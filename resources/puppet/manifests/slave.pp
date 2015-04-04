@@ -20,18 +20,6 @@ package { "bridge-utils":
     ensure   => installed,
 }
 
-file { "Download .ssh DIR":
-    path     => "${oneadmin_home}/.ssh",
-    owner    => "oneadmin",
-    group    => "oneadmin",
-    mode     => 0755,
-    source   => "/vagrant/.ssh",
-    ensure   => directory,
-    replace  => true,
-    recurse  => true,
-    require  => Package["opennebula-node"],
-}
-
 file { "Set br0.cfg":
     path    => "/etc/network/interfaces.d/br0.cfg",
     ensure  => present,
@@ -70,15 +58,33 @@ exec { "Disable virbr0":
 }
 
 if $hostname =~ /^slave-[0-9]+/ {
+    file { "Download .ssh DIR":
+        path     => "${oneadmin_home}/.ssh",
+        owner    => "oneadmin",
+        group    => "oneadmin",
+        mode     => 0644,
+        source   => "/vagrant/.ssh",
+        ensure   => directory,
+        replace  => true,
+        recurse  => true,
+        require  => Exec["Disable virbr0"],
+    }
+    exec { "Permission Private SSH-key":
+        command  => "chmod 600 ${oneadmin_home}/.ssh/id_rsa",
+        cwd      => "${oneadmin_home}",
+        user     => "oneadmin",
+        timeout  => "0",
+        logoutput => true,
+        require  => File["Download .ssh DIR"],
+    }
     exec { "Config NFS (/etc/fstab)":
         command  => "echo '${master_ip}:/var/lib/one/  /var/lib/one/  nfs   soft,intr,rsize=8192,wsize=8192,noauto' >> /etc/fstab",
         user     => "root",
         timeout  => "0",
         logoutput => true,
         unless   => "grep -q '^${master_ip}:/var/lib/one' /etc/fstab",
-        require  => Exec["Disable virbr0"],
+        require  => Exec["Permission Private SSH-key"],
     }
-
     exec { "Mount /etc/fstab":
         command  => "mount -a",
         user     => "root",
