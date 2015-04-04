@@ -20,16 +20,6 @@ package { "bridge-utils":
     ensure   => installed,
 }
 
-file { "Set br0.cfg":
-    path    => "/etc/network/interfaces.d/br0.cfg",
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0644,
-    content => template("/vagrant/resources/puppet/templates/br0.cfg.erb"),
-    require  => [Package["nfs-common"], Package["opennebula-node"], Package["bridge-utils"]],
-}
-
 file { "Set eth1.cfg":
     path    => "/etc/network/interfaces.d/eth1.cfg",
     ensure  => present,
@@ -37,7 +27,7 @@ file { "Set eth1.cfg":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/eth1.cfg.erb"),
-    require  => File["Set eth1.cfg"],
+    require  => [Package["nfs-common"], Package["opennebula-node"], Package["bridge-utils"]],
 }
 
 exec { "Enable eth1":
@@ -49,13 +39,23 @@ exec { "Enable eth1":
     require  => File["Set eth1.cfg"],
 }
 
+file { "Set br0.cfg":
+    path    => "/etc/network/interfaces.d/br0.cfg",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/br0.cfg.erb"),
+    require  => File["Enable eth1"],
+}
+
 exec { "Enable br0":
     command  => "ifup br0",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "ifconfig br0 2> /dev/null | grep -q UP",
-    require  => Exec["Enable eth1"],
+    require  => File["Set br0.cfg"],
 }
 
 exec { "Disable virbr0":
