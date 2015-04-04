@@ -165,3 +165,11 @@ exec { "Run config-one-env.sh":
     require  => File["Put config-one-env.sh"],
 }
 
+exec { "Force Restart Servuce: OpenNebula":
+    command  => "service opennebula restart",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Run config-one-env.sh"],
+}
+
