@@ -101,16 +101,23 @@ if $hostname =~ /^slave-[0-9]+/ {
 	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Permission Private SSH-key"],
     }
+    file { "Create DIR /var/lib/one/datastores":
+        path     => "/var/lib/one/datastores",
+        owner    => "oneadmin",
+        group    => "oneadmin",
+        mode     => 0755,
+        ensure   => directory,
+        recurse  => true,
+        require  => Exec["Add /etc/fstab"],
+    }
     exec { "Mount datastore":
         #provider => shell,
-        #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto master:/var/lib/one/datastores /var/lib/one/datastores",
-        #command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
-        command  => "bash /vagrant/resources/puppet/files/mount-datastores.sh",
+        command  => "mkdir -p /var/lib/one/datastores && mount /var/lib/one/datastores",
         user     => "root",
         timeout  => "0",
         logoutput => true,
 	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
-        require  => [Package["nfs-common"], Exec["Add /etc/fstab"]],
+        require  => File["Create DIR /var/lib/one/datastores"],
         before   => File["Config Libvirt/QEMU"],
     }
 }
