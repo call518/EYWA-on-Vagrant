@@ -27,7 +27,7 @@ file { "Set eth1.cfg":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/eth1.cfg.erb"),
-    require  => [Package["nfs-common"], Package["opennebula-node"], Package["bridge-utils"]],
+    require => [Package["nfs-common"], Package["opennebula-node"], Package["bridge-utils"]],
 }
 
 exec { "Enable eth1":
@@ -46,7 +46,7 @@ file { "Set br0.cfg":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/br0.cfg.erb"),
-    require  => File["Enable eth1"],
+    require => Exec["Enable eth1"],
 }
 
 exec { "Enable br0":
