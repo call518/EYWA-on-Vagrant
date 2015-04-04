@@ -35,6 +35,7 @@ exec { "Disable/Remove apparmor":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require => Exec["Apt-get Uodate"],
+    onlyif   => "service apparmor status",
+    require  => Exec["Apt-get Uodate"],
 }
 
