@@ -6,4 +6,4 @@ EYWA PoC, on Vagrant Environment
 
 ## Architecture of EYWA
 
-![Architecture_of_EYWA](etc-files/architecture_of_eywa.png)
+![Architecture](etc-files/architecture_of_eywa.png)
