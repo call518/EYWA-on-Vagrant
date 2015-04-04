@@ -17,7 +17,7 @@ oneimage create \
 --path "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" \
 --driver qcow2 \
 --datastore default
-sleep 3
+sleep 5
 done
 
 onetemplate create \
@@ -32,3 +32,5 @@ onetemplate create \
 --ssh /var/lib/one/.ssh/id_rsa.pub
 
 EOF
+
+exit 0
