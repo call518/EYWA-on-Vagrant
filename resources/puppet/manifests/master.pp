@@ -56,11 +56,11 @@ file { "Export NFS":
     require => Package["nfs-kernel-server"],
 }
 
-$one_home = "/var/lib/one"
+$oneadmin_home = "/var/lib/one"
 
 exec { "Set SSH authorized_keys":
-    command  => "cp $one_home/.ssh/id_rsa.pub $one_home/.ssh/authorized_keys",
-    cwd      => "$one_home",
+    command  => "cp ${oneadmin_home}/.ssh/id_rsa.pub ${oneadmin_home}/.ssh/authorized_keys",
+    cwd      => "${oneadmin_home}",
     user     => "oneadmin",
     timeout  => "0",
     logoutput => true,
@@ -68,7 +68,7 @@ exec { "Set SSH authorized_keys":
 }
 
 file { "Set SSH Client Options":
-    path    => "$one_home/.ssh/config",
+    path    => "${oneadmin_home}/.ssh/config",
     ensure  => present,
     owner   => "oneadmin",
     group   => "oneadmin",
@@ -76,13 +76,22 @@ file { "Set SSH Client Options":
     require => Exec["Set SSH authorized_keys"],
 }
 
-exec { "Change Password - oneadmin User":
-    command  => "oneuser passwd oneadmin ${oneadmin_pw}",
-    user     => "oneadmin",
+exec { "Change Password - oneadmin User (1)":
+    command  => "su oneadmin -l -c 'oneuser passwd oneadmin ${oneadmin_pw}'",
+    user     => "root",
     timeout  => "0",
     logoutput => true,
     notify  => Service["opennebula"],
     require  => File["Set SSH Client Options"],
+}
+
+exec { "Change Password - oneadmin User (2)":
+    command  => "echo 'oneadmin:${oneadmin_pw}' > ${oneadmin_home}/.one/one_auth",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    notify  => Service["opennebula"],
+    require  => Exec["Change Password - oneadmin User (1)"],
 }
 
 file { "Config oned.conf":
@@ -93,7 +102,7 @@ file { "Config oned.conf":
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
     notify  => Service["opennebula"],
-    require => Exec["Change Password - oneadmin User"],
+    require => Exec["Change Password - oneadmin User (2)"],
 }
 
 exec { "Add Slave Hosts":
