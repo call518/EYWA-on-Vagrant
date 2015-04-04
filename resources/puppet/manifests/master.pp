@@ -30,7 +30,7 @@ exec { "Set MySQL root Password":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    onlyif   => "test -f /root/.installed.mysql",
+    onlyif   => "test ! -f /root/.installed.mysql",
     require  => Package["mysql-server"],
 }
 
@@ -39,7 +39,7 @@ exec { "Create opennebula Database":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    onlyif   => "test -f /root/.installed.mysql",
+    onlyif   => "test ! -f /root/.installed.mysql",
     notify  => Service["opennebula"],
     require  => Exec["Set MySQL root Password"],
 }
