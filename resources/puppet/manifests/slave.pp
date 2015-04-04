@@ -30,13 +30,23 @@ file { "Set br0.cfg":
     require  => [Package["nfs-common"], Package["opennebula-node"], Package["bridge-utils"]],
 }
 
+file { "Set eth1.cfg":
+    path    => "/etc/network/interfaces.d/eth1.cfg",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/eth1.cfg.erb"),
+    require  => File["Set eth1.cfg"],
+}
+
 exec { "Enable eth1":
-    command  => "ip link set up eth1",
+    command  => "ifup eth1",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "ifconfig eth1 2> /dev/null | grep -q UP",
-    require  => File["Set br0.cfg"],
+    require  => File["Set eth1.cfg"],
 }
 
 exec { "Enable br0":
