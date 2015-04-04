@@ -5,6 +5,8 @@ include 'apt'
 ### Export Env: Global %PATH for "Exec"
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin" ] }
 
+$oneadmin_home = "/var/lib/one"
+
 package { "nfs-kernel-server":
     ensure   => installed,
 }
@@ -58,8 +60,6 @@ file { "Export NFS":
     require => Package["nfs-kernel-server"],
 }
 
-$oneadmin_home = "/var/lib/one"
-
 exec { "Set SSH authorized_keys":
     command  => "cp ${oneadmin_home}/.ssh/id_rsa.pub ${oneadmin_home}/.ssh/authorized_keys",
     cwd      => "${oneadmin_home}",
@@ -69,13 +69,21 @@ exec { "Set SSH authorized_keys":
     require  => File["Export NFS"],
 }
 
+exec { "Upload .ssh DIR":
+    command  => "rm -rf /vagrant/.ssh; cp -a ${oneadmin_home}/.ssh/ /vagrant/",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Set SSH authorized_keys"],
+}
+
 file { "Set SSH Client Options":
     path    => "${oneadmin_home}/.ssh/config",
     ensure  => present,
     owner   => "oneadmin",
     group   => "oneadmin",
     source  => "/vagrant/resources/puppet/files/one-ssh-config",
-    require => Exec["Set SSH authorized_keys"],
+    require => Exec["Upload .ssh DIR"],
 }
 
 file { "Config oned.conf":
@@ -94,7 +102,7 @@ file { "Put config-one-env.sh":
     ensure  => present,
     owner   => "root",
     group   => "root",
-    mode    => 0755,
+    mode    => 0700,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
     require  => File["Config oned.conf"],
 }

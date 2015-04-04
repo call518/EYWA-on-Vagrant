@@ -5,6 +5,8 @@ include 'apt'
 ### Export Env: Global %PATH for "Exec"
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin" ] }
 
+$oneadmin_home = "/var/lib/one"
+
 package { "nfs-common":
     ensure   => installed,
 }
@@ -16,6 +18,17 @@ package { "opennebula-node":
 
 package { "bridge-utils":
     ensure   => installed,
+}
+
+file { "Download .ssh DIR":
+    path     => "${oneadmin_home}/.ssh",
+    owner    => "oneadmin",
+    group    => "oneadmin",
+    mode     => 0755,
+    source   => "/vagrant/.ssh",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
 }
 
 file { "Set br0.cfg":
