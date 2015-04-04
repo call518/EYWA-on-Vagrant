@@ -111,7 +111,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => Exec["Add /etc/fstab"],
     }
     exec { "Mount datastore":
-        #provider => shell,
+        provider => shell,
         command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 5; done",
         user     => "root",
         timeout  => "0",
