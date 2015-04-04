@@ -125,3 +125,12 @@ file { "Config Libvirt/QEMU":
     require => Exec["Disable virbr0"],
 }
 
+exec { "Add ONE Node":
+    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\" | grep -q $hostname",
+    require  => File["Config Libvirt/QEMU"],
+}
+
