@@ -29,6 +29,7 @@ file { "Download .ssh DIR":
     ensure   => directory,
     replace  => true,
     recurse  => true,
+    require  => Package["opennebula-node"],
 }
 
 file { "Set br0.cfg":
