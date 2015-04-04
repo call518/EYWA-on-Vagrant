@@ -10,7 +10,8 @@ package { "nfs-common":
 }
 
 package { "opennebula-node":
-    ensure   => installed,
+    #ensure   => installed,
+    ensure   => "4.6.2-1",
 }
 
 package { "bridge-utils":

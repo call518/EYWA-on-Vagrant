@@ -10,11 +10,13 @@ package { "nfs-kernel-server":
 }
 
 package { "opennebula":
-    ensure   => installed,
+    #ensure   => installed,
+    ensure   => "4.6.2-1",
 }
 
 package { "opennebula-sunstone":
-    ensure   => installed,
+    #ensure   => installed,
+    ensure   => "4.6.2-1",
 }
 
 service { "nfs-kernel-server":
