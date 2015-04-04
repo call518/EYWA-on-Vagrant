@@ -30,3 +30,11 @@ exec { "Apt-get Uodate":
     require => File["Add sources.list"],
 }
 
+exec { "Disable/Remove apparmor":
+    command  => "service apparmor stop && update-rc.d -f apparmor remove && apt-get remove -y apparmor apparmor-utils",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require => Exec["Apt-get Uodate"],
+}
+
