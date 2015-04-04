@@ -94,21 +94,22 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => File["Put .ssh DIR"],
     }
     exec { "Add /etc/fstab":
-        command  => "echo '${master_ip}:/var/lib/one/datastores /var/lib/one/datastores nfs soft,intr,rsize=8192,wsize=8192,noauto' >> /etc/fstab",
+        command  => "echo 'master:/var/lib/one/datastores /var/lib/one/datastores nfs soft,intr,rsize=8192,wsize=8192,noauto' >> /etc/fstab",
         user     => "root",
         timeout  => "0",
         logoutput => true,
-	unless   => "df | grep -q '^${master_ip}:/var/lib/one/datastores'",
+	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Permission Private SSH-key"],
     }
     exec { "Mount datastore":
-        provider => shell,
-        #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto ${master_ip}:/var/lib/one/datastores /var/lib/one/datastores",
-        command  => "while ! df | grep -q '^${master_ip}:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
+        #provider => shell,
+        #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto master:/var/lib/one/datastores /var/lib/one/datastores",
+        #command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
+        command  => "bash resources/puppet/files/mount-datastores.sh",
         user     => "root",
         timeout  => "0",
         logoutput => true,
-	unless   => "df | grep -q '^${master_ip}:/var/lib/one/datastores'",
+	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => [Package["nfs-common"], Exec["Add /etc/fstab"]],
         before   => File["Config Libvirt/QEMU"],
     }
