@@ -88,7 +88,7 @@ file { "Config oned.conf":
 }
 
 file { "Put config-one-env.sh":
-    path    => "/root/config-one-env.sh",
+    path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
     owner   => "root",
     group   => "root",
@@ -98,10 +98,10 @@ file { "Put config-one-env.sh":
 }
 
 exec { "Run config-one-env.sh":
-    command  => "/root/config-one-env.sh",
+    command  => "/home/vagrant/config-one-env.sh",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    unless   => "grep -q '^oneadmin:${oneadmin_pw}$' ${oneadmin_home}/.one/one_auth",
+    #unless   => "grep -q '^oneadmin:${oneadmin_pw}$' ${oneadmin_home}/.one/one_auth",
     require  => File["Put config-one-env.sh"],
 }

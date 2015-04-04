@@ -4,9 +4,7 @@ su oneadmin -l -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
 test ! $? && exit
 echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
 test ! $? && exit
-onehost create master -i kvm -v kvm -n dummy
-test ! $? && exit
-onehost create slave-1 -i kvm -v kvm -n dummy
-test ! $? && exit
-onehost create slave-2 -i kvm -v kvm -n dummy
-test ! $? && exit
+su oneadmin -l -c 'onehost create master -i kvm -v kvm -n dummy'
+su oneadmin -l -c 'onehost create slave-1 -i kvm -v kvm -n dummy'
+su oneadmin -l -c 'onehost create slave-2 -i kvm -v kvm -n dummy'
+exit 0
