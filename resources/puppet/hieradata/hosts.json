@@ -6,11 +6,11 @@
     },
     "slave-1": {
       "name": "slave-1",
-      "ipaddress": "192.168.33.51"
+      "ipaddress": "192.168.33.12"
     },
     "slave-2": {
       "name": "slave-2",
-      "ipaddress": "192.168.33.52"
+      "ipaddress": "192.168.33.13"
     }
   }
 }
