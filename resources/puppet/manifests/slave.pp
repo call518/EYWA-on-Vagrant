@@ -102,6 +102,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => Exec["Permission Private SSH-key"],
     }
     exec { "Mount datastore":
+        provider => shell,
         #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto ${master_ip}:/var/lib/one/datastores /var/lib/one/datastores",
         command  => "while ! df | grep -q '^#{master_ip}:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
         user     => "root",
