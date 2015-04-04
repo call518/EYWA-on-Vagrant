@@ -76,3 +76,48 @@ file { "Set SSH Client Options":
     require => Exec["Set SSH authorized_keys"],
 }
 
+exec { "Change Password - oneadmin User":
+    command  => "oneuser passwd oneadmin ${oneadmin_pw}",
+    user     => "oneadmin",
+    timeout  => "0",
+    logoutput => true,
+    notify  => Service["opennebula"],
+    require  => File["Set SSH Client Options"],
+}
+
+file { "Config oned.conf":
+    path    => "/etc/one/oned.conf",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
+    notify  => Service["opennebula"],
+    require => Exec["Change Password - oneadmin User"],
+}
+
+exec { "Add Slave Hosts":
+    command  => "onehost create master -i kvm -v kvm -n dummy && onehost create slave-1 -i kvm -v kvm -n dummy && onehost create slave-2 -i kvm -v kvm -n dummy",
+    user     => "oneadmin",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Config oned.conf"],
+}
+
+#file { "Put EWYA-Post-Script":
+#    path    => "/root/ewya-post-script.sh",
+#    ensure  => present,
+#    owner   => "root",
+#    group   => "root",
+#    mode    => 0644,
+#    source  => "/vagrant/resources/puppet/files/eywa-post-script.sh",
+#    require => Exec["Add Slave Hosts"],
+#}
+
+#exec { "Run EWYA-Post-Script":
+#    command  => "/root/ewya-post-script.sh",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => File["Set SSH Client Options"],
+#}

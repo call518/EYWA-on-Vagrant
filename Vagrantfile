@@ -13,13 +13,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.ssh.forward_x11 = true
 
   master_ip = "192.168.33.11"
-  sustone_listen_addr = "0.0.0.0",
-  sustone_listen_port = "9869",
+
+  oneadmin_pw = "passw0rd"
+  sustone_listen_addr = "0.0.0.0"
+  sustone_listen_port = "9869"
 
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28F8F701DC29E4B9!247&authkey=!AC-zzAlAl6UhvGo&ithint=file%2cbox"
 
   config.vm.define "master" do |master|
+    my_ip = "#{master_ip}"
     master.vm.hostname = "master"
     master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
@@ -52,6 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file  = "master.pp"
       puppet.facter = {
         "master_ip" => "#{master_ip}",
+        "oneadmin_pw" => "#{oneadmin_pw}",
         "sustone_listen_addr" => "#{sustone_listen_addr}",
         "sustone_listen_port" => "#{sustone_listen_port}",
       }
@@ -64,6 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file  = "slave.pp"
       puppet.facter = {
         "master_ip" => "#{master_ip}",
+        "my_ip" => "#{my_ip}",
       }
       puppet.options = "--verbose"
     end
@@ -72,11 +77,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #num_slave_nodes = 2 ## (WARNING) Sync with hiera file -> "resources/puppet/hieradata/hosts.json"
   num_slave_nodes = 1 ## (WARNING) Sync with hiera file -> "resources/puppet/hieradata/hosts.json"
   slave_ip_base = "192.168.33."
-  slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+51}" }
+  slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+12}" }
   
   num_slave_nodes.times do |n|
     config.vm.define "slave-#{n+1}" do |slave|
       slave_ip = slave_ips[n]
+      my_ip = "#{slave_ip}"
       slave.vm.hostname = "slave-#{n+1}"
       slave.vm.network "private_network", ip: "#{slave_ip}"
       slave.vm.provider :virtualbox do |vb|
@@ -106,6 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.manifest_file  = "slave.pp"
         puppet.facter = {
           "master_ip" => "#{master_ip}",
+          "my_ip" => "#{my_ip}",
         }
         puppet.options = "--verbose"
       end
