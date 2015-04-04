@@ -58,24 +58,24 @@ exec { "Disable virbr0":
 }
 
 if $hostname =~ /^slave-[0-9]+/ {
-    file { "Download .ssh DIR":
+    file { "Put .ssh DIR":
         path     => "${oneadmin_home}/.ssh",
         owner    => "oneadmin",
         group    => "oneadmin",
         mode     => 0644,
-        source   => "/vagrant/.ssh",
+        source   => "/vagrant/resources/puppet/files/.ssh",
         ensure   => directory,
         replace  => true,
         recurse  => true,
         require  => Exec["Disable virbr0"],
     }
     exec { "Permission Private SSH-key":
-        command  => "chmod 600 ${oneadmin_home}/.ssh/id_rsa",
+        command  => "chown oneadmin:oneadmin ${oneadmin_home}/.ssh/* && chmod 644 ${oneadmin_home}/.ssh/* && chmod 600 ${oneadmin_home}/.ssh/id_rsa",
         cwd      => "${oneadmin_home}",
         user     => "oneadmin",
         timeout  => "0",
         logoutput => true,
-        require  => File["Download .ssh DIR"],
+        require  => File["Put .ssh DIR"],
     }
     exec { "Config NFS (/etc/fstab)":
         command  => "echo '${master_ip}:/var/lib/one/  /var/lib/one/  nfs   soft,intr,rsize=8192,wsize=8192,noauto' >> /etc/fstab",

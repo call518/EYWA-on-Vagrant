@@ -60,40 +60,52 @@ file { "Export NFS":
     require => Package["nfs-kernel-server"],
 }
 
-exec { "Set SSH authorized_keys":
-    command  => "cp ${oneadmin_home}/.ssh/id_rsa.pub ${oneadmin_home}/.ssh/authorized_keys",
-    cwd      => "${oneadmin_home}",
-    user     => "oneadmin",
-    timeout  => "0",
-    logoutput => true,
+#exec { "Set SSH authorized_keys":
+#    command  => "cp ${oneadmin_home}/.ssh/id_rsa.pub ${oneadmin_home}/.ssh/authorized_keys",
+#    cwd      => "${oneadmin_home}",
+#    user     => "oneadmin",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => File["Export NFS"],
+#}
+
+file { "Put .ssh DIR":
+    path     => "${oneadmin_home}/.ssh",
+    owner    => "oneadmin",
+    group    => "oneadmin",
+    mode     => 0644,
+    source   => "/vagrant/resources/puppet/files/.ssh",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
     require  => File["Export NFS"],
 }
 
 exec { "Permission Private SSH-key":
-    command  => "chmod 600 ${oneadmin_home}/.ssh/id_rsa",
+    command  => "chown oneadmin:oneadmin ${oneadmin_home}/.ssh/* && chmod 644 ${oneadmin_home}/.ssh/* && chmod 600 ${oneadmin_home}/.ssh/id_rsa",
     cwd      => "${oneadmin_home}",
     user     => "oneadmin",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Set SSH authorized_keys"],
+    require  => File["Put .ssh DIR"],
 }
 
-exec { "Upload .ssh DIR":
-    command  => "rm -rf /vagrant/.ssh; cp -a ${oneadmin_home}/.ssh/ /vagrant/",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    require  => Exec["Permission Private SSH-key"],
-}
-
-file { "Set SSH Client Options":
-    path    => "${oneadmin_home}/.ssh/config",
-    ensure  => present,
-    owner   => "oneadmin",
-    group   => "oneadmin",
-    source  => "/vagrant/resources/puppet/files/one-ssh-config",
-    require => Exec["Upload .ssh DIR"],
-}
+#exec { "Upload .ssh DIR":
+#    command  => "rm -rf /vagrant/.ssh; cp -a ${oneadmin_home}/.ssh/ /vagrant/",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => Exec["Permission Private SSH-key"],
+#}
+#
+#file { "Set SSH Client Options":
+#    path    => "${oneadmin_home}/.ssh/config",
+#    ensure  => present,
+#    owner   => "oneadmin",
+#    group   => "oneadmin",
+#    source  => "/vagrant/resources/puppet/files/one-ssh-config",
+#    require => Exec["Upload .ssh DIR"],
+#}
 
 file { "Config oned.conf":
     path    => "/etc/one/oned.conf",
@@ -103,7 +115,7 @@ file { "Config oned.conf":
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
     notify  => Service["opennebula"],
-    require => File["Set SSH Client Options"],
+    require => Exec["Permission Private SSH-key"],
 }
 
 file { "Put config-one-env.sh":
