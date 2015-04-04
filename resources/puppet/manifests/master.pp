@@ -21,6 +21,10 @@ package { "opennebula-sunstone":
     ensure   => "4.6.2-1",
 }
 
+package { "mysql-server":
+    ensure   => installed,
+}
+
 service { "nfs-kernel-server":
     ensure  => "running",
     enable  => "true",
