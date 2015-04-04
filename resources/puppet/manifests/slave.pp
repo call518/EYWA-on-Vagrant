@@ -130,7 +130,7 @@ exec { "Add ONE Node":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\" | grep -q $hostname",
+    unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost list' | grep -q $hostname",
     require  => File["Config Libvirt/QEMU"],
 }
 
