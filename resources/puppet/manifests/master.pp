@@ -55,7 +55,7 @@ exec { "Set MySQL root Password":
     timeout  => "0",
     logoutput => true,
     onlyif   => "test ! -f /root/.installed.mysql",
-    require  => [Pacakge["opennebula"], Package["mysql-server"]],
+    require  => [Package["opennebula"], Package["mysql-server"]],
 }
 
 exec { "Create opennebula Database":
