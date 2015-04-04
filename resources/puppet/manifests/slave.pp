@@ -101,7 +101,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         timeout  => "0",
         logoutput => true,
 	unless   => "df | grep -q '^#{master_ip}:/var/lib/one/datastores'",
-        require  => Exec["Add /etc/fstab"],
+        require  => [Package["nfs-common"], Exec["Add /etc/fstab"]],
         before   => File["Config Libvirt/QEMU"],
     }
 }
