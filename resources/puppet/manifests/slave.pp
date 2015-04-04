@@ -112,8 +112,8 @@ if $hostname =~ /^slave-[0-9]+/ {
     }
     exec { "Mount datastore":
         provider => shell,
-        #command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 5; done",
-        command  => "mount /var/lib/one/datastores",
+        #command  => "mount /var/lib/one/datastores",
+        command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 5; done",
         user     => "root",
         timeout  => "0",
         logoutput => true,
