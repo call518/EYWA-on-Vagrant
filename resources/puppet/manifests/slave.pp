@@ -134,6 +134,15 @@ file { "Config Libvirt/QEMU":
     require => Exec["Disable virbr0"],
 }
 
+exec { "Update Apparmor":
+    command  => "sed -e '/change_profile/a \ \ /usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd && service apparmor reload",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "grep -q '/usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd",
+    require  => File["Config Libvirt/QEMU"],
+}
+
 exec { "Add ONE Node":
     command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
     user     => "root",
