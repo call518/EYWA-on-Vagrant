@@ -25,6 +25,25 @@ package { "mysql-server":
     ensure   => installed,
 }
 
+exec { "Set MySQL root Password":
+    command  => "mysqladmin -uroot password ${oneadmin_pw}",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    onlyif   => "test -f /root/.installed.mysql",
+    require  => Package["mysql-server"],
+}
+
+exec { "Create opennebula Database":
+    command  => "mysql -uroot -p${oneadmin_pw} -e 'create database opennebula' && touch /root/.installed.mysql",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    onlyif   => "test -f /root/.installed.mysql",
+    notify  => Service["opennebula"],
+    require  => Exec["Set MySQL root Password"],
+}
+
 service { "nfs-kernel-server":
     ensure  => "running",
     enable  => "true",
@@ -119,7 +138,7 @@ file { "Config oned.conf":
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
     notify  => Service["opennebula"],
-    require => Exec["Permission Private SSH-key"],
+    require => [Exec["Create opennebula Database"], Exec["Permission Private SSH-key"]],
 }
 
 file { "Put config-one-env.sh":
@@ -137,6 +156,5 @@ exec { "Run config-one-env.sh":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    #unless   => "grep -q '^oneadmin:${oneadmin_pw}$' ${oneadmin_home}/.one/one_auth",
     require  => File["Put config-one-env.sh"],
 }
