@@ -25,25 +25,6 @@ package { "mysql-server":
     ensure   => installed,
 }
 
-exec { "Set MySQL root Password":
-    command  => "mysqladmin -uroot password ${oneadmin_pw}",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    onlyif   => "test ! -f /root/.installed.mysql",
-    require  => Package["mysql-server"],
-}
-
-exec { "Create opennebula Database":
-    command  => "mysql -uroot -p${oneadmin_pw} -e 'create database opennebula' && touch /root/.installed.mysql",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    onlyif   => "test ! -f /root/.installed.mysql",
-    notify  => Service["opennebula"],
-    require  => Exec["Set MySQL root Password"],
-}
-
 service { "nfs-kernel-server":
     ensure  => "running",
     enable  => "true",
@@ -60,6 +41,31 @@ service { "opennebula-sunstone":
     ensure  => "running",
     enable  => "true",
     require => Package["opennebula-sunstone"],
+}
+
+service { "mysql":
+    ensure  => "running",
+    enable  => "true",
+    require => Package["mysql-server"],
+}
+
+exec { "Set MySQL root Password":
+    command  => "mysqladmin -uroot password ${oneadmin_pw}",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    onlyif   => "test ! -f /root/.installed.mysql",
+    require  => [Pacakge["opennebula"], Package["mysql-server"]],
+}
+
+exec { "Create opennebula Database":
+    command  => "mysql -uroot -p${oneadmin_pw} -e 'create database opennebula' && touch /root/.installed.mysql",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    onlyif   => "test ! -f /root/.installed.mysql",
+    notify   => Service["opennebula"],
+    require  => Exec["Set MySQL root Password"],
 }
 
 file { "Config sunstone.conf":
