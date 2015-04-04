@@ -20,6 +20,12 @@ package { "bridge-utils":
     ensure   => installed,
 }
 
+service { "libvirt-bin":
+    ensure  => "running",
+    enable  => "true",
+    require => Package["opennebula-node"],
+}
+
 file { "Set eth1.cfg":
     path    => "/etc/network/interfaces.d/eth1.cfg",
     ensure  => present,
@@ -96,7 +102,8 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => Exec["Permission Private SSH-key"],
     }
     exec { "Mount datastore":
-        command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto ${master_ip}:/var/lib/one/datastores /var/lib/one/datastores",
+        #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto ${master_ip}:/var/lib/one/datastores /var/lib/one/datastores",
+        command  => "while ! df | grep -q '^#{master_ip}:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
         user     => "root",
         timeout  => "0",
         logoutput => true,
@@ -104,12 +111,6 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => [Package["nfs-common"], Exec["Add /etc/fstab"]],
         before   => File["Config Libvirt/QEMU"],
     }
-}
-
-service { "libvirt-bin":
-    ensure  => "running",
-    enable  => "true",
-    require => Package["opennebula-node"],
 }
 
 file { "Config Libvirt/QEMU":
