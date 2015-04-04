@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta content='GitLab Enterprise Edition' name='description'>
+<title>
+
+GitLab
+</title>
+<link href="/assets/favicon-d6aa61c7c265900a7d4c45d3ac2b461f.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<link href="/assets/application-3a0061c199f41ba8cc28216a08370179.css" media="all" rel="stylesheet" />
+<link href="/assets/print-8597f8b497e02f892aa5a4b25d5a857b.css" media="print" rel="stylesheet" />
+<script src="/assets/application-2be68b6f02a4088462824b0d3a885564.js"></script>
+<meta content="authenticity_token" name="csrf-param" />
+<meta content="R0wpyNtMnECnJKnYliJGA0HN3gRTobWQSktRgUwaA7g=" name="csrf-token" />
+<script type="text/javascript">
+//<![CDATA[
+window.gon={};gon.default_issues_tracker="gitlab";gon.api_version="v3";gon.relative_url_root="";gon.default_avatar_url="https://gitlab.com/assets/no_avatar-fd406ccede8cb1881f20921c8bfa169b.png";
+//]]>
+</script>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
+<meta content='#474D57' name='theme-color'>
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37019925-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+</head>
+
+<body class='ui_mars login-page application'>
+
+<header class='navbar navbar-fixed-top navbar-gitlab'>
+<div class='navbar-inner'>
+<div class='container'>
+<div class='app_logo'>
+<a class="home" href="/explore"><img alt="Logo white" src="/assets/logo-white-0b53cd4ea06811d79b3acd486384e047.png" />
+</a></div>
+<h1 class='title'></h1>
+<button class='navbar-toggle' data-target='.navbar-collapse' data-toggle='collapse' type='button'>
+<span class='sr-only'>Toggle navigation</span>
+<i class='fa fa-bars'></i>
+</button>
+</div>
+</div>
+</header>
+
+
+<div class='container navless-container'>
+<div class='content'>
+<div class='flash-container'>
+<div class='flash-alert'>
+You need to sign in before continuing.
+</div>
+</div>
+
+<div class='row prepend-top-20'>
+<div class='col-sm-5 pull-right'>
+<div>
+<div class='login-box'>
+<div class='login-heading'>
+<h3>Existing user? Sign in</h3>
+</div>
+<div class='login-body'>
+<form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="R0wpyNtMnECnJKnYliJGA0HN3gRTobWQSktRgUwaA7g=" /></div><input autofocus="autofocus" class="form-control top" id="user_login" name="user[login]" placeholder="Username or Email" type="text" />
+<input class="form-control bottom" id="user_password" name="user[password]" placeholder="Password" type="password" />
+<div class='remember-me checkbox'>
+<label for='user_remember_me'>
+<input name="user[remember_me]" type="hidden" value="0" /><input id="user_remember_me" name="user[remember_me]" type="checkbox" value="1" />
+<span>Remember me</span>
+</label>
+<div class='pull-right'>
+<a href="/users/password/new">Forgot your password?</a>
+</div>
+</div>
+<div>
+<input class="btn btn-save" name="commit" type="submit" value="Sign in" />
+</div>
+</form>
+
+
+</div>
+</div>
+
+<div class='clearfix prepend-top-20'>
+<p>
+<span class='light'>
+Sign in with &nbsp;
+</span>
+<span class='light'>
+<a href="/users/auth/google_oauth2"><img alt="Sign in with Google Oauth2" src="/assets/authbuttons/google_32-14a2d47a14f23a05010046e56c83bbc0.png" /></a>
+</span>
+<span class='light'>
+<a href="/users/auth/twitter"><img alt="Sign in with Twitter" src="/assets/authbuttons/twitter_32-b52e34b8463a7bd83f999ecf17bc79c7.png" /></a>
+</span>
+<span class='light'>
+<a href="/users/auth/github"><img alt="Sign in with Github" src="/assets/authbuttons/github_32-8f80b7902c4b0a22367e40998f70ecac.png" /></a>
+</span>
+<span class='light'>
+<a href="/users/auth/bitbucket"><img alt="Sign in with Bitbucket" src="/assets/authbuttons/bitbucket_32-62d35f0d15be1613256bece7556cd47e.png" /></a>
+</span>
+</p>
+
+</div>
+<div class='prepend-top-20'>
+<div class='login-box'>
+<div class='login-heading'>
+<h3>New user? Create an account</h3>
+</div>
+<div class='login-body'>
+<form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="R0wpyNtMnECnJKnYliJGA0HN3gRTobWQSktRgUwaA7g=" /></div><div class='devise-errors'>
+
+</div>
+<div>
+<input class="form-control top" id="user_name" name="user[name]" placeholder="Name" required="required" type="text" />
+</div>
+<div>
+<input class="form-control middle" id="user_username" name="user[username]" placeholder="Username" required="required" type="text" />
+</div>
+<div>
+<input class="form-control middle" id="user_email" name="user[email]" placeholder="Email" required="required" type="email" value="" />
+</div>
+<div class='form-group append-bottom-20' id='password-strength'>
+<input class="form-control bottom" id="user_password_sign_up" name="user[password]" placeholder="Password" required="required" type="password" />
+</div>
+<div>
+<input class="btn-create btn" name="commit" type="submit" value="Sign up" />
+</div>
+</form>
+
+</div>
+</div>
+<div class='clearfix prepend-top-20'>
+<p>
+<span class='light'>Did not receive confirmation email?</span>
+<a href="/users/confirmation/new">Send again</a>
+</p>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class='col-sm-7 brand-holder pull-left'>
+<h1>
+GitLab.com
+</h1>
+
+<p>Gitlab.com allows you to use GitLab without installing anything. To get a free account with unlimited public and private repositories and unlimited collaborators please <a href="https://gitlab.com/users/sign_up">sign up now</a>. For more information please see the <a href="https://about.gitlab.com/gitlab-com/">GitLab.com page on our website</a>. Report any problems you have with GitLab.com in the <a href="https://gitlab.com/gitlab-com/support-forum/issues">GitLab.com Support Forum</a>. You can explore projects without signing in by going to the <a href="https://gitlab.com/explore/projects/trending">explore page</a>. By signing up for and by signing in to this service you accept our <a href="https://about.gitlab.com/privacy/">Privacy policy</a> and the <a href="https://about.gitlab.com/terms/#gitlab_com">GitLab.com Terms</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+<hr>
+<div class='container'>
+<div class='footer-links'>
+<a href="/explore">Explore</a>
+<a href="http://doc.gitlab.com/" rel="nofollow">Documentation</a>
+<a href="https://about.gitlab.com/" rel="nofollow">About GitLab</a>
+</div>
+</div>
+</body>
+</html>
