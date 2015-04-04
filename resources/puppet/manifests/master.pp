@@ -69,12 +69,21 @@ exec { "Set SSH authorized_keys":
     require  => File["Export NFS"],
 }
 
+exec { "Permission Private SSH-key":
+    command  => "chmod 600 ${oneadmin_home}/.ssh/id_rsa",
+    cwd      => "${oneadmin_home}",
+    user     => "oneadmin",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Set SSH authorized_keys"],
+}
+
 exec { "Upload .ssh DIR":
     command  => "rm -rf /vagrant/.ssh; cp -a ${oneadmin_home}/.ssh/ /vagrant/",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Set SSH authorized_keys"],
+    require  => Exec["Permission Private SSH-key"],
 }
 
 file { "Set SSH Client Options":
