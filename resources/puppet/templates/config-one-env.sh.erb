@@ -1,10 +1,29 @@
 #!/bin/bash
 
 su -l oneadmin -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
-test ! $? && exit
 echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
-test ! $? && exit
 su -l oneadmin -c 'onehost create master -i kvm -v kvm -n dummy'
 su -l oneadmin -c 'onehost create slave-1 -i kvm -v kvm -n dummy'
 su -l oneadmin -c 'onehost create slave-2 -i kvm -v kvm -n dummy'
-exit 0
+
+su -l oneadmin << EOF
+
+onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
+
+oneimage create \
+--name "CentOS-6.5_x86_64" \
+--path "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" \
+--driver qcow2 \
+--datastore default
+
+onetemplate create \
+--name "CentOS-6.5" \
+--cpu 1 \
+--vcpu 1 \
+--memory 512 \
+--arch x86_64 \
+--disk "CentOS-6.5_x86_64" \
+--nic "Test Network" \
+--vnc
+
+EOF
