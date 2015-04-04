@@ -1,1 +1,1 @@
-/var/lib/one/ *(rw,sync,no_subtree_check,root_squash)
+/var/lib/one/datastores *(rw,sync,no_subtree_check,root_squash)

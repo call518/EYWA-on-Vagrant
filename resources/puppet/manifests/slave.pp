@@ -77,13 +77,21 @@ if $hostname =~ /^slave-[0-9]+/ {
         logoutput => true,
         require  => File["Put .ssh DIR"],
     }
+    exec { "Add /etc/fstab":
+        command  => "echo '#{master_ip}:/var/lib/one/datastores /var/lib/one/datastores nfs soft,intr,rsize=8192,wsize=8192,noauto' >> /etc/fstab",
+        user     => "root",
+        timeout  => "0",
+        logoutput => true,
+	unless   => "df | grep -q '^#{master_ip}:/var/lib/one/datastores'",
+        require  => Exec["Permission Private SSH-key"],
+    }
     exec { "Mount datastore":
         command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto ${master_ip}:/var/lib/one/datastores /var/lib/one/datastores",
         user     => "root",
         timeout  => "0",
         logoutput => true,
 	unless   => "df | grep -q '^#{master_ip}:/var/lib/one/datastores'",
-        require  => Exec["Permission Private SSH-key"],
+        require  => Exec["Add /etc/fstab"],
         before   => File["Config Libvirt/QEMU"],
     }
 }
