@@ -90,7 +90,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         user     => "root",
         timeout  => "0",
         logoutput => true,
-	unless   => "df | grep -q #{master_ip}:/var/lib/one/datastores"
+	unless   => "df | grep -q #{master_ip}:/var/lib/one/datastores",
         require  => Exec["Config NFS (/etc/fstab)"],
         before   => File["Config Libvirt/QEMU"],
     }
