@@ -105,7 +105,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         #provider => shell,
         #command  => "mount -t nfs -o soft,intr,rsize=8192,wsize=8192,noauto master:/var/lib/one/datastores /var/lib/one/datastores",
         #command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 1; done",
-        command  => "bash resources/puppet/files/mount-datastores.sh",
+        command  => "bash /vagrant/resources/puppet/files/mount-datastores.sh",
         user     => "root",
         timeout  => "0",
         logoutput => true,
