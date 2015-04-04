@@ -10,11 +10,15 @@ su -l oneadmin << EOF
 
 onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
 
+sleep 5
+
 oneimage create \
 --name "CentOS-6.5_x86_64" \
 --path "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" \
 --driver qcow2 \
 --datastore default
+
+sleep 5
 
 onetemplate create \
 --name "CentOS-6.5" \
