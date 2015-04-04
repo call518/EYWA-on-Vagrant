@@ -112,14 +112,6 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => [Package["nfs-common"], Exec["Add /etc/fstab"]],
         before   => File["Config Libvirt/QEMU"],
     }
-    exec { "Add ONE Node":
-        command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
-        user     => "root",
-        timeout  => "0",
-        logoutput => true,
-        unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\" | grep -q $hostname",
-        require  => Exec["Mount datastore"],
-    }
 }
 
 file { "Config Libvirt/QEMU":
@@ -131,5 +123,14 @@ file { "Config Libvirt/QEMU":
     content => template("/vagrant/resources/puppet/templates/libvirt-qemu.conf.erb"),
     notify  => Service["libvirt-bin"],
     require => Exec["Disable virbr0"],
+}
+
+exec { "Add ONE Node":
+    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\" | grep -q $hostname",
+    require  => File["Config Libvirt/QEMU"],
 }
 
