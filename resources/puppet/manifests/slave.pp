@@ -144,7 +144,7 @@ file { "Config Libvirt/QEMU":
 #}
 
 exec { "Add ONE Node":
-    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
+    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n ebtables'\"",
     user     => "root",
     timeout  => "0",
     logoutput => true,
