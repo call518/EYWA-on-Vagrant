@@ -163,7 +163,7 @@ exec { "Download Default-Image (centos6.5.qcow2.gz)":
     command  => "wget \"${default_image_path}\" -O /tmp/default-image.qcow2.gz",
     user     => "root",
     timeout  => "0",
-    logoutput => true,
+    #logoutput => true,
     require  => File["Put config-one-env.sh"],
 }
 
