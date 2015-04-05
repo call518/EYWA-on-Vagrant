@@ -168,7 +168,7 @@ exec { "Download Default-Image (centos6.5.qcow2.gz)":
 }
 
 exec { "Run config-one-env.sh":
-    command  => "/home/vagrant/config-one-env.sh",
+    command  => "dos2unix /home/vagrant/config-one-env.sh && bash /home/vagrant/config-one-env.sh",
     cwd      => "/home/vagrant",
     user     => "root",
     timeout  => "0",

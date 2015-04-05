@@ -1,26 +1,40 @@
 #### Base (Common pp) #########
 
+include 'apt'
+
 ### Export Env: Global %PATH for "Exec"
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin" ] }
 
+exec { "Apt-get Update":
+    command  => "apt-get update",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+}
+
 #package { "git":
 #    ensure => "installed"
+#    require => Exec["Apt-get Update"],
 #}
 
 #package { "unzip":
 #    ensure => "installed"
+#    require => Exec["Apt-get Update"],
 #}
 
-#package { "dos2unix":
-#    ensure   => installed,
-#}
+package { "dos2unix":
+    ensure   => installed,
+    require => Exec["Apt-get Update"],
+}
 
 #package { "expect":
 #    ensure   => installed,
+#    require => Exec["Apt-get Update"],
 #}
 
 #package { "sshpass":
 #    ensure   => installed,
+#    require => Exec["Apt-get Update"],
 #}
 
 case $operatingsystem {

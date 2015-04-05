@@ -22,7 +22,7 @@ file { "Add sources.list":
     require => Exec["Add apt-key"],
 }
 
-exec { "Apt-get Uodate":
+exec { "Apt-get Update":
     command  => "apt-get update",
     user     => "root",
     timeout  => "0",
@@ -36,6 +36,6 @@ exec { "Disable/Remove apparmor":
     timeout  => "0",
     logoutput => true,
     onlyif   => "service apparmor status",
-    require  => Exec["Apt-get Uodate"],
+    require  => Exec["Apt-get Update"],
 }
 
