@@ -147,6 +147,14 @@ file { "Config oned.conf":
     require => [Exec["Create opennebula Database"], Exec["Permission Private SSH-key"]],
 }
 
+exec { "Restart Service - OpenNebula":
+    command  => "service opennebula restart",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Config oned.conf"],
+}
+
 file { "Put config-one-env.sh":
     path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
@@ -154,7 +162,7 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0700,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => File["Config oned.conf"],
+    require  => Exec["Restart Service - OpenNebula"],
 }
 
 $default_image_path = "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz"
