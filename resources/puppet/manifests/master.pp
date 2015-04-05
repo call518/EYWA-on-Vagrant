@@ -139,15 +139,14 @@ file { "Put config-one-env.sh":
     require  => Exec["Restart Service - OpenNebula"],
 }
 
-$default_image_path = "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz"
-
-exec { "Download Default-Image (centos6.5.qcow2.gz)":
-    command  => "wget \"${default_image_path}\" -O /tmp/default-image.qcow2.gz",
-    user     => "root",
-    timeout  => "0",
-    #logoutput => true,
-    require  => File["Put config-one-env.sh"],
-}
+#$default_image_path = "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz"
+#exec { "Download Default-Image (centos6.5.qcow2.gz)":
+#    command  => "wget \"${default_image_path}\" -O /tmp/default-image.qcow2.gz",
+#    user     => "root",
+#    timeout  => "0",
+#    #logoutput => true,
+#    require  => File["Put config-one-env.sh"],
+#}
 
 exec { "Run config-one-env.sh":
     command  => "dos2unix /home/vagrant/config-one-env.sh && bash /home/vagrant/config-one-env.sh",
@@ -155,6 +154,7 @@ exec { "Run config-one-env.sh":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Download Default-Image (centos6.5.qcow2.gz)"],
+    require  => Exec["Put config-one-env.sh"],
+    #require  => Exec["Download Default-Image (centos6.5.qcow2.gz)"],
 }
 
