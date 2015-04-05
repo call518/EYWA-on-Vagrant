@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "master" do |master|
     my_ip = "#{master_ip}"
     master.vm.hostname = "master"
-    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
+    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
     #master.vm.network "forwarded_port", guest: 5900, host: 5900
     master.vm.provider :virtualbox do |vb|
@@ -33,6 +33,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
     master.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
+    master.vm.provision "shell", inline: <<-SCRIPT
+      if test ! -f /root/.created-routing; then
+        ip link set mtu 1600 eth2
+        #route add -net 192.168.34.0/24 gateway 192.168.33.1 dev eth1
+        sudo iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+        touch /root/.created-routing
+      fi
+    SCRIPT
     master.vm.provision "puppet" do |puppet|
       puppet.working_directory = "/vagrant/resources/puppet"
       puppet.hiera_config_path = "resources/puppet/hiera.yaml"
@@ -90,6 +98,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
       slave.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
       slave.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
+      slave.vm.provision "shell", inline: <<-SCRIPT
+        if test ! -f /root/.created-routing; then
+          ip link set mtu 1600 eth2
+          #route add -net 192.168.34.0/24 gateway 192.168.33.1 dev eth1
+          sudo iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+          touch /root/.created-routing
+        fi
+      SCRIPT
       slave.vm.provision "puppet" do |puppet|
         puppet.working_directory = "/vagrant/resources/puppet"
         puppet.hiera_config_path = "resources/puppet/hiera.yaml"
