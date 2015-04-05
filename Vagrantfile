@@ -34,8 +34,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
     master.vm.provision "shell", inline: <<-SCRIPT
       if test ! -f /root/.created-routing; then
-        sudo ip link set mtu 1600 eth1
-        sudo iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+        ip link set mtu 1600 eth1
+        iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
         touch /root/.created-routing
       fi
     SCRIPT
@@ -98,8 +98,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       slave.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
       slave.vm.provision "shell", inline: <<-SCRIPT
         if test ! -f /root/.created-routing; then
-          sudo ip link set mtu 1600 eth1
-          sudo iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+          ip link set mtu 1600 eth1
+          iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
           touch /root/.created-routing
         fi
       SCRIPT
