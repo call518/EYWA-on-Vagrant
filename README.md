@@ -15,6 +15,9 @@ host> vagrant ssh master
 master> sudo /home/vagrant/config-one-env.sh
 ```
 
+* (Note) You will need to wait until the image is READY to be used.
+  * in "Virtual Resource" Tab -> "Images" Tab
+
 ## Login Web Console: http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
