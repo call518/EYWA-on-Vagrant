@@ -2,6 +2,7 @@
 
 su -l oneadmin -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
 echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
+
 #su -l oneadmin -c 'onehost create master -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-1 -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-2 -i kvm -v kvm -n ebtable'
@@ -16,10 +17,10 @@ oneimage create \
 --driver qcow2 \
 --datastore default
 
-while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
-do
-	sleep 60
-done
+#while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
+#do
+#	sleep 60
+#done
 
 onetemplate create \
 --name "CentOS-6.5_64" \
