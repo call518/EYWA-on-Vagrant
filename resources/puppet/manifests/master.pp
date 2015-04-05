@@ -89,15 +89,6 @@ file { "Export NFS":
     require => Package["nfs-kernel-server"],
 }
 
-#exec { "Set SSH authorized_keys":
-#    command  => "cp ${oneadmin_home}/.ssh/id_rsa.pub ${oneadmin_home}/.ssh/authorized_keys",
-#    cwd      => "${oneadmin_home}",
-#    user     => "oneadmin",
-#    timeout  => "0",
-#    logoutput => true,
-#    require  => File["Export NFS"],
-#}
-
 file { "Put .ssh DIR":
     path     => "${oneadmin_home}/.ssh",
     owner    => "oneadmin",
@@ -118,23 +109,6 @@ exec { "Permission Private SSH-key":
     logoutput => true,
     require  => File["Put .ssh DIR"],
 }
-
-#exec { "Upload .ssh DIR":
-#    command  => "rm -rf /vagrant/.ssh; cp -a ${oneadmin_home}/.ssh/ /vagrant/",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    require  => Exec["Permission Private SSH-key"],
-#}
-#
-#file { "Set SSH Client Options":
-#    path    => "${oneadmin_home}/.ssh/config",
-#    ensure  => present,
-#    owner   => "oneadmin",
-#    group   => "oneadmin",
-#    source  => "/vagrant/resources/puppet/files/one-ssh-config",
-#    require => Exec["Upload .ssh DIR"],
-#}
 
 file { "Config oned.conf":
     path    => "/etc/one/oned.conf",
