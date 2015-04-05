@@ -135,7 +135,7 @@ file { "Config Libvirt/QEMU":
 }
 
 exec { "Update Apparmor":
-    command  => "sed -e '/change_profile/a \ \ /usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd && service apparmor reload",
+    command  => "sed -i '/change_profile/a \ \ /usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd && service apparmor reload",
     user     => "root",
     timeout  => "0",
     logoutput => true,
