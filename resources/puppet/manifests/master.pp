@@ -154,7 +154,7 @@ exec { "Run config-one-env.sh":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Put config-one-env.sh"],
+    require  => File["Put config-one-env.sh"],
     #require  => Exec["Download Default-Image (centos6.5.qcow2.gz)"],
 }
 
