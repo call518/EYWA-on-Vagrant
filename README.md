@@ -12,3 +12,7 @@ EYWA PoC, on Vagrant Environment
 ## Architecture of EYWA
 
 ![Architecture](etc-files/architecture.png)
+
+## (Note)
+
+* VNC Console is not supported. Because of Port Forwarding (>5900, Random)
