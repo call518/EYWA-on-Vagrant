@@ -28,8 +28,9 @@ onetemplate create \
 --arch x86_64 \
 --disk "CentOS-6.5_64" \
 --nic "Test Network" \
---vnc \
---ssh /var/lib/one/.ssh/id_rsa.pub
+--context DNS=8.8.8.8 \
+--ssh /var/lib/one/.ssh/id_rsa.pub \
+--vnc
 
 EOF
 
