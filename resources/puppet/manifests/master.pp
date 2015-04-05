@@ -12,13 +12,11 @@ package { "nfs-kernel-server":
 }
 
 package { "opennebula":
-    #ensure   => installed,
-    ensure   => "4.6.2-1",
+    ensure   => installed,
 }
 
 package { "opennebula-sunstone":
-    #ensure   => installed,
-    ensure   => "4.6.2-1",
+    ensure   => installed,
 }
 
 package { "mysql-server":
@@ -84,6 +82,7 @@ file { "Export NFS":
     ensure  => present,
     owner   => "root",
     group   => "root",
+    mode    => 0644,
     source  => "/vagrant/resources/puppet/files/nfs-exports",
     notify  => Service["nfs-kernel-server"],
     require => Package["nfs-kernel-server"],
@@ -121,40 +120,20 @@ file { "Config oned.conf":
     require => [Exec["Create opennebula Database"], Exec["Permission Private SSH-key"]],
 }
 
-exec { "Restart Service - OpenNebula":
-    command  => "service opennebula restart",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    require  => File["Config oned.conf"],
-}
-
 file { "Put config-one-env.sh":
     path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
     owner   => "root",
     group   => "root",
-    mode    => 0700,
+    mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => Exec["Restart Service - OpenNebula"],
+    require  => File["Config oned.conf"],
 }
 
-#$default_image_path = "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz"
-#exec { "Download Default-Image (centos6.5.qcow2.gz)":
-#    command  => "wget \"${default_image_path}\" -O /tmp/default-image.qcow2.gz",
+#exec { "Run config-one-env.sh":
+#    command  => "/home/vagrant/config-one-env.sh",
 #    user     => "root",
 #    timeout  => "0",
-#    #logoutput => true,
+#    logoutput => true,
 #    require  => File["Put config-one-env.sh"],
 #}
-
-exec { "Run config-one-env.sh":
-    command  => "dos2unix /home/vagrant/config-one-env.sh && bash /home/vagrant/config-one-env.sh",
-    cwd      => "/home/vagrant",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    require  => File["Put config-one-env.sh"],
-    #require  => Exec["Download Default-Image (centos6.5.qcow2.gz)"],
-}
-

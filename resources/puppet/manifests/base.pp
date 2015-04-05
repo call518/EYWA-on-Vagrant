@@ -22,10 +22,10 @@ exec { "Apt-get Update":
 #    require => Exec["Apt-get Update"],
 #}
 
-package { "dos2unix":
-    ensure   => installed,
-    require => Exec["Apt-get Update"],
-}
+#package { "dos2unix":
+#    ensure   => installed,
+#    require => Exec["Apt-get Update"],
+#}
 
 #package { "expect":
 #    ensure   => installed,

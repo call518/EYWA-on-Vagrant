@@ -24,21 +24,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "master" do |master|
     my_ip = "#{master_ip}"
     master.vm.hostname = "master"
-    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
+    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
+    master.vm.network "forwarded_port", guest: 5900, host: 5900
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
     master.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
-    master.vm.provision "shell", inline: <<-SCRIPT
-      if test ! -f /root/.created-routing; then
-        ip link set mtu 1600 eth1
-        iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
-        touch /root/.created-routing
-      fi
-    SCRIPT
     master.vm.provision "puppet" do |puppet|
       puppet.working_directory = "/vagrant/resources/puppet"
       puppet.hiera_config_path = "resources/puppet/hiera.yaml"
@@ -79,7 +73,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  num_slave_nodes = 1 ## (WARNING) Max:2, and sync with hiera file -> "resources/puppet/hieradata/hosts.json"
+  #num_slave_nodes = 2 ## (WARNING) Sync with hiera file -> "resources/puppet/hieradata/hosts.json"
+  num_slave_nodes = 1 ## (WARNING) Sync with hiera file -> "resources/puppet/hieradata/hosts.json"
   slave_ip_base = "192.168.33."
   slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+12}" }
   
@@ -88,20 +83,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       slave_ip = slave_ips[n]
       my_ip = "#{slave_ip}"
       slave.vm.hostname = "slave-#{n+1}"
-      slave.vm.network "private_network", ip: "#{slave_ip}", virtualbox__intnet: true
+      slave.vm.network "private_network", ip: "#{slave_ip}"
       slave.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--cpus", "2"]
         vb.customize ["modifyvm", :id, "--memory", "2048"]
       end
       slave.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
       slave.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
-      slave.vm.provision "shell", inline: <<-SCRIPT
-        if test ! -f /root/.created-routing; then
-          ip link set mtu 1600 eth1
-          iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
-          touch /root/.created-routing
-        fi
-      SCRIPT
       slave.vm.provision "puppet" do |puppet|
         puppet.working_directory = "/vagrant/resources/puppet"
         puppet.hiera_config_path = "resources/puppet/hiera.yaml"

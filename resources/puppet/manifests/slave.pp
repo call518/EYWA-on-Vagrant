@@ -12,8 +12,7 @@ package { "nfs-common":
 }
 
 package { "opennebula-node":
-    #ensure   => installed,
-    ensure   => "4.6.2-1",
+    ensure   => installed,
 }
 
 package { "bridge-utils":
@@ -135,7 +134,7 @@ file { "Config Libvirt/QEMU":
 }
 
 exec { "Update Apparmor":
-    command  => "sed -i '/change_profile/a \ \ /usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd && service apparmor reload",
+    command  => "sed -i '/change_profile/a \\  /usr/libexec/libvirt_iohelper Uxr,' /etc/apparmor.d/usr.sbin.libvirtd && service apparmor reload",
     user     => "root",
     timeout  => "0",
     logoutput => true,

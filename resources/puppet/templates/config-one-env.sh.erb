@@ -1,44 +1,44 @@
 #!/bin/bash
 
-#su -l oneadmin -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
-#echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
+ip addr add 192.168.33.1/24 dev br0
+
+su -l oneadmin -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
+echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
 
 #su -l oneadmin -c 'onehost create master -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-1 -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-2 -i kvm -v kvm -n ebtable'
 
-#su -l oneadmin << EOF
-#
-#onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
-#
-##default_image_path="http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz"
-#default_image_path="/tmp/default-image.qcow2.gz"
-#
-#oneimage create \
-#--name "CentOS-6.5_64" \
-#--path $default_image_path \
-#--driver qcow2 \
-#--datastore default
-#
-##while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
-##do
-##	sleep 60
-##done
-#
-#onetemplate create \
-#--name "CentOS-6.5_64" \
-#--cpu 1 \
-#--vcpu 1 \
-#--memory 512 \
-#--arch x86_64 \
-#--disk "CentOS-6.5_64" \
-#--nic "Test Network" \
-#--context DNS=8.8.8.8 \
-#--ssh /var/lib/one/.ssh/id_rsa.pub \
-#--vnc
-#
-#EOF
+su -l oneadmin << EOF
 
-#service opennebula restart
+onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
+
+oneimage create \
+--name "CentOS-6.5_64" \
+--path "/vagrant/images/centos6.5.qcow2.gz" \
+--driver qcow2 \
+--datastore default
+
+#while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
+#do
+#	sleep 60
+#done
+
+onetemplate create \
+--name "CentOS-6.5_64" \
+--cpu 1 \
+--vcpu 1 \
+--memory 512 \
+--arch x86_64 \
+--disk "CentOS-6.5_64" \
+--nic "Test Network" \
+--context DNS=8.8.8.8 \
+--ssh /var/lib/one/.ssh/id_rsa.pub \
+--vnc
+
+EOF
+
+service opennebula restart
+service opennebula-sunstone restart
 
 exit 0

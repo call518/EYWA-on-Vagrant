@@ -2,11 +2,20 @@
 
 EYWA PoC, on Vagrant Environment
 
-# Intro
+# Dashboard
 
-## Summary
+![Dashboard](etc-files/dashboard.png)
 
-* Web Console: http://{Host-IP}:9869
+# Prepair OpenNebula Env.
+
+## Post-Installation
+
+```bash
+host> vagrant ssh master
+master> sudo /home/vagrant/config-one-env.sh
+```
+
+## Login Web Console: http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
 ## Architecture of EYWA
