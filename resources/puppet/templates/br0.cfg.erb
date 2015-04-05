@@ -8,4 +8,6 @@ iface br0 inet static
         bridge_maxage 12
         bridge_stp off
 	post-up ip addr add 192.168.33.1/24 dev $IFACE
+	post-up iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
 	pre-down ip addr del 192.168.33.1/24 dev $IFACE
+	pre-down iptables -t nat -D POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE

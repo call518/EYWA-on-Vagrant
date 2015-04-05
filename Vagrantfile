@@ -33,11 +33,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
     master.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
     master.vm.provision "shell", inline: <<-SCRIPT
-      if test ! -f /root/.created-routing; then
-        ip link set mtu 1600 eth1
-        iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
-        touch /root/.created-routing
-      fi
+      #if test ! -f /root/.created-routing; then
+      #  ip link set mtu 1600 eth1
+      #  iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+      #  touch /root/.created-routing
+      #fi
     SCRIPT
     master.vm.provision "puppet" do |puppet|
       puppet.working_directory = "/vagrant/resources/puppet"
@@ -96,11 +96,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       slave.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
       slave.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
       slave.vm.provision "shell", inline: <<-SCRIPT
-        if test ! -f /root/.created-routing; then
-          ip link set mtu 1600 eth1
-          iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
-          touch /root/.created-routing
-        fi
+        #if test ! -f /root/.created-routing; then
+        #  ip link set mtu 1600 eth1
+        #  iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
+        #  touch /root/.created-routing
+        #fi
       SCRIPT
       slave.vm.provision "puppet" do |puppet|
         puppet.working_directory = "/vagrant/resources/puppet"
