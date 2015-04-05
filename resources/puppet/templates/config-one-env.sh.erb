@@ -16,7 +16,7 @@ oneimage create \
 --driver qcow2 \
 --datastore default
 
-while oneimage list | grep 'CentOS-6.5_64' | grep -q READY
+while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
 do
 	sleep 60
 done
@@ -34,5 +34,8 @@ onetemplate create \
 --vnc
 
 EOF
+
+echo "========== Restart OpenNebula Service(oned) =========="
+service opennebula restart
 
 exit 0

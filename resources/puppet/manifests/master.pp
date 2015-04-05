@@ -176,11 +176,3 @@ exec { "Run config-one-env.sh":
     require  => Exec["Download Default-Image (centos6.5.qcow2.gz)"],
 }
 
-exec { "Force Restart Servuce: OpenNebula":
-    command  => "service opennebula restart",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    require  => Exec["Run config-one-env.sh"],
-}
-
