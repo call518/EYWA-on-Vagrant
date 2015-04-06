@@ -10,13 +10,24 @@ EYWA PoC, OpenNebula on Vagrant Environment
 
 ## Post-Installation
 
+### Build Master Node (Front-end)
+
 ```bash
+host> vagrant up master
 host> vagrant ssh master
 master> sudo /home/vagrant/config-one-env.sh
 ```
 
-* (Note) You will need to wait until the image is READY to be used.
-  * in "Virtual Resource" Tab -> "Images" Tab
+### Build Slave Node
+
+```bash
+host> vagrant up slave-1
+```
+
+### (Note)
+
+* You will need to wait until the image is READY to be used.
+* Where is...., in "Virtual Resource" Tab -> "Images" Tab
 
 ## Login Web Console: http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
