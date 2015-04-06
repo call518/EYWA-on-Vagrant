@@ -190,7 +190,7 @@ package { "expect":
     ensure   => installed,
 }
 
-file { "Put .vnc DIR":
+file { "Put /root/.vnc DIR":
     path     => "/root/.vnc",
     owner    => "root",
     group    => "root",
@@ -208,7 +208,7 @@ file { "Put /tmp/vnc-passwd.txt":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/vnc-passwd.txt.erb"),
-    require  => File["Put .vnc DIR"],
+    require  => File["Put /root/.vnc DIR"],
 }
 
 exec { "Set vncpasswd for root":
@@ -250,13 +250,24 @@ exec { "Add Service - vncserver":
     require  => File["Put vncserver Init-Script"],
 }
 
+file { "Put /root/.config/nautilus DIR":
+    path     => "/root/.config/nautilus",
+    owner    => "root",
+    group    => "root",
+    mode     => 0755,
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => Exec["Add Service - vncserver"],
+}
+
 exec { "Start vncserver Service":
     command  => "service vncserver start",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "lsof -ni:5900",
-    require  => Exec["Add Service - vncserver"],
+    require  => File["Put /root/.config/nautilus DIR"],
 }
 
 ####################################################
