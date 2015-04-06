@@ -163,7 +163,7 @@ exec { "Run set-oneadmin-pw.sh":
 
 ########## Set VNC Server ##########################
 
-exec { "Install ubuntu-desktop":
+exec { "Install GNOME Desktop":
     provider => shell,
     environment => ["DEBIAN_FRONTEND=noninteractive"],
     #command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install ubuntu-desktop ubuntu-gnome-desktop",
@@ -189,7 +189,7 @@ file { "Put .vnc DIR":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    require  => [Exec["Install ubuntu-desktop"], Package["vnc4server"], Package["expect"]],
+    require  => [Exec["Install GNOME Desktop"], Package["vnc4server"], Package["expect"]],
 }
 
 file { "Put /tmp/vnc-passwd.txt":
