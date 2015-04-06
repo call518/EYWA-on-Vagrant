@@ -4,7 +4,7 @@ OpenNebula on Vagrant Environment
 
 # Dashboard
 
-![Dashboard](etc-files/dashboard.png)
+![Dashboard](etc-files/Dashboard.png)
 
 # Prepair OpenNebula Env.
 
