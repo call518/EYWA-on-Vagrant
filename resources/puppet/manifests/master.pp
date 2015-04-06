@@ -15,6 +15,11 @@ package { "opennebula":
     ensure   => installed,
 }
 
+package { "virt-manager":
+    ensure   => installed,
+    require  => Package["opennebula"],
+}
+
 package { "opennebula-sunstone":
     ensure   => installed,
 }
@@ -120,6 +125,14 @@ file { "Config oned.conf":
     require => [Exec["Create opennebula Database"], Exec["Permission Private SSH-key"]],
 }
 
+exec { "Restart OpenNebula Service":
+    command  => "service opennebula restart",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Config oned.conf"],
+}
+
 file { "Put config-one-env.sh":
     path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
@@ -127,13 +140,114 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => File["Config oned.conf"],
+    require  => Exec["Restart OpenNebula Service"],
 }
 
-#exec { "Run config-one-env.sh":
-#    command  => "/home/vagrant/config-one-env.sh",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    require  => File["Put config-one-env.sh"],
-#}
+file { "Put set-oneadmin-pw.sh":
+    path    => "/home/vagrant/set-oneadmin-pw.sh",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0744,
+    content => template("/vagrant/resources/puppet/templates/set-oneadmin-pw.sh.erb"),
+    require  => File["Put config-one-env.sh"],
+}
+
+exec { "Run set-oneadmin-pw.sh":
+    command  => "/home/vagrant/set-oneadmin-pw.sh",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put set-oneadmin-pw.sh"],
+}
+
+########## Set VNC Server ##########################
+
+exec { "Install ubuntu-desktop":
+    provider => shell,
+    environment => ["DEBIAN_FRONTEND=noninteractive"],
+    #command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install ubuntu-desktop ubuntu-gnome-desktop",
+    command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install ubuntu-gnome-desktop",
+    user     => "root",
+    timeout  => "0",
+    #logoutput => true,
+}
+
+package { "vnc4server":
+    ensure   => installed,
+}
+
+package { "expect":
+    ensure   => installed,
+}
+
+file { "Put .vnc DIR":
+    path     => "/root/.vnc",
+    owner    => "root",
+    group    => "root",
+    mode     => 0755,
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => [Exec["Install ubuntu-desktop"], Package["vnc4server"], Package["expect"]],
+}
+
+file { "Put /tmp/vnc-passwd.txt":
+    path    => "/tmp/vnc-passwd.txt",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/vnc-passwd.txt.erb"),
+    require  => File["Put .vnc DIR"],
+}
+
+exec { "Set vncpasswd for root":
+    provider => shell,
+    command  => "vncpasswd /root/.vnc/passwd < /tmp/vnc-passwd.txt && chmod 600 /root/.vnc/passwd && rm /tmp/vnc-passwd.txt",
+    creates  => "/root/.vnc/passwd",
+    cwd      => "/root",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put /tmp/vnc-passwd.txt"],
+}
+
+file { "Put VNC xstartup":
+    path    => "/root/.vnc/xstartup",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0744,
+    source => "/vagrant/resources/puppet/files/vnc-xstartup",
+    require  => Exec["Set vncpasswd for root"],
+}
+
+file { "Put vncserver Init-Script":
+    path    => "/etc/init.d/vncserver",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    content => template("/vagrant/resources/puppet/templates/init-vncserver.erb"),
+    require  => File["Put VNC xstartup"],
+}
+
+exec { "Add Service - vncserver":
+    command  => "update-rc.d vncserver defaults",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put vncserver Init-Script"],
+}
+
+exec { "Start vncserver Service":
+    command  => "service vncserver start",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "lsof -ni:5900",
+    require  => Exec["Add Service - vncserver"],
+}
+
+####################################################

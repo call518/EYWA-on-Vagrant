@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo " === Change Password ==== "
+su -l oneadmin -c 'oneuser passwd oneadmin <%= @oneadmin_pw %>'
+echo 'oneadmin:<%= @oneadmin_pw %>' > /var/lib/one/.one/one_auth
