@@ -26,6 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.hostname = "master"
     master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
+    master.vm.network "forwarded_port", guest: 5900, host: 5900
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
