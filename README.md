@@ -24,12 +24,21 @@ master> sudo /home/vagrant/config-one-env.sh
 host> vagrant up slave-1
 ```
 
+### Using Desktop VNC
+
+* in VNC Client
+
+```
+VNC Address: {Host-IP}:5900
+```
+
 ### (Note)
 
 * You will need to wait until the image is READY to be used.
 * Where is...., in "Virtual Resource" Tab -> "Images" Tab
 
-## Login Web Console: http://{Host-IP}:9869
+## Login Web Console
+  * http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
 ## Architecture of EYWA
