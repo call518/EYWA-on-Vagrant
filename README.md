@@ -47,10 +47,14 @@ VNC Address: {Host-IP}:5900
   * http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
-## Architecture of EYWA
-
-![Architecture](etc-files/Architecture.png)
-
 ## (Note)
 
 * VNC Console is not supported. Because of Port Forwarding (>5900, Random)
+
+# EYWA Architecture
+
+![Architecture](etc-files/Architecture.png)
+
+# Detail
+
+## (TODO)
