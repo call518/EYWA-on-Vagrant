@@ -18,6 +18,12 @@ host> vagrant ssh master
 master> sudo /home/vagrant/config-one-env.sh
 ```
 
+#### config-one-env.sh
+
+* Create Virtual-Network
+* Create Image (CentOS 6.5 x86_64)
+* Create Template (CentOS-6.5_64)
+
 ### Build Slave Node
 
 ```bash
@@ -26,7 +32,7 @@ host> vagrant up slave-1
 
 ### Using Desktop VNC
 
-* in VNC Client
+* Connecting /w VNC
 
 ```
 VNC Address: {Host-IP}:5900
@@ -37,7 +43,7 @@ VNC Address: {Host-IP}:5900
 * You will need to wait until the image is READY to be used.
 * Where is...., in "Virtual Resource" Tab -> "Images" Tab
 
-## Login Web Console
+## Login Web-UI
   * http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
