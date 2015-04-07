@@ -28,17 +28,6 @@ package { "vnc4server":
     ensure   => installed,
 }
 
-file { "Put /root/.vnc DIR":
-    path     => "/root/.vnc",
-    owner    => "root",
-    group    => "root",
-    mode     => 0755,
-    ensure   => directory,
-    replace  => true,
-    recurse  => true,
-    require  => [Exec["Install GNOME Desktop (2)"], Package["vnc4server"]],
-}
-
 file { "Put /tmp/vnc-passwd.txt":
     path    => "/tmp/vnc-passwd.txt",
     ensure  => present,
@@ -46,7 +35,29 @@ file { "Put /tmp/vnc-passwd.txt":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/vnc-passwd.txt.erb"),
-    require  => File["Put /root/.vnc DIR"],
+    require  => Exec["Install GNOME Desktop (2)"],
+}
+
+exec { "Create DIR - /root/.vnc":
+    provider => shell,
+    command  => "mkdir /root/.vnc",
+    creates  => "/root/.vnc",
+    cwd      => "/root",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put /tmp/vnc-passwd.txt"],
+}
+
+exec { "Create DIR - /root/.config/nautilus":
+    provider => shell,
+    command  => "mkdir -p /root/.config/nautilus",
+    creates  => "/root/.config/nautilus",
+    cwd      => "/root",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Create DIR - /root/.vnc"],
 }
 
 exec { "Set vncpasswd for root":
@@ -57,7 +68,7 @@ exec { "Set vncpasswd for root":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => File["Put /tmp/vnc-passwd.txt"],
+    require  => Exec["Create DIR - /root/.config/nautilus"],
 }
 
 file { "Put VNC xstartup":

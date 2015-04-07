@@ -8,9 +8,9 @@
 #su -l oneadmin -c 'onehost create slave-1 -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-2 -i kvm -v kvm -n ebtable'
 
-#echo " === Restart OpenNebula Service ==== "
-#service opennebula restart
-#service opennebula-sunstone restart
+echo " === Restart OpenNebula Service ==== "
+service opennebula restart
+service opennebula-sunstone restart
 
 echo " === Build Test Image/Template/Network ==== "
 su -l oneadmin << EOF
