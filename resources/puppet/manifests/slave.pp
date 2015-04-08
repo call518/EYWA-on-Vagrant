@@ -81,7 +81,7 @@ exec { "Enable br0":
 }
 
 exec { "Static ARP Table for br0":
-    command  => "arp -d 192.168.33.1; apr -s 192.168.33.1 ${pub_gw_mac_std}",
+    command  => "arp -d 192.168.33.1; apr -s 192.168.33.1 ${pub_gw_mac_std}; exit 0",
     user     => "root",
     timeout  => "0",
     logoutput => true,
