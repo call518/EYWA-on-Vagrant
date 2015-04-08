@@ -14,5 +14,7 @@ gnome-settings-daemon &
 metacity &
 nautilus -n &
 
+gconftool-2 -t str -s /apps/metacity/global_keybindings/show_desktop ""
+
 #gnome-terminal &
 virt-manager &
