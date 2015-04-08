@@ -80,22 +80,14 @@ exec { "Enable br0":
     require  => File["Set br0.cfg"],
 }
 
-exec { "Static ARP Table for br0":
-    command  => "arp -d 192.168.33.1; apr -s 192.168.33.1 ${pub_gw_mac_std}; exit 0",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    unless   => "ifconfig br0 2> /dev/null | grep -q UP",
-    require  => Exec["Enable br0"],
-}
-
 exec { "Disable virbr0":
     command  => "sleep 10; virsh net-destroy default && virsh net-autostart default --disable",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     onlyif   => "ifconfig virbr0 2> /dev/null > /dev/null",
-    require  => Exec["Static ARP Table for br0"],
+    #require  => Exec["Static ARP Table for br0"],
+    require  => Exec["Enable br0"],
 }
 
 if $hostname =~ /^slave-[0-9]+/ {
