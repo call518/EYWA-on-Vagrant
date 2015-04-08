@@ -15,6 +15,11 @@ package { "opennebula-node":
     ensure   => installed,
 }
 
+package { "qemu-system":
+    ensure   => installed,
+    require  => Package["opennebula-node"],
+}
+
 package { "bridge-utils":
     ensure   => installed,
 }
@@ -22,7 +27,7 @@ package { "bridge-utils":
 service { "libvirt-bin":
     ensure  => "running",
     enable  => "true",
-    require => Package["opennebula-node"],
+    require => [Package["opennebula-node"], Package["qemu-system"]],
 }
 
 file { "Set eth1.cfg":
@@ -44,26 +49,14 @@ exec { "Enable eth1":
     require  => File["Set eth1.cfg"],
 }
 
-if $hostname =~ /^master/ {
-  file { "Set br0.cfg":
-      path    => "/etc/network/interfaces.d/br0.cfg",
-      ensure  => present,
-      owner   => "root",
-      group   => "root",
-      mode    => 0644,
-      content => template("/vagrant/resources/puppet/templates/br0-master.cfg.erb"),
-      require => Exec["Enable eth1"],
-  }
-} else {
-  file { "Set br0.cfg":
-      path    => "/etc/network/interfaces.d/br0.cfg",
-      ensure  => present,
-      owner   => "root",
-      group   => "root",
-      mode    => 0644,
-      content => template("/vagrant/resources/puppet/templates/br0-slave.cfg.erb"),
-      require => Exec["Enable eth1"],
-  }
+file { "Set br0.cfg":
+    path    => "/etc/network/interfaces.d/br0.cfg",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/br0.cfg.erb"),
+    require => Exec["Enable eth1"],
 }
 
 exec { "Enable br0":

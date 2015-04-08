@@ -32,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+      #vb.customize ["modifyvm", :id, "--natdnsproxy2", "on"]
     end
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
     master.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
@@ -107,6 +108,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--cpus", "2"]
         vb.customize ["modifyvm", :id, "--memory", "2048"]
         vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+        #vb.customize ["modifyvm", :id, "--natdnsproxy2", "on"]
       end
       slave.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
       slave.vm.provision "shell", path: "resources/puppet/scripts/bootstrap.sh"
