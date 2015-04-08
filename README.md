@@ -37,7 +37,7 @@ host> vagrant up slave-1
 * Connecting /w VNC
 
 ```
-VNC Address: {Host-IP}:5900
+VNC Address: {Host-IP}:55900
 ```
 
 ## To Launch VM
