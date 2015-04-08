@@ -51,4 +51,4 @@ VNC Address: {Host-IP}:55900
 
 ## (Note)
 
-* OpenNebula's VNC Console is not supported. Because of Port Forwarding (>5900, Random)
+* OpenNebula's VNC Console is not supported. Because of Port Forwarding (>5900, Dynamic)
