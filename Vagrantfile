@@ -18,8 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   sustone_listen_addr = "0.0.0.0"
   sustone_listen_port = "9869"
 
-  pub_gw_mac = "021c2ac0a82101"
-  pub_gw_mac_std = "02:1c:2a:c0:a8:21:01"
+  pub_gw_mac = "080027f92954"
+  pub_gw_mac_std = "08:00:27:f9:29:54"
 
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28F8F701DC29E4B9!247&authkey=!AC-zzAlAl6UhvGo&ithint=file%2cbox"
@@ -147,6 +147,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.facter = {
           "master_ip" => "#{master_ip}",
           "my_ip" => "#{my_ip}",
+          "pub_gw_mac_std" => "#{pub_gw_mac}",
           "pub_gw_mac_std" => "#{pub_gw_mac_std}",
         }
         puppet.options = "--verbose"
