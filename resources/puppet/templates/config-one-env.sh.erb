@@ -12,11 +12,15 @@ echo " === Restart OpenNebula Service ==== "
 service opennebula restart
 service opennebula-sunstone restart
 
-echo " === Build Test Image/Template/Network ==== "
+echo " === Build Test Network/Image/Template ==== "
 su -l oneadmin << EOF
 
+echo
+echo " === Createing Network ==== "
 onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
 
+echo
+echo " === Createing Image ==== "
 oneimage create \
 --name "CentOS-6.5_64" \
 --path "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" \
@@ -28,6 +32,8 @@ oneimage create \
 #	sleep 60
 #done
 
+echo
+echo " === Createing Template ==== "
 onetemplate create \
 --name "CentOS-6.5_64" \
 --cpu 1 \
