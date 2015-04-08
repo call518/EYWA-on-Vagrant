@@ -28,13 +28,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     my_ip = "#{master_ip}"
     master.vm.hostname = "master"
     #master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
-    master.vm.network "private_network", ip: "#{master_ip}", :mac => "#{pub_gw_mac}", auto_config: false
+    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
     master.vm.network "forwarded_port", guest: 55900, host: 55900
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+      vb.customize ["modifyvm", :id, "--macaddress2", "#{pub_gw_mac}"]
       #vb.customize ["modifyvm", :id, "--natdnsproxy2", "on"]
     end
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
