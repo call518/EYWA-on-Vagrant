@@ -49,14 +49,26 @@ exec { "Enable eth1":
     require  => File["Set eth1.cfg"],
 }
 
-file { "Set br0.cfg":
-    path    => "/etc/network/interfaces.d/br0.cfg",
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0644,
-    content => template("/vagrant/resources/puppet/templates/br0.cfg.erb"),
-    require => Exec["Enable eth1"],
+if $hostname =~ /^master/ {
+  file { "Set br0.cfg":
+      path    => "/etc/network/interfaces.d/br0.cfg",
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      content => template("/vagrant/resources/puppet/templates/br0-master.cfg.erb"),
+      require => Exec["Enable eth1"],
+  }
+} else {
+  file { "Set br0.cfg":
+      path    => "/etc/network/interfaces.d/br0.cfg",
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0644,
+      content => template("/vagrant/resources/puppet/templates/br0-slave.cfg.erb"),
+      require => Exec["Enable eth1"],
+  }
 }
 
 exec { "Enable br0":
@@ -68,13 +80,22 @@ exec { "Enable br0":
     require  => File["Set br0.cfg"],
 }
 
+exec { "Static ARP Table for br0":
+    command  => "arp -d 192.168.33.1; apr -s 192.168.33.1 ${pub_gw_mac_std}",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "ifconfig br0 2> /dev/null | grep -q UP",
+    require  => Exec["Enable br0"],
+}
+
 exec { "Disable virbr0":
     command  => "sleep 10; virsh net-destroy default && virsh net-autostart default --disable",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     onlyif   => "ifconfig virbr0 2> /dev/null > /dev/null",
-    require  => Exec["Enable br0"],
+    require  => Exec["Static ARP Table for br0"],
 }
 
 if $hostname =~ /^slave-[0-9]+/ {

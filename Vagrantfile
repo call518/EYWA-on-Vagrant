@@ -18,6 +18,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   sustone_listen_addr = "0.0.0.0"
   sustone_listen_port = "9869"
 
+  pub_gw_mac = "021c2ac0a82101"
+  pub_gw_mac_std = "02:1c:2a:c0:a8:21:01"
+
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28F8F701DC29E4B9!247&authkey=!AC-zzAlAl6UhvGo&ithint=file%2cbox"
 
@@ -25,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     my_ip = "#{master_ip}"
     master.vm.hostname = "master"
     #master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
-    master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
+    master.vm.network "private_network", ip: "#{master_ip}", :mac => "#{pub_gw_mac}", auto_config: false
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
     master.vm.network "forwarded_port", guest: 55900, host: 55900
     master.vm.provider :virtualbox do |vb|
@@ -78,6 +81,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.facter = {
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
+        "pub_gw_mac" => "#{pub_gw_mac}",
+        "pub_gw_mac_std" => "#{pub_gw_mac_std}",
       }
       puppet.options = "--verbose"
     end
@@ -141,6 +146,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.facter = {
           "master_ip" => "#{master_ip}",
           "my_ip" => "#{my_ip}",
+          "pub_gw_mac_std" => "#{pub_gw_mac_std}",
         }
         puppet.options = "--verbose"
       end
