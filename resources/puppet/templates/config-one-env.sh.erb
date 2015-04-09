@@ -8,22 +8,20 @@
 #su -l oneadmin -c 'onehost create slave-1 -i kvm -v kvm -n ebtable'
 #su -l oneadmin -c 'onehost create slave-2 -i kvm -v kvm -n ebtable'
 
-echo " === Restart OpenNebula Service ==== "
+echo " ========== Restart OpenNebula Service ==== "
 service opennebula restart
 service opennebula-sunstone restart
 
+echo " ========== Download Test VM Image ======== "
+wget "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" -O /usr/local/src/centos6.5.qcow2.gz
+
 echo " === Build Test Network/Image/Template ==== "
 su -l oneadmin << EOF
-
-echo
-echo " === Createing Network ==== "
 onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
 
-echo
-echo " === Createing Image ==== "
 oneimage create \
 --name "CentOS-6.5_64" \
---path "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" \
+--path "/usr/local/src/centos6.5.qcow2.gz" \
 --driver qcow2 \
 --datastore default
 
@@ -32,8 +30,6 @@ oneimage create \
 #	sleep 60
 #done
 
-echo
-echo " === Createing Template ==== "
 onetemplate create \
 --name "CentOS-6.5_64" \
 --cpu 1 \
@@ -45,11 +41,12 @@ onetemplate create \
 --context DNS=8.8.8.8 \
 --ssh /var/lib/one/.ssh/id_rsa.pub \
 --vnc
-
 EOF
 
 echo
-echo " === Completed !!! ==== "
+echo " ========================================== "
+echo " ============= Completed !!! ============== "
+echo " ========================================== "
 echo
 
 exit 0
