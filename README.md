@@ -53,6 +53,14 @@ VNC Address: {Vagrant-Host-IP}:55900
 * in Web-UI, "Virtual Resource" Tab, and "Vritual Machines" Tab
 * Click "+" button
 
+### SSH Connect to VM
+
+```
+on master or slave-{n}
+
+ssh -i /var/lib/one/.ssh/id_rsa root@{vm_ip_address}
+```
+
 ## APPENDIX
 
 * OpenNebula's VNC Console is not supported. Because of Port Forwarding (>5900, Dynamic)
