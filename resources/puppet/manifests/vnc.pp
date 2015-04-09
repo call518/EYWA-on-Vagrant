@@ -35,7 +35,7 @@ file { "Put /tmp/vnc-passwd.txt":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/vnc-passwd.txt.erb"),
-    require  => Exec["Install GNOME Desktop (2)"],
+    require  => [Exec["Install GNOME Desktop (2)"], Package["vnc4server"]],
 }
 
 exec { "Create DIR - /root/.vnc":

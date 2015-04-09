@@ -18,7 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   sustone_listen_addr = "0.0.0.0"
   sustone_listen_port = "9869"
 
-  pub_gw_mac = "080027f92954"
+  #pub_gw_mac = "080027f92954"
+  pub_gw_mac = "080000000001"
 
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28F8F701DC29E4B9!247&authkey=!AC-zzAlAl6UhvGo&ithint=file%2cbox"
