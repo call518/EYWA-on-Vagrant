@@ -133,16 +133,6 @@ exec { "Restart OpenNebula Service":
     require  => File["Config oned.conf"],
 }
 
-file { "Put config-one-env.sh":
-    path    => "/home/vagrant/config-one-env.sh",
-    ensure  => present,
-    owner   => "root",
-    group   => "root",
-    mode    => 0744,
-    content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => Exec["Restart OpenNebula Service"],
-}
-
 file { "Put set-oneadmin-pw.sh":
     path    => "/home/vagrant/set-oneadmin-pw.sh",
     ensure  => present,
@@ -150,7 +140,7 @@ file { "Put set-oneadmin-pw.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/set-oneadmin-pw.sh.erb"),
-    require  => File["Put config-one-env.sh"],
+    require  => Exec["Restart OpenNebula Service"],
 }
 
 exec { "Run set-oneadmin-pw.sh":
@@ -159,5 +149,31 @@ exec { "Run set-oneadmin-pw.sh":
     timeout  => "0",
     logoutput => true,
     require  => File["Put set-oneadmin-pw.sh"],
+}
+
+exec { "Download centos6.5.qcow2.gz":
+    command  => "wget http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz -O /usr/local/src/centos6.5.qcow2.gz",
+    user     => "root",
+    timeout  => "0",
+    #logoutput => true,
+    require  => Exec["Run set-oneadmin-pw.sh"],
+}
+
+file { "Put config-one-env.sh":
+    path    => "/home/vagrant/config-one-env.sh",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0744,
+    content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
+    require  => Exec["Download centos6.5.qcow2.gz"],
+}
+
+exec { "Run config-one-env.sh":
+    command  => "/home/vagrant/config-one-env.sh",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put config-one-env.sh"],
 }
 
