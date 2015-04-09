@@ -136,8 +136,29 @@ if $hostname =~ /^slave-[0-9]+/ {
         logoutput => true,
 	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => File["Create DIR /var/lib/one/datastores"],
-        before   => File["Config Libvirt/QEMU"],
+        before   => File["Put .ssh DIR for root"],
     }
+}
+
+file { "Put .ssh DIR for root":
+    path     => "/root/.ssh",
+    owner    => "root",
+    group    => "root",
+    mode     => 0644,
+    source   => "/vagrant/resources/puppet/files/.ssh",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => Exec["Disable virbr0"],
+}
+
+exec { "Permission Private SSH-key for root":
+    command  => "chown root:root /root/.ssh/* && chmod 644 /root/.ssh/* && chmod 600 /root/.ssh/id_rsa",
+    cwd      => "/root",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put .ssh DIR for root"],
 }
 
 file { "Config Libvirt/QEMU":
@@ -148,7 +169,7 @@ file { "Config Libvirt/QEMU":
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/libvirt-qemu.conf.erb"),
     notify  => Service["libvirt-bin"],
-    require => Exec["Disable virbr0"],
+    require => Exec["Permission Private SSH-key for root"],
 }
 
 exec { "Update Apparmor":
