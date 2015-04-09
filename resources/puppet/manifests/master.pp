@@ -153,6 +153,7 @@ exec { "Run set-oneadmin-pw.sh":
 
 exec { "Download centos6.5.qcow2.gz":
     command  => "wget http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz -O /usr/local/src/centos6.5.qcow2.gz",
+    creates  => "/usr/local/src/centos6.5.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
