@@ -1,18 +1,22 @@
 #!/bin/sh
 
-[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
-[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
-
-export XKL_XMODMAP_DISABLE=1
-
-xsetroot -solid grey
-vncconfig -iconic &
-x-window-manager &
-
-gnome-panel &
-gnome-settings-daemon &
-metacity &
-nautilus -n &
+#[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+#[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+#
+#export XKL_XMODMAP_DISABLE=1
+#
+#xsetroot -solid grey
+#vncconfig -iconic &
+#x-window-manager &
+#
+#gnome-panel &
+#gnome-settings-daemon &
+#metacity &
+#nautilus -n &
 
 #gnome-terminal &
+
+xrdb $HOME/.Xresources
+startxfce4 &
+xfce4-terminal &
 virt-manager &

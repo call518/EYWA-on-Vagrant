@@ -5,23 +5,13 @@ include 'apt'
 ### Export Env: Global %PATH for "Exec"
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin" ] }
 
-exec { "Install GNOME Desktop (1)":
+exec { "Install Xfce4 Desktop":
     provider => shell,
     environment => ["DEBIAN_FRONTEND=noninteractive"],
-    command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install --no-install-recommends ubuntu-gnome-desktop",
+    command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install xfce4 xfce4-goodies",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
-}
-
-exec { "Install GNOME Desktop (2)":
-    provider => shell,
-    environment => ["DEBIAN_FRONTEND=noninteractive"],
-    command  => "apt-get -q -y --force-yes -o DPkg::Options::=--force-confold install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal",
-    user     => "root",
-    timeout  => "0",
-    #logoutput => true,
-    require  => Exec["Install GNOME Desktop (1)"],
 }
 
 package { "vnc4server":
@@ -35,7 +25,7 @@ file { "Put /tmp/vnc-passwd.txt":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/vnc-passwd.txt.erb"),
-    require  => [Exec["Install GNOME Desktop (2)"], Package["vnc4server"]],
+    require  => [Exec["Install Xfce4 Desktop"], Package["vnc4server"]],
 }
 
 exec { "Create DIR - /root/.vnc":
@@ -49,15 +39,27 @@ exec { "Create DIR - /root/.vnc":
     require  => File["Put /tmp/vnc-passwd.txt"],
 }
 
-exec { "Create DIR - /root/.config/nautilus":
+exec { "Create DIR - /root/.config":
     provider => shell,
-    command  => "mkdir -p /root/.config/nautilus",
-    creates  => "/root/.config/nautilus",
+    command  => "mkdir /root/.config",
+    creates  => "/root/.vnc",
     cwd      => "/root",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Create DIR - /root/.vnc"],
+    require  => File["Create DIR - /root/.vnc"],
+}
+
+file { "Put Xfce4 Config DIR":
+    path     => "/root/.config/xfce4",
+    ensure   => present,
+    owner    => "root",
+    group    => "root",
+    mode     => 0755,
+    replace  => true,
+    recurse  => true,
+    source   => "/vagrant/resources/puppet/files/root-xfce4",
+    require  => Exec["Create DIR - /root/.config"],
 }
 
 exec { "Set vncpasswd for root":
@@ -68,7 +70,7 @@ exec { "Set vncpasswd for root":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Create DIR - /root/.config/nautilus"],
+    require  => File["Put Xfce4 Config DIR"],
 }
 
 file { "Put VNC xstartup":
@@ -99,23 +101,12 @@ exec { "Add Service - vncserver":
     require  => File["Put vncserver Init-Script"],
 }
 
-file { "Put /root/.config/nautilus DIR":
-    path     => "/root/.config/nautilus",
-    owner    => "root",
-    group    => "root",
-    mode     => 0755,
-    ensure   => directory,
-    replace  => true,
-    recurse  => true,
-    require  => Exec["Add Service - vncserver"],
-}
-
 exec { "Start vncserver Service":
     command  => "service vncserver start",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "lsof -ni:5900",
-    require  => File["Put /root/.config/nautilus DIR"],
+    require  => Exec["Add Service - vncserver"],
 }
 

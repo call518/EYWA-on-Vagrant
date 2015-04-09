@@ -150,16 +150,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
         puppet.options = "--verbose"
       end
-      slave.vm.provision "puppet" do |puppet|
-        puppet.working_directory = "/vagrant/resources/puppet"
-        puppet.hiera_config_path = "resources/puppet/hiera.yaml"
-        puppet.manifests_path = "resources/puppet/manifests"
-        puppet.manifest_file  = "vnc.pp"
-        puppet.facter = {
-          "oneadmin_pw" => "#{oneadmin_pw}",
-        }
-        puppet.options = "--verbose"
-      end
+#      slave.vm.provision "puppet" do |puppet|
+#        puppet.working_directory = "/vagrant/resources/puppet"
+#        puppet.hiera_config_path = "resources/puppet/hiera.yaml"
+#        puppet.manifests_path = "resources/puppet/manifests"
+#        puppet.manifest_file  = "vnc.pp"
+#        puppet.facter = {
+#          "oneadmin_pw" => "#{oneadmin_pw}",
+#        }
+#        puppet.options = "--verbose"
+#      end
     end
   end
 end
