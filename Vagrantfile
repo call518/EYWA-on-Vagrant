@@ -98,7 +98,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  num_slave_nodes = 1 ## (WARNING) Max:2, and sync with hiera file -> "resources/puppet/hieradata/hosts.json"
+  num_slave_nodes = 2 ## (WARNING) Max:2, and sync with hiera file -> "resources/puppet/hieradata/hosts.json"
   slave_ip_base = "192.168.33."
   slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+12}" }
   
