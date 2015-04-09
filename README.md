@@ -49,7 +49,6 @@ VNC Address: {Vagrant-Host-IP}:55900
 
 ### Create Test VM
 
-* (Note) You will need to wait until the image is READY to be used. (Where is...., in "Virtual Resource" Tab -> "Images" Tab)
 * in Web-UI, "Virtual Resource" Tab, and "Vritual Machines" Tab
 * Click "+" button
 
