@@ -18,8 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   sustone_listen_addr = "0.0.0.0"
   sustone_listen_port = "9869"
 
-  #pub_gw_mac = "080027f92954"
-  pub_gw_mac = "080000000001"
+  #pub_gw_mac = "080000000001"
 
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28F8F701DC29E4B9!247&authkey=!AC-zzAlAl6UhvGo&ithint=file%2cbox"
@@ -35,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
-      vb.customize ["modifyvm", :id, "--macaddress2", "#{pub_gw_mac}"]
+      #vb.customize ["modifyvm", :id, "--macaddress2", "#{pub_gw_mac}"]
       #vb.customize ["modifyvm", :id, "--natdnsproxy2", "on"]
     end
     master.vm.provision "shell", path: "resources/puppet/scripts/upgrade-puppet.sh"
@@ -82,7 +81,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.facter = {
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
-        "pub_gw_mac" => "#{pub_gw_mac}",
+        #"pub_gw_mac" => "#{pub_gw_mac}",
       }
       puppet.options = "--verbose"
     end
@@ -146,7 +145,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.facter = {
           "master_ip" => "#{master_ip}",
           "my_ip" => "#{my_ip}",
-          "pub_gw_mac" => "#{pub_gw_mac}",
+          #"pub_gw_mac" => "#{pub_gw_mac}",
         }
         puppet.options = "--verbose"
       end
