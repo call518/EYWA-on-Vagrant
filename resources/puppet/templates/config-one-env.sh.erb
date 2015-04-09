@@ -39,6 +39,7 @@ onetemplate create \
 --disk "CentOS-6.5_64" \
 --nic "Test Network" \
 --context DNS=8.8.8.8 \
+--context GATEWAY=192.168.33.2 \
 --ssh /var/lib/one/.ssh/id_rsa.pub \
 --vnc
 EOF

@@ -41,15 +41,18 @@ host> vagrant up slave-2
 VNC Address: {Vagrant-Host-IP}:55900
 ```
 
-## To Launch VM
-
-* You will need to wait until the image is READY to be used.
-* Where is...., in "Virtual Resource" Tab -> "Images" Tab
-
 ## Web-UI
   * http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
-## (Note)
+## Launch VM
+
+### Create Test VM
+
+* (Note) You will need to wait until the image is READY to be used. (Where is...., in "Virtual Resource" Tab -> "Images" Tab)
+* in Web-UI, "Virtual Resource" Tab, and "Vritual Machines" Tab
+* Click "+" button
+
+## APPENDIX
 
 * OpenNebula's VNC Console is not supported. Because of Port Forwarding (>5900, Dynamic)
