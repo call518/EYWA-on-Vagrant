@@ -47,7 +47,7 @@ exec { "Create DIR - /root/.config":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => File["Create DIR - /root/.vnc"],
+    require  => Exec["Create DIR - /root/.vnc"],
 }
 
 file { "Put Xfce4 Config DIR":
