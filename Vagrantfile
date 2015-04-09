@@ -95,6 +95,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
       puppet.options = "--verbose"
     end
+    master.vm.provision "puppet" do |puppet|
+      puppet.working_directory = "/vagrant/resources/puppet"
+      puppet.hiera_config_path = "resources/puppet/hiera.yaml"
+      puppet.manifests_path = "resources/puppet/manifests"
+      puppet.manifest_file  = "eywa.pp"
+      puppet.facter = {
+        "master_ip" => "#{master_ip}",
+        "my_ip" => "#{my_ip}",
+        "oneadmin_pw" => "#{oneadmin_pw}",
+      }
+      puppet.options = "--verbose"
+    end
   end
 
   num_slave_nodes = 2 ## (WARNING) Max:2, and sync with hiera file -> "resources/puppet/hieradata/hosts.json"
