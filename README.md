@@ -26,10 +26,11 @@ master> sudo /home/vagrant/config-one-env.sh
 * Create Image (CentOS 6.5 x86_64)
 * Create Template (CentOS-6.5_64)
 
-## Build Slave Node
+## Build Slave Nodes
 
 ```bash
 host> vagrant up slave-1
+host> vagrant up slave-2
 ```
 
 ## (Option) Using Desktop VNC
@@ -37,7 +38,7 @@ host> vagrant up slave-1
 * Connecting /w VNC
 
 ```
-VNC Address: {Host-IP}:55900
+VNC Address: {Vagrant-Host-IP}:55900
 ```
 
 ## To Launch VM
