@@ -16,7 +16,7 @@ file { "Put eywa_schema.sql":
 }
 
 exec { "Create eywa DB":
-    command  => "mysql -uroot -p${oneadmin_pw} -e 'create datebase eywa'",
+    command  => "mysql -uroot -p${oneadmin_pw} -e 'create database eywa'",
     user     => "root",
     timeout  => "0",
     logoutput => true,
@@ -25,7 +25,7 @@ exec { "Create eywa DB":
 }
 
 exec { "Create eywa Schema":
-    command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql'",
+    command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
     user     => "root",
     timeout  => "0",
     logoutput => true,
