@@ -26,7 +26,8 @@ CREATE TABLE `mc_address` (
   `num` int(11) NOT NULL AUTO_INCREMENT,
   `address` varchar(256) NOT NULL,
   `uid` varchar(256) DEFAULT NULL,
-  PRIMARY KEY (`num`)
+  PRIMARY KEY (`num`),
+  KEY (`address`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4097 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,7 +56,8 @@ CREATE TABLE `vm_info` (
   `hid` int(11) DEFAULT NULL,
   `ip` varchar(256) DEFAULT NULL,
   `deleted` int(1) NOT NULL,
-  PRIMARY KEY (`num`)
+  PRIMARY KEY (`num`),
+  KEY (`vid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
