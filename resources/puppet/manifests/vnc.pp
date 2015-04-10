@@ -106,7 +106,7 @@ exec { "Start vncserver Service":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    unless   => "lsof -ni:5900",
+    unless   => "lsof -ni:55900",
     require  => Exec["Add Service - vncserver"],
 }
 
