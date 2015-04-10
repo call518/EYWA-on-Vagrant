@@ -24,7 +24,7 @@ exec { "Create eywa DB":
     require  => File["Put eywa_schema.sql"],
 }
 
-exec { "Create eywa Schema":
+exec { "Create eywa Schema & Env.":
     command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
     user     => "root",
     timeout  => "0",
@@ -32,4 +32,13 @@ exec { "Create eywa Schema":
     unless   => "mysql -uroot -p${oneadmin_pw} -e 'select * from eywa.vm_info'",
     require  => Exec["Create eywa DB"],
 }
+
+#exec { "Generate Multicast Address Pool":
+#    command  => "for i in `seq 0 15`; do for j in `seq 0 255`; do mysql -uroot -p${oneadmin_pw} -e \"insert into eywa.mc_address values ('','239.0.$i.$j','')\"; done; done",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    unless   => "mysql -uroot -p${oneadmin_pw} -e 'select * from eywa.vm_info'",
+#    require  => Exec["Create eywa Schema & Env."],
+#}
 
