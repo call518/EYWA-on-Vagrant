@@ -100,7 +100,7 @@ package { "bind9utils":
 }
 
 file { "Put /var/lib/bind/test.org.zone":
-    path    => "/var/lib/bind/test.org.zone.erb",
+    path    => "/var/lib/bind/test.org.zone",
     ensure  => present,
     owner   => "bind",
     group   => "bind",
