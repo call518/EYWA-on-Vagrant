@@ -65,7 +65,7 @@ file { "Put ${oneadmin_home}/files DIR":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    require  => File["${oneadmin_home}/files"],
+    require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
 }
 
 file { "Put xpath.rb":
