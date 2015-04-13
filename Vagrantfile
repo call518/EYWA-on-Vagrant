@@ -106,7 +106,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
-        "ptr_head" => "${ptr_head}",
+        "ptr_head" => "#{ptr_head}",
       }
       puppet.options = "--verbose"
     end
