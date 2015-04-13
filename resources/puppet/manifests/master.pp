@@ -161,7 +161,7 @@ exec { "=== Starting Download Template-Image ===":
 
 exec { "Download Ubuntu-12.04.qcow2.gz":
     command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110219' -O /usr/local/src/Ubuntu-12.04.qcow2.gz",
-    creates  => "/usr/local/src/Template-Ubuntu-12.04.qcow2.gz",
+    creates  => "/usr/local/src/Ubuntu-12.04.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
