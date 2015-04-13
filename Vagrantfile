@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ptr_head = "33.168.192"
 
   oneadmin_pw = "passw0rd"
-  vm_root_pw = "passw0rd"
+  vm_root_pw = "1234"
 
   sunstone_listen_addr = "0.0.0.0"
   sunstone_listen_port = "9869"
