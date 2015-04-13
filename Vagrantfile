@@ -13,6 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.ssh.forward_x11 = true
 
   master_ip = "192.168.33.11"
+  ptr_head = "33.168.192"
 
   oneadmin_pw = "passw0rd"
   sustone_listen_addr = "0.0.0.0"
@@ -30,6 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
     master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
     master.vm.network "forwarded_port", guest: 55900, host: 55900
+    master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -104,6 +106,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
+        "ptr_head" => "${ptr_head}",
       }
       puppet.options = "--verbose"
     end

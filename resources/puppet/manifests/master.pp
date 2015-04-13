@@ -159,9 +159,9 @@ exec { "=== Starting Download Template-Image ===":
     require  => Exec["Run set-oneadmin-pw.sh"],
 }
 
-exec { "Download Ubuntu-14.04.qcow2.gz":
-    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110209' -O /usr/local/src/Template-Ubuntu-14.04.qcow2.gz",
-    creates  => "/usr/local/src/Template-Ubuntu-14.04.qcow2.gz",
+exec { "Download Ubuntu-12.04.qcow2.gz":
+    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110219' -O /usr/local/src/Ubuntu-12.04.qcow2.gz",
+    creates  => "/usr/local/src/Template-Ubuntu-12.04.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
@@ -175,7 +175,7 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
+    require  => Exec["Download Ubuntu-12.04.qcow2.gz"],
 }
 
 exec { "Run config-one-env.sh":

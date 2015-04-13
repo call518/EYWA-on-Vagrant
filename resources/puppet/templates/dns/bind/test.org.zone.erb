@@ -1,0 +1,18 @@
+$ORIGIN .
+$TTL 3600	; 1 hour
+test.org		IN SOA	ns1.test.org. admin.test.org. (
+				2008097658 ; serial
+				3600       ; refresh (1 hour)
+				240        ; retry (4 minutes)
+				1209600    ; expire (2 weeks)
+				43200      ; minimum (12 hours)
+				)
+			NS	ns1.test.org.
+			NS	ns2.test.org.
+			A	<%= @master_ip %>
+			MX	10 mail.test.org.
+			TXT	"v=spf1 ip4:<%= @master_ip %> ~all"
+$ORIGIN test.org.
+mail			A	<%= @master_ip %>
+ns1				A	<%= @master_ip %>
+ns2				A	<%= @master_ip %>

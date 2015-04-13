@@ -1,0 +1,12 @@
+$ORIGIN .
+$TTL 86400	; 1 day
+<%= @ptr_head %>.in-addr.arpa	IN SOA	ns1.test.org. admin.test.org. (
+				2005010515 ; serial
+				28800      ; refresh (8 hours)
+				14400      ; retry (4 hours)
+				3600000    ; expire (5 weeks 6 days 16 hours)
+				86400      ; minimum (1 day)
+				)
+			NS	ns1.test.org.
+			NS	ns2.test.org.
+$ORIGIN <%= @ptr_head %>.in-addr.arpa.
