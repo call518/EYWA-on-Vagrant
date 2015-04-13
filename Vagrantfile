@@ -73,6 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.facter = {
         "master_ip" => "#{master_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
+        "vm_root_pw" => "#{vm_root_pw}",
         "sunstone_listen_addr" => "#{sunstone_listen_addr}",
         "sunstone_listen_port" => "#{sunstone_listen_port}",
       }
@@ -109,7 +110,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
-        "vm_root_pw" => "#{vm_root_pw}",
         "ptr_head" => "#{ptr_head}",
       }
       puppet.options = "--verbose"
