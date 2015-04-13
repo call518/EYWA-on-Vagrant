@@ -1,0 +1,40 @@
+#!/bin/bash
+
+WRAPPER="/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper"
+$WRAPPER begin
+$WRAPPER delete system login user vyatta authentication encrypted-password
+#$WRAPPER delete interfaces ethernet eth1 address
+$WRAPPER set interfaces ethernet eth1 address 10.0.0.1/24
+$WRAPPER commit
+$WRAPPER end
+#$WRAPPER save
+
+. /mnt/context/context.sh
+
+## root 계정 비번 제거
+#sed -i '/vyatta/d' /etc/shadow
+#echo "vyatta:!:15748:0:99999:7:::" >> /etc/shadow
+
+## root 계정 비번 설정
+if [ ! -z $PASSWD ]; then
+	echo "vyatta:$PASSWD" | chpasswd
+	#echo "password" | passwd --stdin root
+fi
+
+#echo "
+#acpiphp
+#pci_hotplug" >> /etc/modules
+#for m in acpiphp pci_hotplug; do sudo modprobe ${m}; done
+
+HOME="/home/vyatta"
+mkdir -p $HOME/.ssh
+echo $SSH_PUBLIC_KEY > $HOME/.ssh/authorized_keys
+chmod 600 $HOME/.ssh/authorized_keys
+chown -R vyatta:vyatta $HOME
+
+## == (추후 VR 이미지에 설정 해야할지 고민 필요... 선택사항이 아닌 필수라...) ===
+sed -i '/^exit 0/d' /etc/rc.local
+echo "arping -U 10.0.0.1 -I eth1 -c 10" >> /etc/rc.local
+echo "exit 0" >> /etc/rc.local
+arping -U 10.0.0.1 -I eth1 -c 10
+ip addr add 10.0.0.1/24 dev eth1

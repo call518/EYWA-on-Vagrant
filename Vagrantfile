@@ -16,8 +16,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ptr_head = "33.168.192"
 
   oneadmin_pw = "passw0rd"
-  sustone_listen_addr = "0.0.0.0"
-  sustone_listen_port = "9869"
+  vm_root_pw = "passw0rd"
+
+  sunstone_listen_addr = "0.0.0.0"
+  sunstone_listen_port = "9869"
 
   #pub_gw_mac = "080000000001"
 
@@ -29,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.hostname = "master"
     #master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
     master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
-    master.vm.network "forwarded_port", guest: "#{sustone_listen_port}", host: "#{sustone_listen_port}"
+    master.vm.network "forwarded_port", guest: "#{sunstone_listen_port}", host: "#{sunstone_listen_port}"
     master.vm.network "forwarded_port", guest: 55900, host: 55900, protocol: 'tcp'
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'tcp'
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
@@ -71,8 +73,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.facter = {
         "master_ip" => "#{master_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
-        "sustone_listen_addr" => "#{sustone_listen_addr}",
-        "sustone_listen_port" => "#{sustone_listen_port}",
+        "sunstone_listen_addr" => "#{sunstone_listen_addr}",
+        "sunstone_listen_port" => "#{sunstone_listen_port}",
       }
       puppet.options = "--verbose"
     end
@@ -107,6 +109,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
         "oneadmin_pw" => "#{oneadmin_pw}",
+        "vm_root_pw" => "#{vm_root_pw}",
         "ptr_head" => "#{ptr_head}",
       }
       puppet.options = "--verbose"

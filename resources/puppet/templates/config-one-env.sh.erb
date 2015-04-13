@@ -13,36 +13,43 @@ service opennebula restart
 service opennebula-sunstone restart
 
 #echo " ========== Download Test VM Image ======== "
-#wget "https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110219" -O /usr/local/src/Ubuntu-12.04.qcow2.gz
+#wget "https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218" -O /usr/local/src/Ubuntu-14.04.qcow2.gz
 
 echo " === Build Test Network/Image/Template ==== "
 su -l oneadmin << EOF
 onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
 
 oneimage create \
---name "Ubuntu-12.04" \
---path "/usr/local/src/Ubuntu-12.04.qcow2.gz" \
+--name "Ubuntu-14.04" \
+--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
 --driver qcow2 \
+--prefix sd \
 --datastore default
 
-#while ! oneimage list | grep 'Ubuntu-12.04' | grep -q rdy
+#while ! oneimage list | grep 'Ubuntu-14.04' | grep -q rdy
 #do
 #	sleep 60
 #done
 
 onetemplate create \
---name "Ubuntu-12.04" \
+--name "Ubuntu-14.04" \
 --cpu 1 \
 --vcpu 1 \
 --memory 512 \
 --arch x86_64 \
---disk "Ubuntu-12.04" \
+--disk "Ubuntu-14.04" \
 --nic "Test Network" \
---context DNS=8.8.8.8 \
---context GATEWAY=192.168.33.2 \
+--context FILES="/var/lib/one/files/public-vm/init.sh" \
+--context DNS="8.8.8.8" \
+--context ETH0_IP="\$NIC[IP,NETWORK=\"Public-Net\"]" \
+--context ETH0_NETWORK="\$NIC[NETWORK_ADDRESS,NETWORK=\"Public-Net\"]" \
+--context ETH0_NETMASK="\$NIC[NETWORK_MASK,NETWORK=\"Public-Net\"]" \
+--context GATEWAY="\$NIC[GATEWAY,NETWORK=\"Public-Net\"]" \
+--context PASSWROD="<%= @vm_root_pw %>" \
 --ssh /var/lib/one/.ssh/id_rsa.pub \
 --vnc
 EOF
+#--context GATEWAY="192.168.33.2" \
 
 echo
 echo " ========================================== "

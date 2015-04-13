@@ -44,16 +44,28 @@ exec { "Create eywa Schema & Env.":
 #    require  => Exec["Create eywa Schema & Env."],
 #}
 
-file { "Put hooks/eywa DIR":
+file { "Put ${oneadmin_home}/remotes/hooks/eywa DIR":
     path     => "${oneadmin_home}/remotes/hooks/eywa",
     owner    => "oneadmin",
     group    => "oneadmin",
     mode     => 0775,
-    source   => "/vagrant/resources/puppet/files/eywa",
+    source   => "/vagrant/resources/puppet/files/eywa-remotes",
     ensure   => directory,
     replace  => true,
     recurse  => true,
     require  => Exec["Create eywa Schema & Env."],
+}
+
+file { "Put ${oneadmin_home}/files DIR":
+    path     => "${oneadmin_home}/files",
+    owner    => "oneadmin",
+    group    => "oneadmin",
+    mode     => 0775,
+    source   => "/vagrant/resources/puppet/files/eywa-files",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => File["${oneadmin_home}/files"],
 }
 
 file { "Put xpath.rb":
@@ -63,7 +75,7 @@ file { "Put xpath.rb":
     group   => "oneadmin",
     mode    => 0775,
     source  => "/vagrant/resources/puppet/files/xpath.rb",
-    require => File["Put hooks/eywa DIR"],
+    require => File["Put ${oneadmin_home}/files DIR"],
 }
 
 file { "Config oned.conf for EYWA":
