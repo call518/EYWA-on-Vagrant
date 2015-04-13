@@ -151,8 +151,8 @@ exec { "Run set-oneadmin-pw.sh":
     require  => File["Put set-oneadmin-pw.sh"],
 }
 
-exec { "=== Starting Download Message ===":
-    command  => "echo '=== Starting... Download Test-Imagei... Waiting.... ==='",
+exec { "=== Starting Download Template-Image ===":
+    command  => "echo '=== Starting... Download Template-Image... Waiting.... ==='",
     user     => "root",
     timeout  => "0",
     logoutput => true,
@@ -160,12 +160,12 @@ exec { "=== Starting Download Message ===":
 }
 
 exec { "Download Ubuntu-14.04.qcow2.gz":
-    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/Ubuntu-14.04.qcow2.gz",
-    creates  => "/usr/local/src/Ubuntu-14.04.qcow2.gz",
+    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110209' -O /usr/local/src/Template-Ubuntu-14.04.qcow2.gz",
+    creates  => "/usr/local/src/Template-Ubuntu-14.04.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
-    require  => Exec["=== Starting Download Message ==="],
+    require  => Exec["=== Starting Download Template-Image ==="],
 }
 
 file { "Put config-one-env.sh":
