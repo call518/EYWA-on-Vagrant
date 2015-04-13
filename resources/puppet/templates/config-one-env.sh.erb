@@ -17,7 +17,7 @@ service opennebula-sunstone restart
 
 echo " === Build Test Network/Image/Template ==== "
 su -l oneadmin << EOF
-onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
+onevnet create /home/vagrant/one-test-network.tmpl
 
 oneimage create \
 --name "Ubuntu-14.04" \
@@ -31,25 +31,27 @@ oneimage create \
 #	sleep 60
 #done
 
-onetemplate create \
---name "Ubuntu-14.04" \
---cpu 1 \
---vcpu 1 \
---memory 512 \
---arch x86_64 \
---disk "Ubuntu-14.04" \
---nic "Test Network" \
---context FILES="/var/lib/one/files/public-vm/init.sh" \
---context DNS="8.8.8.8" \
---context ETH0_IP="\$NIC[IP,NETWORK=\"Public-Net\"]" \
---context ETH0_NETWORK="\$NIC[NETWORK_ADDRESS,NETWORK=\"Public-Net\"]" \
---context ETH0_NETMASK="\$NIC[NETWORK_MASK,NETWORK=\"Public-Net\"]" \
---context GATEWAY="\$NIC[GATEWAY,NETWORK=\"Public-Net\"]" \
---context PASSWROD="<%= @vm_root_pw %>" \
---ssh /var/lib/one/.ssh/id_rsa.pub \
---vnc
-EOF
+#onetemplate create \
+#--name "Ubuntu-14.04" \
+#--cpu 1 \
+#--vcpu 1 \
+#--memory 512 \
+#--arch x86_64 \
+#--disk "Ubuntu-14.04" \
+#--nic "Test Network" \
+#--context FILES="/var/lib/one/files/public-vm/init.sh" \
+#--context DNS="8.8.8.8" \
 #--context GATEWAY="192.168.33.2" \
+#--context ETH0_IP="\$NIC[IP,NETWORK=\"Test Network\"]" \
+#--context ETH0_NETWORK="\$NIC[NETWORK_ADDRESS,NETWORK=\"Test Network\"]" \
+#--context ETH0_MASK="\$NIC[NETWORK_MASK,NETWORK=\"Test Network\"]" \
+#--context ETH0_GATEWAY="\$NIC[GATEWAY,NETWORK=\"Test Network\"]" \
+#--context PASSWORD="<%= @vm_root_pw %>" \
+#--ssh /var/lib/one/.ssh/id_rsa.pub \
+#--vnc
+
+onetemplate create --ssh /var/lib/one/.ssh/id_rsa.pub /home/vagrant/default.template
+EOF
 
 echo
 echo " ========================================== "

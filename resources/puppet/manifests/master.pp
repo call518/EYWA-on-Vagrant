@@ -168,6 +168,26 @@ exec { "Download Ubuntu-14.04.qcow2.gz":
     require  => Exec["=== Starting Download Template-Image ==="],
 }
 
+file { "Put one-test-network.tmpl":
+    path    => "/home/vagrant/one-test-network.tmpl",
+    ensure  => present,
+    owner   => "root",
+    group   => "oneadmin",
+    mode    => 0744,
+    source => "/vagrant/resources/puppet/files/one-test-network.tmpl",
+    require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
+}
+
+file { "Put default.template":
+    path    => "/home/vagrant/default.template",
+    ensure  => present,
+    owner   => "root",
+    group   => "oneadmin",
+    mode    => 0744,
+    content => template("/vagrant/resources/puppet/templates/default.template.erb"),
+    require  => File["Put one-test-network.tmpl"],
+}
+
 file { "Put config-one-env.sh":
     path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
@@ -175,7 +195,7 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
+    require  => File["Put one-test-network.tmpl"],
 }
 
 exec { "Run config-one-env.sh":

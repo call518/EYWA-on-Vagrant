@@ -1,0 +1,28 @@
+NAME="Ubuntu-14.04"
+CONTEXT=[
+  DNS="8.8.8.8",
+  ETH0_IP="$NIC[IP,NETWORK=\"Test Network\"]",
+  ETH0_NETWORK="$NIC[NETWORK_ADDRESS,NETWORK=\"Test Network\"]",
+  ETH0_MASK="$NIC[NETWORK_MASK,NETWORK=\"Test Network\"]",
+  ETH0_GATEWAY="$NIC[GATEWAY,NETWORK=\"Test Network\"]",
+  FILES="/var/lib/one/files/public-vm/init.sh",
+  IS_EYWA="no",
+  IS_VR="no",
+  PASSWD="<%= @vm_root_pw %>",
+  PASSWORD="<%= @vm_root_pw %>",
+CPU="1"
+DISK=[
+  IMAGE="Ubuntu-14.04",
+  IMAGE_UID="0" ]
+FEATURES=[
+  ACPI="yes" ]
+GRAPHICS=[
+  LISTEN="0.0.0.0",
+  TYPE="VNC" ]
+MEMORY="512"
+NIC=[
+  NETWORK="Test Network",
+  NETWORK_UID="0" ]
+OS=[
+  ARCH="x86_64",
+  BOOT="hd" ]
