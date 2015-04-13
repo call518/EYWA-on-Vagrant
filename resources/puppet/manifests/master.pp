@@ -188,6 +188,14 @@ file { "Put default.template":
     require  => File["Put one-test-network.tmpl"],
 }
 
+exec { "Set SSH_PUB_KEY in default.template":
+    command  => "sed \"s|@@__SSH_PUB_KEY__@@|$(cat /var/lib/one/.ssh/id_rsa.pub)|g\" /home/vagrant/default.template",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Put default.template"],
+}
+
 file { "Put config-one-env.sh":
     path    => "/home/vagrant/config-one-env.sh",
     ensure  => present,
@@ -195,7 +203,7 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => File["Put one-test-network.tmpl"],
+    require  => Exec["Set SSH_PUB_KEY in default.template"],
 }
 
 exec { "Run config-one-env.sh":
