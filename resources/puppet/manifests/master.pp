@@ -151,21 +151,21 @@ exec { "Run set-oneadmin-pw.sh":
     require  => File["Put set-oneadmin-pw.sh"],
 }
 
-exec { "=== Echo Downloading Message ===":
-    command  => "echo '=== Starting... Download Test-Imagei... Waiting.... ===",
+exec { "=== Starting Download Message ===":
+    command  => "echo '=== Starting... Download Test-Imagei... Waiting.... ==='",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     require  => Exec["Run set-oneadmin-pw.sh"],
 }
 
-exec { "Download centos6.5.qcow2.gz":
-    command  => "wget http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz -O /usr/local/src/centos6.5.qcow2.gz",
-    creates  => "/usr/local/src/centos6.5.qcow2.gz",
+exec { "Download Ubuntu-14.04.qcow2.gz":
+    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/Ubuntu-14.04.qcow2.gz",
+    creates  => "/usr/local/src/Ubuntu-14.04.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
-    require  => Exec["=== Echo Downloading Message ==="],
+    require  => Exec["=== Starting Download Message ==="],
 }
 
 file { "Put config-one-env.sh":
@@ -175,7 +175,7 @@ file { "Put config-one-env.sh":
     group   => "root",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/config-one-env.sh.erb"),
-    require  => Exec["Download centos6.5.qcow2.gz"],
+    require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
 }
 
 exec { "Run config-one-env.sh":

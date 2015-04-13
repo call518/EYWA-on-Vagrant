@@ -13,30 +13,30 @@ service opennebula restart
 service opennebula-sunstone restart
 
 #echo " ========== Download Test VM Image ======== "
-#wget "http://appliances.c12g.com/CentOS-6.5/centos6.5.qcow2.gz" -O /usr/local/src/centos6.5.qcow2.gz
+#wget "https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110214" -O /usr/local/src/Ubuntu-14.04.qcow2.gz
 
 echo " === Build Test Network/Image/Template ==== "
 su -l oneadmin << EOF
 onevnet create /vagrant/resources/puppet/files/one-test-network.tmpl
 
 oneimage create \
---name "CentOS-6.5_64" \
---path "/usr/local/src/centos6.5.qcow2.gz" \
+--name "Ubuntu-14.04" \
+--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
 --driver qcow2 \
 --datastore default
 
-#while ! oneimage list | grep 'CentOS-6.5_64' | grep -q rdy
+#while ! oneimage list | grep 'Ubuntu-14.04' | grep -q rdy
 #do
 #	sleep 60
 #done
 
 onetemplate create \
---name "CentOS-6.5_64" \
+--name "Ubuntu-14.04" \
 --cpu 1 \
 --vcpu 1 \
 --memory 512 \
 --arch x86_64 \
---disk "CentOS-6.5_64" \
+--disk "Ubuntu-14.04" \
 --nic "Test Network" \
 --context DNS=8.8.8.8 \
 --context GATEWAY=192.168.33.2 \
