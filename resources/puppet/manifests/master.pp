@@ -189,11 +189,11 @@ file { "Put default.template":
 }
 
 exec { "Set SSH_PUB_KEY in default.template":
-    command  => "sed \"s|@@__SSH_PUB_KEY__@@|$(cat /var/lib/one/.ssh/id_rsa.pub)|g\" /home/vagrant/default.template",
+    command  => "sed -i \"s|@@__SSH_PUB_KEY__@@|$(cat /var/lib/one/.ssh/id_rsa.pub)|g\" /home/vagrant/default.template",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Put default.template"],
+    require  => File["Put default.template"],
 }
 
 file { "Put config-one-env.sh":
