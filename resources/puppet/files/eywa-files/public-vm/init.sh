@@ -23,7 +23,7 @@ echo "$HOSTNAME.test.org" > /etc/hostname
 #echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 #echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 hostname $HOSTNAME.test.org
-/etc/init.d/hostname restart
+#/etc/init.d/hostname restart
 
 echo "nameserver 192.168.33.11
 nameserver 168.126.63.1" > /etc/resolv.conf
