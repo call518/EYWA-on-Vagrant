@@ -7,6 +7,10 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin"
 
 $oneadmin_home = "/var/lib/one"
 
+package { "arptables":
+    ensure   => installed,
+}
+
 package { "nfs-common":
     ensure   => installed,
 }
@@ -181,12 +185,24 @@ exec { "Update Apparmor":
     require  => File["Config Libvirt/QEMU"],
 }
 
+file { "Put /var/tmp/one/hooks/eywa":
+    path     => "/var/tmp/one/hooks/eywa",
+    owner    => "oneadmin",
+    group    => "oneadmin",
+    mode     => 0775,
+    source   => "/vagrant/resources/puppet/files/eywa-remotes",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => Exec["Update Apparmor"],
+}
+
 exec { "Add ONE Node":
     command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n ebtables'\"",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost list'\" | grep -q $hostname",
-    require  => File["Config Libvirt/QEMU"],
+    require  => File["Put /var/tmp/one/hooks/eywa"],
 }
 
