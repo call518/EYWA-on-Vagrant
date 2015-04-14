@@ -1,15 +1,16 @@
 NAME="Ubuntu-14.04"
 CONTEXT=[
-  DNS="8.8.8.8",
   ETH0_IP="$NIC[IP,NETWORK=\"Test Network\"]",
-  ETH0_NETWORK="$NIC[NETWORK_ADDRESS,NETWORK=\"Test Network\"]",
-  ETH0_MASK="$NIC[NETWORK_MASK,NETWORK=\"Test Network\"]",
-  ETH0_GATEWAY="$NIC[GATEWAY,NETWORK=\"Test Network\"]",
+  ETH0_MAC="$NIC[MAC,NETWORK=\"Test Network\"]",
+  ETH0_GATEWAY="192.168.33.2",
+  ETH0_NETWORK="192.168.33.0",
+  ETH0_MASK="255.255.255.0",
+  GATEWAY_IFACE_NUM="0",
+  DNS="8.8.8.8",
   FILES="/var/lib/one/files/public-vm/init.sh",
   IS_EYWA="no",
   IS_VR="no",
   PASSWD="<%= @vm_root_pw %>",
-  PASSWORD="<%= @vm_root_pw %>",
   SSH_PUB_KEY="@@__SSH_PUB_KEY__@@" ]
 CPU="1"
 DISK=[
