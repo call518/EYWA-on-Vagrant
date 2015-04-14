@@ -193,8 +193,8 @@ if $hostname == "master" {
   
   exec { "Set DNS Nameserver":
       command => "sed -i '1s/^/nameserver 127.0.0.1\\n/' /etc/resolv.conf",
-      user     => "root",
-      timeout  => "0",
+      user    => "root",
+      timeout => "0",
       require => Exec["Restart DNS(Bind9) Service"],
   }
 }
@@ -211,3 +211,10 @@ file { "Put /var/tmp/one/hooks/eywa":
     #require  => Exec[""],
 }
 
+exec { "Set SUDO for oneadmin":
+    command => "echo 'oneadmin    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
+    user    => "root",
+    timeout => "0",
+    unless  => "grep -q '^oneadmin    ALL=(ALL) NOPASSWD: ALL' /etc/sudoers",
+    require => File["Put /var/tmp/one/hooks/eywa"],
+}
