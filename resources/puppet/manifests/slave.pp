@@ -122,14 +122,22 @@ if $hostname =~ /^slave-[0-9]+/ {
         unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Permission Private SSH-key"],
     }
-    file { "Create DIR /var/lib/one/datastores":
-        path     => "/var/lib/one/datastores",
-        owner    => "oneadmin",
+    #file { "Create DIR /var/lib/one/datastores":
+    #    path     => "/var/lib/one/datastores",
+    #    owner    => "oneadmin",
+    #    group    => "oneadmin",
+    #    mode     => 0755,
+    #    ensure   => directory,
+    #    recurse  => true,
+    #    require  => Exec["Add /etc/fstab"],
+    #}
+    exec { "Create DIR /var/lib/one/datastores":
+        command  => "mkdir -p /var/lib/one/datastores && chown oneadmin:oneadmin /var/lib/one/datastores && chmod 0755 /var/lib/one/datastores",
+        creates  => "/var/lib/one/datastores",
+        user     => "oneadmin",
         group    => "oneadmin",
-        mode     => 0755,
-        ensure   => directory,
-        recurse  => true,
-        unless   => "df | grep -q '^master:/var/lib/one/datastores'",
+        timeout  => "0",
+        logoutput => true,
         require  => Exec["Add /etc/fstab"],
     }
     exec { "Mount datastore":
@@ -140,7 +148,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         timeout  => "0",
         logoutput => true,
         unless   => "df | grep -q '^master:/var/lib/one/datastores'",
-        require  => File["Create DIR /var/lib/one/datastores"],
+        require  => Exec["Create DIR /var/lib/one/datastores"],
         before   => File["Put .ssh DIR for root"],
     }
 }
