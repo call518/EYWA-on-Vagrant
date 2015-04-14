@@ -119,7 +119,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         user     => "root",
         timeout  => "0",
         logoutput => true,
-	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
+        unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Permission Private SSH-key"],
     }
     file { "Create DIR /var/lib/one/datastores":
@@ -129,6 +129,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         mode     => 0755,
         ensure   => directory,
         recurse  => true,
+        unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Add /etc/fstab"],
     }
     exec { "Mount datastore":
