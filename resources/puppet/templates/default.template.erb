@@ -1,7 +1,7 @@
 NAME="Ubuntu-14.04"
 CONTEXT=[
-  ETH0_IP="$NIC[IP,NETWORK=\"Test Network\"]",
-  ETH0_MAC="$NIC[MAC,NETWORK=\"Test Network\"]",
+  ETH0_IP="$NIC[IP,NETWORK=\"Public-Net\"]",
+  ETH0_MAC="$NIC[MAC,NETWORK=\"Public-Net\"]",
   ETH0_GATEWAY="192.168.33.2",
   ETH0_NETWORK="192.168.33.0",
   ETH0_MASK="255.255.255.0",
@@ -23,7 +23,7 @@ GRAPHICS=[
   TYPE="VNC" ]
 MEMORY="512"
 NIC=[
-  NETWORK="Test Network",
+  NETWORK="Public-Net",
   NETWORK_UNAME="oneadmin" ]
 OS=[
   ARCH="x86_64",
