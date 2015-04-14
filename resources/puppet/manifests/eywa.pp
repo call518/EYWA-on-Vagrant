@@ -31,7 +31,7 @@ exec { "Set eywa DB's User/Pass":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    unless   => "mysql -uroot -p${oneadmin_pw} -e 'USE eywa'",
+    unless   => "RESULT=`mysql -uroot -ppassw0rd -e \"select user,host from mysql.user where user='eywa'\"`; if [ -z \"$RESULT\" ]; then exit 1; else exit 0; fi",
     require  => File["Put eywa_schema.sql"],
 }
 
