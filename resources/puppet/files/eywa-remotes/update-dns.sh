@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#DB_HOST="172.21.18.11"
+#DB_HOST="192.168.33.11"
 #DB_NAME="eywa"
 #DB_USER="eywa"
 #DB_PASS="1234"
@@ -14,7 +14,7 @@ ONE_IS_VR=`$XPATH /VM/TEMPLATE/CONTEXT/IS_VR`
 
 NS_BIN="/usr/bin/nsupdate"
 
-SERVER="172.21.18.11"
+SERVER="192.168.33.11"
 #WORK_IP=$3
 #if [ "$ONE_IS_EYWA" == "yes" ]; then
 #	if [ "$ONE_IS_VR" == "yes" ]; then

@@ -2,7 +2,7 @@
 
 cd /var/lib/one/remotes/hooks
 
-DB_HOST="172.21.18.11"
+DB_HOST="192.168.33.11"
 DB_NAME="eywa"
 DB_USER="eywa"
 DB_PASS="1234"
