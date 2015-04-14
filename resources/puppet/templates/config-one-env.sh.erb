@@ -19,9 +19,23 @@ echo " === Build Network/Image/Template ==== "
 su -l oneadmin << EOF
 onevnet create /home/vagrant/one-public-net.tmpl
 
+#oneimage create \
+#--name "Ubuntu-14.04" \
+#--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
+#--driver qcow2 \
+#--prefix sd \
+#--datastore default
+
 oneimage create \
---name "Ubuntu-14.04" \
---path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
+--name "EYWA-Virtual-Router" \
+--path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
+--driver qcow2 \
+--prefix sd \
+--datastore default
+
+oneimage create \
+--name "Ubuntu12.04_64" \
+--path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
 --driver qcow2 \
 --prefix sd \
 --datastore default
