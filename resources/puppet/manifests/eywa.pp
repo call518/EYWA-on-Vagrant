@@ -209,3 +209,9 @@ exec { "Set DNS Nameserver":
     require => Exec["Restart DNS(Bind9) Service"],
 }
 
+#package { "mon":
+#    #ensure   => installed,
+#    ensure   => "1.2.0-4",
+#}
+
+
