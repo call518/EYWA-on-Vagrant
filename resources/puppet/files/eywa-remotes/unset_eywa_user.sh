@@ -14,13 +14,13 @@ XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
 ONE_UID=`$XPATH /USER/ID`
 
-#onevm delete "$ONE_UID-ONE-Router"
+#onevm delete "$ONE_UID-EYWA-Router"
 for vid in `$MYSQL_EYWA -e "select vid from vm_info where uid='$ONE_UID'" | sed -e '/vid/d'`
 do
 	onevm delete $vid
 done
 onevnet delete "$ONE_UID-Private-Net"
-onetemplate delete "$ONE_UID-ONE-Router"
+onetemplate delete "$ONE_UID-EYWA-Router"
 #onetemplate delete "$ONE_UID-Ubuntu(EYWA)"
 #onetemplate delete "$ONE_UID-Ubuntu (Public)"
 for oid in `$MYSQL_ONE -e"select oid from template_pool where uid='$ONE_UID'" | sed -e '/oid/d'`
