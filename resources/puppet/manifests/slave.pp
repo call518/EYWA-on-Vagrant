@@ -134,7 +134,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         user     => "root",
         timeout  => "0",
         logoutput => true,
-	unless   => "df | grep -q '^master:/var/lib/one/datastores'",
+        unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => File["Create DIR /var/lib/one/datastores"],
         before   => File["Put .ssh DIR for root"],
     }
