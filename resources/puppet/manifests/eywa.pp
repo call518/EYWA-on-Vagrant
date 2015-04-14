@@ -27,6 +27,7 @@ exec { "Create eywa DB":
 }
 
 exec { "Set eywa DB's User/Pass":
+    provider => shell,
     command  => "mysql -uroot -p${oneadmin_pw} -e \"GRANT ALL PRIVILEGES ON eywa.* TO 'eywa'@'localhost' IDENTIFIED BY '1234'\" && mysql -uroot -p${oneadmin_pw} -e \"GRANT ALL PRIVILEGES ON eywa.* TO 'eywa'@'%' IDENTIFIED BY '1234'\"",
     user     => "root",
     timeout  => "0",
