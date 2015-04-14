@@ -26,14 +26,14 @@ exec { "Create eywa DB":
     require  => File["Put eywa_schema.sql"],
 }
 
-exec { "Set eywa DB's User/Pass":
+exec { "Set eywa User/Pass":
     provider => shell,
     command  => "mysql -uroot -p${oneadmin_pw} -e \"GRANT ALL PRIVILEGES ON eywa.* TO 'eywa'@'localhost' IDENTIFIED BY '1234'\" && mysql -uroot -p${oneadmin_pw} -e \"GRANT ALL PRIVILEGES ON eywa.* TO 'eywa'@'%' IDENTIFIED BY '1234'\"",
     user     => "root",
     timeout  => "0",
     logoutput => true,
     unless   => "RESULT=`mysql -uroot -ppassw0rd -e \"SELECT user FROM mysql.user WHERE user='eywa'\"`; if [ -z \"$RESULT\" ]; then exit 1; else exit 0; fi",
-    require  => File["Put eywa_schema.sql"],
+    require  => Exec["Create eywa DB"],
 }
 
 exec { "Create eywa Schema & Env.":
@@ -42,7 +42,7 @@ exec { "Create eywa Schema & Env.":
     timeout  => "0",
     logoutput => true,
     unless   => "mysql -uroot -p${oneadmin_pw} -e 'SELECT * FROM eywa.vm_info'",
-    require  => Exec["Set eywa DB's User/Pass"],
+    require  => Exec["Set eywa User/Pass"],
 }
 
 #exec { "Generate Multicast Address Pool":
