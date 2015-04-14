@@ -66,6 +66,18 @@ file { "Put ${oneadmin_home}/remotes/hooks/eywa DIR":
     require  => Exec["Create eywa Schema & Env."],
 }
 
+file { "Put /var/tmp/one/hooks/eywa":
+    path     => "/var/tmp/one/hooks/eywa",
+    owner    => "oneadmin",
+    group    => "oneadmin",
+    mode     => 0775,
+    source   => "/vagrant/resources/puppet/files/eywa-remotes",
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
+}
+
 file { "Put ${oneadmin_home}/files DIR":
     path     => "${oneadmin_home}/files",
     owner    => "oneadmin",
@@ -75,18 +87,38 @@ file { "Put ${oneadmin_home}/files DIR":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
+    #require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
+    require  => File["Put /var/tmp/one/hooks/eywa"],
 }
 
-file { "Put xpath.rb":
-    path    => "${oneadmin_home}/remotes/datastore/xpath.rb",
-    ensure  => present,
-    owner   => "oneadmin",
-    group   => "oneadmin",
-    mode    => 0775,
-    source  => "/vagrant/resources/puppet/files/xpath.rb",
-    require => File["Put ${oneadmin_home}/files DIR"],
-}
+#exec { "mkdir /var/tmp/one/hooks/eywa":
+#    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa",
+#    creates  => "/var/tmp/one/hooks/eywa",
+#    user     => "oneadmin",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => File["Put ${oneadmin_home}/files DIR"],
+#}
+
+#file { "Put xpath.rb (${oneadmin_home}/remotes/datastore/xpath.rb)":
+#    path    => "${oneadmin_home}/remotes/datastore/xpath.rb",
+#    ensure  => present,
+#    owner   => "oneadmin",
+#    group   => "oneadmin",
+#    mode    => 0775,
+#    source  => "/vagrant/resources/puppet/files/xpath.rb",
+#    require => Exec["mkdir /var/tmp/one/hooks/eywa"],
+#}
+
+#file { "Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)":
+#    path    => "/var/tmp/one/hooks/eywa/xpath.rb",
+#    ensure  => present,
+#    owner   => "oneadmin",
+#    group   => "oneadmin",
+#    mode    => 0775,
+#    source  => "/vagrant/resources/puppet/files/xpath.rb",
+#    require => File["Put xpath.rb (${oneadmin_home}/remotes/datastore/xpath.rb)"],
+#}
 
 file { "Config oned.conf for EYWA":
     path    => "/etc/one/oned.conf",
@@ -95,7 +127,8 @@ file { "Config oned.conf for EYWA":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/oned.conf-eywa.erb"),
-    require => File["Put xpath.rb"],
+    #require => File["Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)"],
+    require => File["Put ${oneadmin_home}/files DIR"],
 }
 
 exec { "Restart OpenNebula Service":
