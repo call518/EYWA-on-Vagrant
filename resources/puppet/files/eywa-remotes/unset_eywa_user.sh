@@ -9,8 +9,8 @@ DB_PASS="1234"
 MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME"
 MYSQL_ONE="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST opennebula"
 T64=$1
-XPATH="/var/lib/one/remotes/datastore/xpath.rb -b $T64"
-#XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
+#XPATH="/var/lib/one/remotes/datastore/xpath.rb -b $T64"
+XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
 ONE_UID=`$XPATH /USER/ID`
 
