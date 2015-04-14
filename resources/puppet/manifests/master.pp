@@ -25,7 +25,8 @@ package { "opennebula-sunstone":
 }
 
 package { "mysql-server":
-    ensure   => installed,
+    #ensure   => installed,
+    ensure   => "5.5.41-0ubuntu0.14.04.1",
 }
 
 service { "nfs-kernel-server":
@@ -71,6 +72,17 @@ exec { "Create opennebula Database":
     require  => Exec["Set MySQL root Password"],
 }
 
+file { "Config my.cnf":
+    path    => "/etc/mysql/my.cnf",
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0644,
+    content => template("/vagrant/resources/puppet/templates/my.cnf.erb"),
+    notify  => Service["mysql"],
+    require => Exec["Create opennebula Database"],
+}
+
 file { "Config sunstone.conf":
     path    => "/etc/one/sunstone-server.conf",
     ensure  => present,
@@ -79,7 +91,7 @@ file { "Config sunstone.conf":
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/sunstone-server.conf.erb"),
     notify  => Service["opennebula-sunstone"],
-    require => Package["opennebula-sunstone"],
+    require => [Package["opennebula-sunstone"], File["Config my.cnf"]],
 }
 
 file { "Export NFS":
@@ -90,7 +102,7 @@ file { "Export NFS":
     mode    => 0644,
     source  => "/vagrant/resources/puppet/files/nfs-exports",
     notify  => Service["nfs-kernel-server"],
-    require => Package["nfs-kernel-server"],
+    require => [Package["nfs-kernel-server"], File["Config sunstone.conf"]],
 }
 
 file { "Put .ssh DIR":
