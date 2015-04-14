@@ -195,7 +195,8 @@ exec { "Update Apparmor":
 }
 
 exec { "Add ONE Node":
-    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n ebtables'\"",
+    #command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n ebtables'\"",
+    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
     user     => "root",
     timeout  => "0",
     logoutput => true,
