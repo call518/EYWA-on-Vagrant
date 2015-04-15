@@ -8,12 +8,14 @@ CONTEXT=[
 	SSH_PUBLIC_KEY="$USER[SSH_PUBLIC_KEY]",
 	ETH0_IP="$NIC[IP,NETWORK=\"Public-Net\"]",
 	ETH1_IP="$NIC[IP,NETWORK=\"@@__UID__@@-Private-Net\"]",
+    GATEWAY_IFACE_NUM="0",
+    GATEWAY="192.168.33.2",
     HAPROXY_CFG="http:0.0.0.0:8080:80:1000:100:10.0.0.1,10.0.0.2,10.0.0.3,10.0.0.4,10.0.0.5,10.0.0.6,10.0.0.7,10.0.0.8,10.0.0.9,10.0.0.10"
 ]
 
 CPU="2"
 
-DISK=[IMAGE="EYWA-Virtual-Router",IMAGE_UID="0"]
+DISK=[IMAGE="EYWA-Virtual-Router",IMAGE_UNAME="oneadmin"]
 
 FEATURES=[ACPI="yes"]
 
@@ -21,8 +23,8 @@ GRAPHICS=[LISTEN="0.0.0.0",TYPE="VNC"]
 
 MEMORY="1024"
 
-NIC=[MODEL="virtio",NETWORK="Public-Net",NETWORK_UID="0"]
+NIC=[MODEL="virtio",NETWORK="Public-Net",NETWORK_UNAME="oneadmin"]
 
-NIC=[MODEL="virtio",NETWORK="@@__UID__@@-Private-Net",NETWORK_UID="0"]
+NIC=[MODEL="virtio",NETWORK="@@__UID__@@-Private-Net",NETWORK_UNAME="oneadmin"]
 
 OS=[ARCH="x86_64",BOOT="hd"]

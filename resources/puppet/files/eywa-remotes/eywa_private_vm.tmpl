@@ -11,7 +11,7 @@ CONTEXT=[
 
 CPU="1"
 
-DISK=[IMAGE="Ubuntu12.04_64",IMAGE_UID="0"]
+DISK=[IMAGE="Ubuntu12.04_64",IMAGE_UNAME="oneadmin"]
 
 FEATURES=[ACPI="yes"]
 
@@ -19,6 +19,6 @@ GRAPHICS=[LISTEN="0.0.0.0",TYPE="VNC"]
 
 MEMORY="512"
 
-NIC=[MODEL="virtio",NETWORK="@@__UID__@@-Private-Net",NETWORK_UID="0"]
+NIC=[MODEL="virtio",NETWORK="@@__UID__@@-Private-Net",NETWORK_UNAME="oneadmin"]
 
 OS=[ARCH="x86_64",BOOT="hd"]

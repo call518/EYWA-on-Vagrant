@@ -199,6 +199,18 @@ if $hostname == "master" {
   }
 }
 
+######## Common: Master & Slave-{N} ###########
+
+exec { "Create DIR /var/tmp/one/hooks/eywa":
+    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa && chmod 0755 /var/tmp/one/hooks/eywa",
+    creates  => "/var/tmp/one/hooks/eywa",
+    user     => "oneadmin",
+    group    => "oneadmin",
+    timeout  => "0",
+    logoutput => true,
+    #require  => Exec[""],
+}
+
 file { "Put /var/tmp/one/hooks/eywa":
     path     => "/var/tmp/one/hooks/eywa",
     owner    => "oneadmin",
@@ -208,7 +220,7 @@ file { "Put /var/tmp/one/hooks/eywa":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    #require  => Exec[""],
+    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
 }
 
 exec { "Set SUDO for oneadmin":
