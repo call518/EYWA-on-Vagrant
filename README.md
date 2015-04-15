@@ -45,12 +45,18 @@ VNC Address: {Vagrant-Host-IP}:55900
   * http://{Host-IP}:9869
   * Admin ID/PW: oneadmin / passw0rd
 
-## Launch VM
+## PoC Scenario
 
-### Create Test VM
-
-* in Web-UI, "Virtual Resource" Tab, and "Vritual Machines" Tab
-* Click "+" button
++ Log in to Web-UI, by "oneadmin" user.
++ Go to "System" Tab -> "Users" Tab.
++ Click "+" Button.
++ Create "oneadmin" User. (Password is that you want.)
+* Default Templates is generated. (in "Templates" Tab)
++ EYWA-Virutal-Router(VR-1) is automatic launched. (in "Virtual Machines" Tab)
+* When VR-1 is up, Create EYWA-VM(VM-1).
+* Add VR-2 for LB/HA
+* Add VM-2.
+* Test Ping, to/on all Nodes.
 
 ### SSH Connect to VM
 
