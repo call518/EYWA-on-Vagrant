@@ -72,6 +72,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			sudo brctl stp VSi$VXLAN_G_N off
 			sudo brctl setfd VSi$VXLAN_G_N 0
 			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
+			sudo ip link set vxlan$VXLAN_G_N mtu 1500
 			sudo ip link set up dev vxlan$VXLAN_G_N
 			sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
 			sudo ifconfig VSi$VXLAN_G_N up
