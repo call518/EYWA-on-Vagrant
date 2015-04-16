@@ -42,13 +42,13 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $2}'`
 		if [ $EXIST_EYWA_VMs -eq 0 ]; then
 			## BR, VLXAN 장치 추가
-			sudo brctl addbr vsi$VXLAN_G_N
-			sudo brctl stp vsi$VXLAN_G_N off
-			sudo brctl setfd vsi$VXLAN_G_N 0
+			sudo brctl addbr VSi$VXLAN_G_N
+			sudo brctl stp VSi$VXLAN_G_N off
+			sudo brctl setfd VSi$VXLAN_G_N 0
 			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 			sudo ip link set up dev vxlan$VXLAN_G_N
-			sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
-			sudo ifconfig vsi$VXLAN_G_N up
+			sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
+			sudo ifconfig VSi$VXLAN_G_N up
 		fi
 	else
 		## 추가 대상이 VR이 아닌, 하위 EYWA VM일 경우, 2가지 arptables 정책만 추가 (orphan)
@@ -61,13 +61,13 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			## 대상 HOST에 동일 계정의 VR이 존재치 않을 경우,
 			if [ $EXIST_EYWA_VMs -eq 0 ]; then
 				## BR, VLXAN 장치 추가
-				sudo brctl addbr vsi$VXLAN_G_N
-				sudo brctl stp vsi$VXLAN_G_N off
-				sudo brctl setfd vsi$VXLAN_G_N 0
+				sudo brctl addbr VSi$VXLAN_G_N
+				sudo brctl stp VSi$VXLAN_G_N off
+				sudo brctl setfd VSi$VXLAN_G_N 0
 				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 				sudo ip link set up dev vxlan$VXLAN_G_N
-				sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
-				sudo ifconfig vsi$VXLAN_G_N up
+				sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
+				sudo ifconfig VSi$VXLAN_G_N up
 			fi
 		else
 			## 대상 HOST에 동일 계정의 VR이 존재할 경우, 

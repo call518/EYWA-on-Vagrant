@@ -47,10 +47,10 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1
 			sudo arptables -D FORWARD -j DROP -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1
 			## BR, VLXAN 장치 삭제
-			sudo ifconfig vsi$VXLAN_G_N down
-			sudo brctl delif vsi$VXLAN_G_N vxlan$VXLAN_G_N
+			sudo ifconfig VSi$VXLAN_G_N down
+			sudo brctl delif VSi$VXLAN_G_N vxlan$VXLAN_G_N
 			sudo ip link delete vxlan$VXLAN_G_N
-			sudo brctl delbr vsi$VXLAN_G_N
+			sudo brctl delbr VSi$VXLAN_G_N
 		#	while [ `sudo arptables -vnL | grep -c "\-j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1"` -gt 0 ]; do
 		#		sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1
 		#	done
@@ -84,10 +84,10 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 				sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1
 				sudo arptables -D FORWARD -j DROP -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1
 				## BR, VLXAN 장치 삭제
-				sudo ifconfig vsi$VXLAN_G_N down
-				sudo brctl delif vsi$VXLAN_G_N vxlan$VXLAN_G_N
+				sudo ifconfig VSi$VXLAN_G_N down
+				sudo brctl delif VSi$VXLAN_G_N vxlan$VXLAN_G_N
 				sudo ip link delete vxlan$VXLAN_G_N
-				sudo brctl delbr vsi$VXLAN_G_N
+				sudo brctl delbr VSi$VXLAN_G_N
 			else
 				## 대상 HOST에 동일 계정의 VM이 존재할 경우,
 				sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2

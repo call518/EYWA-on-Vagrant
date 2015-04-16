@@ -68,13 +68,13 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1 -j DROP
 			sudo arptables -A FORWARD -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1 -j DROP
 			## BR, VLXAN 장치 추가
-			sudo brctl addbr vsi$VXLAN_G_N
-			sudo brctl stp vsi$VXLAN_G_N off
-			sudo brctl setfd vsi$VXLAN_G_N 0
+			sudo brctl addbr VSi$VXLAN_G_N
+			sudo brctl stp VSi$VXLAN_G_N off
+			sudo brctl setfd VSi$VXLAN_G_N 0
 			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 			sudo ip link set up dev vxlan$VXLAN_G_N
-			sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
-			sudo ifconfig vsi$VXLAN_G_N up
+			sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
+			sudo ifconfig VSi$VXLAN_G_N up
 		else
 			## 대상 HOST에 동일 EYWA VM이 하나 이상 남아 있을 때,
 			## (VR만 추가 되는 상황이므로, 나머지 EYWA VM이 로컬 VR을 이용토록 처리)
@@ -95,13 +95,13 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 				sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2 -j DROP
 				sudo arptables -A FORWARD -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1 -j DROP
 				## BR, VLXAN 장치 추가
-				sudo brctl addbr vsi$VXLAN_G_N
-				sudo brctl stp vsi$VXLAN_G_N off
-				sudo brctl setfd vsi$VXLAN_G_N 0
+				sudo brctl addbr VSi$VXLAN_G_N
+				sudo brctl stp VSi$VXLAN_G_N off
+				sudo brctl setfd VSi$VXLAN_G_N 0
 				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 				sudo ip link set up dev vxlan$VXLAN_G_N
-				sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
-				sudo ifconfig vsi$VXLAN_G_N up
+				sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
+				sudo ifconfig VSi$VXLAN_G_N up
 			else
 				## 대상 HOST에 동일 계정의 VM이 존재할 경우,
 				#sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1 -j DROP
@@ -124,24 +124,24 @@ fi
 
 ## == OLD Configuration ==
 #if [ "$ONE_IS_EYWA" == "yes" ]; then
-#	if [ `sudo brctl show | grep vsi$ONE_UID | grep -c vxlan$ONE_UID` -eq 0 ]; then
+#	if [ `sudo brctl show | grep VSi$ONE_UID | grep -c vxlan$ONE_UID` -eq 0 ]; then
 #		#============= OLD ============================
-#		#sudo brctl addbr vsi$ONE_UID
-#		#sudo brctl stp vsi$ONE_UID off
-#		#sudo brctl setfd vsi$ONE_UID 0
+#		#sudo brctl addbr VSi$ONE_UID
+#		#sudo brctl stp VSi$ONE_UID off
+#		#sudo brctl setfd VSi$ONE_UID 0
 #		### ONE_UID가 255보다 클때 주소 및 ID 할당에 문제 있음.. 방안 고민 필요...
 #		#sudo ip link add vxlan$ONE_UID type vxlan id $ONE_UID group 239.0.0.$ONE_UID ttl 10 dev eth2
 #		#sudo ip link set up dev vxlan$ONE_UID
-#		#sudo brctl addif vsi$ONE_UID vxlan$ONE_UID
-#		#sudo ifconfig vsi$ONE_UID up
+#		#sudo brctl addif VSi$ONE_UID vxlan$ONE_UID
+#		#sudo ifconfig VSi$ONE_UID up
 #		#==============================================
-#		sudo brctl addbr vsi$VXLAN_G_N
-#		sudo brctl stp vsi$VXLAN_G_N off
-#		sudo brctl setfd vsi$VXLAN_G_N 0
+#		sudo brctl addbr VSi$VXLAN_G_N
+#		sudo brctl stp VSi$VXLAN_G_N off
+#		sudo brctl setfd VSi$VXLAN_G_N 0
 #		sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 #		sudo ip link set up dev vxlan$VXLAN_G_N
-#		sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
-#		sudo ifconfig vsi$VXLAN_G_N up
+#		sudo brctl addif VSi$VXLAN_G_N vxlan$VXLAN_G_N
+#		sudo ifconfig VSi$VXLAN_G_N up
 #	fi
 #
 #	if [ "$ONE_IS_VR" == "yes" ]; then

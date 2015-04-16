@@ -1,5 +1,5 @@
-auto br0
-iface br0 inet static
+auto VSe
+iface VSe inet static
     address <%= @my_ip %>
     netmask 255.255.255.0
     bridge_ports eth1
@@ -7,4 +7,3 @@ iface br0 inet static
     bridge_hello 2
     bridge_maxage 12
     bridge_stp off
-    #post-up arp -s 192.168.33.2 <%= @pub_gw_mac %> dev $IFACE

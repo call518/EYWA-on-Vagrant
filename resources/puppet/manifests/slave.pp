@@ -73,45 +73,45 @@ exec { "Enable eth1":
 #}
 
 if $hostname =~ /^master/ {
-  file { "Set br0.cfg":
-      path    => "/etc/network/interfaces.d/br0.cfg",
+  file { "Set VSe.cfg":
+      path    => "/etc/network/interfaces.d/VSe.cfg",
       ensure  => present,
       owner   => "root",
       group   => "root",
       mode    => 0644,
-      content => template("/vagrant/resources/puppet/templates/br0-master.cfg.erb"),
+      content => template("/vagrant/resources/puppet/templates/VSe-master.cfg.erb"),
       require => Exec["Enable eth1"],
       #require => Exec["Enable eth2"],
   }
 } else {
-  file { "Set br0.cfg":
-      path    => "/etc/network/interfaces.d/br0.cfg",
+  file { "Set VSe.cfg":
+      path    => "/etc/network/interfaces.d/VSe.cfg",
       ensure  => present,
       owner   => "root",
       group   => "root",
       mode    => 0644,
-      content => template("/vagrant/resources/puppet/templates/br0-slave.cfg.erb"),
+      content => template("/vagrant/resources/puppet/templates/VSe-slave.cfg.erb"),
       require => Exec["Enable eth1"],
   }
 }
 
-exec { "Enable br0":
-    command  => "ifup br0",
+exec { "Enable VSe":
+    command  => "ifup VSe",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    unless   => "ifconfig br0 2> /dev/null | grep -q UP",
-    require  => File["Set br0.cfg"],
+    unless   => "ifconfig VSe 2> /dev/null | grep -q UP",
+    require  => File["Set VSe.cfg"],
 }
 
-exec { "Disable virbr0":
+exec { "Disable virVSe":
     command  => "sleep 10; virsh net-destroy default && virsh net-autostart default --disable",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    onlyif   => "ifconfig virbr0 2> /dev/null > /dev/null",
-    #require  => Exec["Static ARP Table for br0"],
-    require  => Exec["Enable br0"],
+    onlyif   => "ifconfig virVSe 2> /dev/null > /dev/null",
+    #require  => Exec["Static ARP Table for VSe"],
+    require  => Exec["Enable VSe"],
 }
 
 if $hostname =~ /^slave-[0-9]+/ {
@@ -124,7 +124,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         ensure   => directory,
         replace  => true,
         recurse  => true,
-        require  => Exec["Disable virbr0"],
+        require  => Exec["Disable virVSe"],
     }
     exec { "Permission Private SSH-key":
         command  => "chown oneadmin:oneadmin ${oneadmin_home}/.ssh/* && chmod 644 ${oneadmin_home}/.ssh/* && chmod 600 ${oneadmin_home}/.ssh/id_rsa",
@@ -189,7 +189,7 @@ file { "Put .ssh DIR for root":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    require  => Exec["Disable virbr0"],
+    require  => Exec["Disable virVSe"],
 }
 
 exec { "Permission Private SSH-key for root":
