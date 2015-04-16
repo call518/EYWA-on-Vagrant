@@ -51,7 +51,7 @@ TMPL="eywa_private_vm.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL >> $TMP
 TMPL_ID=`onetemplate create $TMP | awk '{print $2}'`
-onetemplate chmod $TMPL_ID 400
+onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
 
@@ -60,7 +60,7 @@ TMPL="public_vm.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL >> $TMP
 TMPL_ID=`onetemplate create $TMP | awk '{print $2}'`
-onetemplate chmod $TMPL_ID 400
+onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
 
