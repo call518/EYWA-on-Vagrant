@@ -46,4 +46,9 @@ chown -R root:root $HOME
 umount -l /mnt
 
 update-rc.d vmcontext disable
-echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
+echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head
+
+## Test Apache
+apt-get	update
+apt-get install apache2
+echo "<font size=10>$(hostname -i)</font>" > /var/www/index.html
