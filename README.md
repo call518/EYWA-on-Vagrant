@@ -19,6 +19,8 @@ EYWA PoC, OpenNebula on Vagrant Environment
 
 ## Build Master Node (Front-end)
 
+(Note) When connect SSH, ignore "*** System restart required ***" message.
+
 ```bash
 host> vagrant up master
 host> vagrant ssh master
