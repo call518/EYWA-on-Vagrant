@@ -67,6 +67,22 @@ if $hostname == "master" {
       require  => Exec["Create eywa Schema & Env."],
   }
   
+  exec { "Set Testing SSH Key for EYWA-VM":
+      command  => "sed -i \"s|@@__SSH_PUB_KEY__@@|$(cat /var/lib/one/.ssh/id_rsa.pub)|g\" ${oneadmin_home}/remotes/hooks/eywa/eywa_private_vm.tmpl",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
+  }
+
+  exec { "Set Testing SSH Key for EYWA-VR":
+      command  => "sed -i \"s|@@__SSH_PUB_KEY__@@|$(cat /var/lib/one/.ssh/id_rsa.pub)|g\" ${oneadmin_home}/remotes/hooks/eywa/eywa_virtual_router.tmpl",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      require  => Exec["Set Testing SSH Key for EYWA-VM"],
+  }
+
   file { "Put ${oneadmin_home}/files DIR":
       path     => "${oneadmin_home}/files",
       owner    => "oneadmin",
@@ -77,7 +93,7 @@ if $hostname == "master" {
       replace  => true,
       recurse  => true,
       #require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
-      require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
+      require  => Exec["Set Testing SSH Key for EYWA-VR"],
   }
   
   #exec { "mkdir /var/tmp/one/hooks/eywa":

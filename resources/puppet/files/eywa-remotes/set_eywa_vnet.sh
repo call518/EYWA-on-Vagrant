@@ -45,7 +45,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			sudo brctl addbr vsi$VXLAN_G_N
 			sudo brctl stp vsi$VXLAN_G_N off
 			sudo brctl setfd vsi$VXLAN_G_N 0
-			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth1
+			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 			sudo ip link set up dev vxlan$VXLAN_G_N
 			sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
 			sudo ifconfig vsi$VXLAN_G_N up
@@ -64,7 +64,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 				sudo brctl addbr vsi$VXLAN_G_N
 				sudo brctl stp vsi$VXLAN_G_N off
 				sudo brctl setfd vsi$VXLAN_G_N 0
-				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth1
+				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 				sudo ip link set up dev vxlan$VXLAN_G_N
 				sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
 				sudo ifconfig vsi$VXLAN_G_N up

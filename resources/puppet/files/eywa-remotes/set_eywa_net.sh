@@ -71,7 +71,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 			sudo brctl addbr vsi$VXLAN_G_N
 			sudo brctl stp vsi$VXLAN_G_N off
 			sudo brctl setfd vsi$VXLAN_G_N 0
-			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth1
+			sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 			sudo ip link set up dev vxlan$VXLAN_G_N
 			sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
 			sudo ifconfig vsi$VXLAN_G_N up
@@ -98,7 +98,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 				sudo brctl addbr vsi$VXLAN_G_N
 				sudo brctl stp vsi$VXLAN_G_N off
 				sudo brctl setfd vsi$VXLAN_G_N 0
-				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth1
+				sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 				sudo ip link set up dev vxlan$VXLAN_G_N
 				sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
 				sudo ifconfig vsi$VXLAN_G_N up
@@ -130,7 +130,7 @@ fi
 #		#sudo brctl stp vsi$ONE_UID off
 #		#sudo brctl setfd vsi$ONE_UID 0
 #		### ONE_UID가 255보다 클때 주소 및 ID 할당에 문제 있음.. 방안 고민 필요...
-#		#sudo ip link add vxlan$ONE_UID type vxlan id $ONE_UID group 239.0.0.$ONE_UID ttl 10 dev eth1
+#		#sudo ip link add vxlan$ONE_UID type vxlan id $ONE_UID group 239.0.0.$ONE_UID ttl 10 dev eth2
 #		#sudo ip link set up dev vxlan$ONE_UID
 #		#sudo brctl addif vsi$ONE_UID vxlan$ONE_UID
 #		#sudo ifconfig vsi$ONE_UID up
@@ -138,7 +138,7 @@ fi
 #		sudo brctl addbr vsi$VXLAN_G_N
 #		sudo brctl stp vsi$VXLAN_G_N off
 #		sudo brctl setfd vsi$VXLAN_G_N 0
-#		sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth1
+#		sudo ip link add vxlan$VXLAN_G_N type vxlan id $VXLAN_G_N group $VXLAN_G_A ttl 10 dev eth2
 #		sudo ip link set up dev vxlan$VXLAN_G_N
 #		sudo brctl addif vsi$VXLAN_G_N vxlan$VXLAN_G_N
 #		sudo ifconfig vsi$VXLAN_G_N up

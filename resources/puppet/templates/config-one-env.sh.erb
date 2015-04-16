@@ -17,8 +17,16 @@ service opennebula-sunstone restart
 
 echo " === Build Network/Image/Template ==== "
 su -l oneadmin << EOF
+### Clear Template/Image/Network Env.
+#onevnet delete Public-Net
+#oneimage delete EYWA-Virtual-Router
+#oneimage delete Ubuntu12.04_64
+
+
+### Create Template/Image/Network Env.
 onevnet create /home/vagrant/one-public-net.tmpl
 
+#oneimage delete Ubuntu-14.04
 #oneimage create \
 #--name "Ubuntu-14.04" \
 #--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \

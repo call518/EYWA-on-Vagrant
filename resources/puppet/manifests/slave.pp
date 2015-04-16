@@ -53,6 +53,25 @@ exec { "Enable eth1":
     require  => File["Set eth1.cfg"],
 }
 
+#file { "Set eth2.cfg":
+#    path    => "/etc/network/interfaces.d/eth2.cfg",
+#    ensure  => present,
+#    owner   => "root",
+#    group   => "root",
+#    mode    => 0644,
+#    content => template("/vagrant/resources/puppet/templates/eth2.cfg.erb"),
+#    require => Exec["Enable eth1"],
+#}
+
+#exec { "Enable eth2":
+#    command  => "ifup eth2",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    unless   => "ifconfig eth2 2> /dev/null | grep -q UP",
+#    require  => File["Set eth2.cfg"],
+#}
+
 if $hostname =~ /^master/ {
   file { "Set br0.cfg":
       path    => "/etc/network/interfaces.d/br0.cfg",
@@ -62,6 +81,7 @@ if $hostname =~ /^master/ {
       mode    => 0644,
       content => template("/vagrant/resources/puppet/templates/br0-master.cfg.erb"),
       require => Exec["Enable eth1"],
+      #require => Exec["Enable eth2"],
   }
 } else {
   file { "Set br0.cfg":

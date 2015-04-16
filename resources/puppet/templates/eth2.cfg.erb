@@ -1,0 +1,7 @@
+auto eth2
+iface eth2 inet manual
+    up ifconfig $IFACE 0.0.0.0 up
+    up ip link set $IFACE promisc on
+    up ifconfig $IFACE mtu 1600
+    down ip link set $IFACE promisc off
+    down ifconfig $IFACE down
