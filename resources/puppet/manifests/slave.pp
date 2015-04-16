@@ -149,6 +149,14 @@ if $hostname =~ /^slave-[0-9]+/ {
         logoutput => true,
         unless   => "df | grep -q '^master:/var/lib/one/datastores'",
         require  => Exec["Create DIR /var/lib/one/datastores"],
+    }
+    exec { "Set Ownership for /var/lib/one/datastores":
+        provider => shell,
+        command  => "chown -R oneadmin:oneadmin /var/lib/one/datastores && chmod -R 775 /var/lib/one/datastores",
+        user     => "root",
+        timeout  => "0",
+        logoutput => true,
+        require  => Exec["Mount datastore"],
         before   => File["Put .ssh DIR for root"],
     }
 }
