@@ -1,5 +1,7 @@
 # Description
 
+(Note) Before "Git Clone", Set CR-LF by Running "git config --global core.autocrlf true"
+
 EYWA PoC, OpenNebula on Vagrant Environment
 
 # EYWA Architecture
