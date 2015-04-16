@@ -28,6 +28,15 @@ hostname $HOSTNAME.test.org
 echo "nameserver 192.168.33.11
 nameserver 168.126.63.1" > /etc/resolv.conf
 
+HOME="/root"
+#mkdir -p $HOME/.ssh
+rm -rf $HOME/.ssh 2> /dev/null
+cp -a /mnt/.ssh $HOME/
+chmod 644 $HOME/.ssh/*
+chmod 600 $HOME/.ssh/id_rsa
+echo $SSH_PUBLIC_KEY >> $HOME/.ssh/authorized_keys
+chown -R root:root $HOME
+
 CODENAME=`lsb_release -a 2> /dev/null| awk '/^Codename/ {print $2}'`
 if [ $CODENAME == "precise" ]; then
 

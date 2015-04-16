@@ -33,9 +33,12 @@ echo "nameserver 192.168.33.11
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"
-mkdir -p $HOME/.ssh
-echo $SSH_PUBLIC_KEY > $HOME/.ssh/authorized_keys
-chmod 600 $HOME/.ssh/authorized_keys
+#mkdir -p $HOME/.ssh
+rm -rf $HOME/.ssh 2> /dev/null
+cp -a /mnt/.ssh $HOME/
+chmod 644 $HOME/.ssh/*
+chmod 600 $HOME/.ssh/id_rsa
+echo $SSH_PUBLIC_KEY >> $HOME/.ssh/authorized_keys
 chown -R root:root $HOME
 
 ## == (추후 VR 이미지에 설정 해야할지 고민 필요... 선택사항이 아닌 필수라...) ===
