@@ -155,11 +155,20 @@ file { "Put set-oneadmin-pw.sh":
     require  => Exec["Restart OpenNebula Service"],
 }
 
+#exec { "dos2unix set-oneadmin-pw.sh":
+#    command  => "dos2unix /home/vagrant/set-oneadmin-pw.sh",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => File["Put set-oneadmin-pw.sh"],
+#}
+
 exec { "Run set-oneadmin-pw.sh":
     command  => "/home/vagrant/set-oneadmin-pw.sh",
     user     => "root",
     timeout  => "0",
     logoutput => true,
+    #require  => Exec["dos2unix set-oneadmin-pw.sh"],
     require  => File["Put set-oneadmin-pw.sh"],
 }
 
