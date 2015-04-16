@@ -104,12 +104,12 @@ exec { "Enable VSe":
     require  => File["Set VSe.cfg"],
 }
 
-exec { "Disable virVSe":
+exec { "Disable virbr0":
     command  => "sleep 10; virsh net-destroy default && virsh net-autostart default --disable",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    onlyif   => "ifconfig virVSe 2> /dev/null > /dev/null",
+    onlyif   => "ifconfig virbr0 2> /dev/null > /dev/null",
     #require  => Exec["Static ARP Table for VSe"],
     require  => Exec["Enable VSe"],
 }
@@ -124,7 +124,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         ensure   => directory,
         replace  => true,
         recurse  => true,
-        require  => Exec["Disable virVSe"],
+        require  => Exec["Disable virbr0"],
     }
     exec { "Permission Private SSH-key":
         command  => "chown oneadmin:oneadmin ${oneadmin_home}/.ssh/* && chmod 644 ${oneadmin_home}/.ssh/* && chmod 600 ${oneadmin_home}/.ssh/id_rsa",
@@ -189,7 +189,7 @@ file { "Put .ssh DIR for root":
     ensure   => directory,
     replace  => true,
     recurse  => true,
-    require  => Exec["Disable virVSe"],
+    require  => Exec["Disable virbr0"],
 }
 
 exec { "Permission Private SSH-key for root":
