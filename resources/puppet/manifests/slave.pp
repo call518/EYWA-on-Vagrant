@@ -151,7 +151,6 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => Exec["Create DIR /var/lib/one/datastores"],
     }
     exec { "Set Ownership for /var/lib/one/datastores":
-        provider => shell,
         command  => "chown -R oneadmin:oneadmin /var/lib/one/datastores && chmod -R 775 /var/lib/one/datastores",
         user     => "root",
         timeout  => "0",
