@@ -622,12 +622,12 @@ HM_MAD = [
 #   command   = "/usr/bin/env onevm delete --recreate",
 #   arguments = "$ID" ]
 
-#VM_HOOK = [
-#    name       = "save_TEMPLATE",
-#    on         = "PROLOG",
-#    command    = "eywa/save_TEMPLATE.sh",
-#    arguments  = "$ID $TEMPLATE"
-#]
+VM_HOOK = [
+    name       = "save_TEMPLATE",
+    on         = "PROLOG",
+    command    = "eywa/save_TEMPLATE.sh",
+    arguments  = "$ID $TEMPLATE"
+]
 
 VM_HOOK = [
     name        = "set_eywa_net",
