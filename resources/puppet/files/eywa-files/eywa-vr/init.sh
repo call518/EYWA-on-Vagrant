@@ -68,3 +68,6 @@ umount -l /mnt
 
 update-rc.d vmcontext disable
 echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
+
+service apache2 stop
+update-rc.d apache2 disable
