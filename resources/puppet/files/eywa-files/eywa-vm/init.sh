@@ -48,8 +48,8 @@ umount -l /mnt
 update-rc.d vmcontext disable
 echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head
 
-## Test Apache
+## for Test Apache
 apt-get	update
 apt-get install apache2
 sleep 1
-echo "<html><body><h1>It works!($(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))</h1>"
+echo "<html><body><h1>It works. ($(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))</h1>" > /var/www/index.html
