@@ -21,7 +21,9 @@ do
 done
 onevnet delete "$ONE_UID-Private-Net"
 onetemplate delete "$ONE_UID-EYWA-Router"
+sleep 2
 onetemplate delete "$ONE_UID-Ubuntu(EYWA)"
+sleep 2
 onetemplate delete "$ONE_UID-Ubuntu(Public)"
 for oid in `$MYSQL_ONE -e"select oid from template_pool where uid='$ONE_UID'" | sed -e '/oid/d'`
 do
