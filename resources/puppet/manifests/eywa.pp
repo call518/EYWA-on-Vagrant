@@ -201,6 +201,11 @@ if $hostname == "master" {
 
 ######## Common: Master & Slave-{N} ###########
 
+package { "mysql-client":
+    #ensure   => installed,
+    ensure   => "5.5.41-0ubuntu0.14.04.1",
+}
+
 exec { "Create DIR /var/tmp/one/hooks/eywa":
     command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa && chmod 0755 /var/tmp/one/hooks/eywa",
     creates  => "/var/tmp/one/hooks/eywa",
