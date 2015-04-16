@@ -49,21 +49,19 @@ update-rc.d vmcontext disable
 echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head
 
 ## for Test Apache
-#apt-get	update
-#apt-get install apache2
-mkdir -p /home/test-web
+mkdir -p /var/www/ 2> /dev/null
 echo "
 <html>
 <body>
 <h1>
-========= It works =========================
-HOSTNAME: $(hostname)
-IP-ADDRE: $(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))
+========= It works =========================<br>
+HOSTNAME: $(hostname)<br>
+IP-ADDRE: $(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))<br>
 ============================================
 </h1>
 </body>
 </html>
-" > /home/test-web/index.html
-pushd /home/test-web
-python -m SimpleHTTPServer 80 &
-popd
+" > /var/www/index.html
+#pushd /home/test-web
+#python -m SimpleHTTPServer 80 &
+#popd
