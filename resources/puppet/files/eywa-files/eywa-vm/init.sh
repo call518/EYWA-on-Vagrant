@@ -52,7 +52,18 @@ echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/r
 #apt-get	update
 #apt-get install apache2
 mkdir -p /home/test-web
-echo "<html><body><h1>It works. ($(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))</h1>" > /home/test-web
+echo "
+<html>
+<body>
+<h1>
+========= It works =========================
+HOSTNAME: $(hostname)
+IP-ADDRE: $(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))
+============================================
+</h1>
+</body>
+</html>
+" > /home/test-web/index.html
 pushd /home/test-web
 python -m SimpleHTTPServer 80 &
 popd
