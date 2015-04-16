@@ -8,6 +8,7 @@
 T64=$2
 XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
+ONE_UID=`$XPATH /VM/TEMPLATE/CONTEXT/ONE_UID`
 ONE_ETH0_IP=`$XPATH /VM/TEMPLATE/NIC/IP`
 ONE_IS_EYWA=`$XPATH /VM/TEMPLATE/CONTEXT/IS_EYWA`
 ONE_IS_VR=`$XPATH /VM/TEMPLATE/CONTEXT/IS_VR`
@@ -25,7 +26,11 @@ SERVER="192.168.33.11"
 #else
 #	FQDN_HEAD="Public-VM"
 #fi
-FQDN_HEAD="VM"
+if [ $ONE_IS_VR == "yes" ]; then
+	FQDN_HEAD="VR"
+else
+	FQDN_HEAD="VM"
+fi
 ZONE="test.org"
 WORK_IP=$ONE_ETH0_IP
 WORK_IP_1=`echo $WORK_IP | awk -F'.' '{print $1}'`
@@ -33,7 +38,7 @@ WORK_IP_2=`echo $WORK_IP | awk -F'.' '{print $2}'`
 WORK_IP_3=`echo $WORK_IP | awk -F'.' '{print $3}'`
 WORK_IP_4=`echo $WORK_IP | awk -F'.' '{print $4}'`
 
-WORK_FQDN="$FQDN_HEAD-$WORK_IP_1-$WORK_IP_2-$WORK_IP_3-$WORK_IP_4.$ZONE"
+WORK_FQDN="$FQDN_HEAD-$ONE_UID-$WORK_IP_1-$WORK_IP_2-$WORK_IP_3-$WORK_IP_4.$ZONE"
 WORK_PTR_IP="$WORK_IP_4-$WORK_IP_3-$WORK_IP_2-$WORK_IP_1"
 
 function usage() {
