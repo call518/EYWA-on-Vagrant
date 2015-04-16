@@ -4,7 +4,7 @@ EYWA PoC, OpenNebula on Vagrant Environment
 
 ## (Note)
 
-* On MS-Windows family, may be ^M troube...
+* On MS-Windows family, may be \^M troube...
 * (Recommended) Before "Git Clone", Running "git config --global core.autocrlf true"
 
 # EYWA Architecture
