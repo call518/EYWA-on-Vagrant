@@ -48,7 +48,7 @@ chown -R root:root $HOME
 #echo "arping -U 10.0.0.1 -I eth1 -c 10" >> /etc/rc.local
 #echo "exit 0" >> /etc/rc.local
 ip addr add 10.0.0.1/24 dev eth1
-arping -A -U 10.0.0.1 -I eth1 -c 10
+arping -A -U 10.0.0.1 -I eth1 -c 100 &
 cp -f /mnt/iptables.rules /etc/default/iptables.rules
 iptables-restore < /etc/default/iptables.rules
 cp -f /mnt/haproxy.cfg.tmpl /etc/haproxy/haproxy.cfg.tmpl

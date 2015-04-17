@@ -54,10 +54,8 @@ echo "
 <html>
 <body>
 <h1>
-========= It works =========================<br>
-HOSTNAME: $(hostname)<br>
-IP-ADDRE: $(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2))<br>
-============================================
+$(hostname)
+$(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2)
 </h1>
 </body>
 </html>
