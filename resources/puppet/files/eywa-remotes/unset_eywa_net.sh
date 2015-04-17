@@ -10,7 +10,7 @@ XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
 ONE_VM_ID=`$XPATH /VM/ID`
 ## 삭제 마킹 가장 우선... (추후, 트랜잭션이든, 다수 VM을 일괄 삭제에 대한 처리 필요...)
-$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID'"
+$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID' -s -N"
 
 ONE_UID=`$XPATH /VM/TEMPLATE/CONTEXT/ONE_UID`
 ONE_GID=`$XPATH /VM/GID`
@@ -18,8 +18,8 @@ ONE_HID=`$XPATH /VM/HISTORY_RECORDS/HISTORY/HID`
 ONE_ETH0_IP=`$XPATH /VM/TEMPLATE/CONTEXT/NIC/IP`
 
 QUERY_MC_ADDRESS=`$MYSQL_EYWA -e "select num,address from mc_address where uid='$ONE_UID'"`
-VXLAN_G_N=`echo $QUERY_MC_ADDRESS | awk '{print $3}'` # VXLAN Group Number
-VXLAN_G_A=`echo $QUERY_MC_ADDRESS | awk '{print $4}'` # VXLAN Group Address
+VXLAN_G_N=`echo $QUERY_MC_ADDRESS | awk '{print $1}'` # VXLAN Group Number
+VXLAN_G_A=`echo $QUERY_MC_ADDRESS | awk '{print $2}'` # VXLAN Group Address
 
 ONE_IS_EYWA=`$XPATH /VM/TEMPLATE/CONTEXT/IS_EYWA`
 ONE_IS_VR=`$XPATH /VM/TEMPLATE/CONTEXT/IS_VR`
@@ -38,8 +38,8 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 	if [ "$ONE_IS_VR" == "yes" ]; then
 		## 삭제 대상이 VR 일경우, 2가지 arptables 정책 모두 삭제 (non-orphan)
 		## (계정당,노드당 VR은 한개만 존재해야 하므로, 잔존 VR이 있는지 없는지는 조사할 필요가 없다)
-		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
-		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $2}'`
+		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='1' and uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
+		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $1}'`
 		if [ $EXIST_EYWA_VMs -eq 0 ]; then
 			## 대상 HOST에 동일 계정의 EYWA VM이 하나도 없으면, arptables 정책 모두 삭제
 			## (현재 VR도 삭제되는 상황이므로 VR조사는 불필요)
@@ -73,9 +73,9 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 		## 삭제 대상이 VR이 아닌, 하위 EYWA VM일 경우, 1가지 arptables 정책만 삭제 (orphan)
 		## (정책 count검사를 위한 while 구문이 있었으나, 삭제 했음..)
 		QUERY_EXIST_EYWA_VRs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='1' and uid='$ONE_UID' and hid='$ONE_HID' and deleted='0'"`
-		EXIST_EYWA_VRs=`echo $QUERY_EXIST_EYWA_VRs | awk '{print $2}'`
-		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
-		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $2}'`
+		EXIST_EYWA_VRs=`echo $QUERY_EXIST_EYWA_VRs | awk '{print $1}'`
+		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='0' and uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
+		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $1}'`
 		if [ $EXIST_EYWA_VRs -eq 0 ]; then
 			## 대상 HOST에 동일 계정의 VR이 존재치 않을 경우,
 			if [ $EXIST_EYWA_VMs -eq 0 ]; then

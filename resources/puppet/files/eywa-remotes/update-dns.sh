@@ -4,7 +4,7 @@
 #DB_NAME="eywa"
 #DB_USER="eywa"
 #DB_PASS="1234"
-#MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME"
+#MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME -s -N"
 T64=$2
 XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 

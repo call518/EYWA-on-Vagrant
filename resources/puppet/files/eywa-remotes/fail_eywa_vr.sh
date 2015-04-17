@@ -4,7 +4,7 @@ DB_HOST="192.168.33.11"
 DB_NAME="eywa"
 DB_USER="eywa"
 DB_PASS="1234"
-MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME"
+MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME -s -N"
 T64=$1
 XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
@@ -18,8 +18,8 @@ ONE_IS_VR=`$XPATH /VM/TEMPLATE/CONTEXT/IS_VR`
 VR_PRI_IP="10.0.0.1"
 
 QUERY_MC_ADDRESS=`$MYSQL_EYWA -e "select num,address from mc_address where uid='$ONE_UID'"`
-VXLAN_G_N=`echo $QUERY_MC_ADDRESS | awk '{print $3}'` # VXLAN Group Number
-VXLAN_G_A=`echo $QUERY_MC_ADDRESS | awk '{print $4}'` # VXLAN Group Address
+VXLAN_G_N=`echo $QUERY_MC_ADDRESS | awk '{print $1}'` # VXLAN Group Number
+VXLAN_G_A=`echo $QUERY_MC_ADDRESS | awk '{print $2}'` # VXLAN Group Address
 
 if [ "$ONE_IS_EYWA" == "yes" ]; then
 	if [ "$ONE_IS_VR" == "yes" ]; then
