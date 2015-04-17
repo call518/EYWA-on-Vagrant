@@ -38,7 +38,7 @@ if [ "$ONE_IS_EYWA" == "yes" ]; then
 	if [ "$ONE_IS_VR" == "yes" ]; then
 		## 삭제 대상이 VR 일경우, 2가지 arptables 정책 모두 삭제 (non-orphan)
 		## (계정당,노드당 VR은 한개만 존재해야 하므로, 잔존 VR이 있는지 없는지는 조사할 필요가 없다)
-		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='1' and uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
+		QUERY_EXIST_EYWA_VMs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='0' and uid='$ONE_UID' and hid='$ONE_HID' and vid!='$ONE_VM_ID' and deleted='0'"`
 		EXIST_EYWA_VMs=`echo $QUERY_EXIST_EYWA_VMs | awk '{print $1}'`
 		if [ $EXIST_EYWA_VMs -eq 0 ]; then
 			## 대상 HOST에 동일 계정의 EYWA VM이 하나도 없으면, arptables 정책 모두 삭제
