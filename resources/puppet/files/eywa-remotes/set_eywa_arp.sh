@@ -43,7 +43,7 @@ if [ "$ONE_IS_VR" == "yes" ]; then
 		if [ $EXIST_EYWA_VRs -ne 0 ]; then
 			sudo arptables -I FORWARD -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1 -j DROP ## 다음 라인의 "onevm delete"에서 수행된 될 Hook가 지울 temp성 정책 하나 추가(일시적으로 중복...)
 			$SSH_oneadmin "onevm delete $ONE_VM_ID"
-			exit 0
+			exit 128
 		fi
 	fi
 fi

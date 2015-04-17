@@ -4,13 +4,13 @@ DB_HOST="192.168.33.11"
 DB_NAME="eywa"
 DB_USER="eywa"
 DB_PASS="1234"
-MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME"
+MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME -s -N"
 T64=$1
 XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
 
 ONE_VM_ID=`$XPATH /VM/ID`
 ## 삭제 마킹 가장 우선... (추후, 트랜잭션이든, 다수 VM을 일괄 삭제에 대한 처리 필요...)
-$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID' -s -N"
+$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID'"
 
 ONE_UID=`$XPATH /VM/TEMPLATE/CONTEXT/ONE_UID`
 ONE_GID=`$XPATH /VM/GID`
