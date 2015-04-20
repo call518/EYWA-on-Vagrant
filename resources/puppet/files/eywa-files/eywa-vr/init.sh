@@ -58,11 +58,12 @@ cp -f /mnt/haproxy.init /etc/init.d/haproxy
 rm -rf /etc/haproxy/haproxy.cfg /etc/haproxy/cfg.d
 mkdir -p /etc/haproxy/cfg.d
 /etc/haproxy/haproxy-cfg-gen
-if [ "${HAPROXY_CFG}X" != "X" ]; then
-	/etc/init.d/haproxy start
-else
-	/etc/init.d/haproxy stop
-fi
+#if [ "${HAPROXY_CFG}X" != "X" ]; then
+#	/etc/init.d/haproxy start
+#else
+#	/etc/init.d/haproxy stop
+#fi
+/etc/init.d/haproxy stop
 
 umount -l /mnt
 
