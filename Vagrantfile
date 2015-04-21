@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provider :virtualbox do |vb|
   #  vb.gui = true
   #end
-  #config.ssh.forward_x11 = true
+  config.ssh.forward_x11 = true
 
   master_ip = "192.168.33.11"
   master_ip_pri = "172.20.33.11"
