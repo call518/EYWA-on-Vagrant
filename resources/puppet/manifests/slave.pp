@@ -249,13 +249,22 @@ file { "Create /home/vagrant/.config DIR for EtherApe":
     require  => Exec["Add ONE Node"],
 }
 
-file { "Put /root/.config/etherape":
-    path    => "/etc/network/interfaces.d/eth1.cfg",
+file { "Put /home/vagrant/.config/etherape":
+    path    => "/home/vagrant/.config/etherape",
     ensure  => present,
-    owner   => "root",
-    group   => "root",
+    owner   => "vagrant",
+    group   => "vagrant",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/etherape.config"),
     require => File["Create /home/vagrant/.config DIR for EtherApe"],
+}
+
+file { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
+    path    => "/root/.config/etherape",
+    ensure  => "link",
+    owner   => "root",
+    group   => "root",
+    target  => "/home/vagrant/.config/etherape",
+    require => File["Put /home/vagrant/.config/etherape"],
 }
 
