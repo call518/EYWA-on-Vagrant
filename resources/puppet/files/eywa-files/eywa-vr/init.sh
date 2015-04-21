@@ -67,10 +67,19 @@ mkdir -p /etc/haproxy/cfg.d
 
 umount -l /mnt
 
+CODENAME=`lsb_release -a 2> /dev/null| awk '/^Codename/ {print $2}'`
+if [ $CODENAME == "precise" ]; then
 echo "### Internal apt-get Mirror
 deb http://ftp.daum.net/ubuntu precise main restricted universe
 deb http://ftp.daum.net/ubuntu precise-updates main restricted universe
 deb http://ftp.daum.net/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
+elif [ $CODENAME == "trusty" ]; then
+echo "### Internal apt-get Mirror
+deb http://ftp.daum.net/ubuntu/ trusty main restricted universe multiverse
+deb http://ftp.daum.net/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://ftp.daum.net/ubuntu/ trusty-security main restricted universe multiverse
+#deb http://ftp.daum.net/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
+fi
 
 update-rc.d vmcontext disable
 echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
