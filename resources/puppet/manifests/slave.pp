@@ -255,7 +255,7 @@ file { "Put /home/vagrant/.config/etherape":
     owner   => "vagrant",
     group   => "vagrant",
     mode    => 0644,
-    content => template("/vagrant/resources/puppet/templates/etherape.config"),
+    content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
     require => File["Create /home/vagrant/.config DIR for EtherApe"],
 }
 
