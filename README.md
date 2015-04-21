@@ -45,7 +45,14 @@ host> vagrant up slave-2
 * Connecting /w VNC
 
 ```
-VNC Address: {Vagrant-Host-IP}:55900
+[master]
+VNC Address: {Vagrant-Host-IP}:55910
+
+[slave-1]
+VNC Address: {Vagrant-Host-IP}:55911
+
+[slave-2]
+VNC Address: {Vagrant-Host-IP}:55912
 ```
 
 ## Web-UI

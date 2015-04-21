@@ -11,6 +11,10 @@ package { "arptables":
     ensure   => installed,
 }
 
+package { "etherape":
+    ensure   => installed,
+}
+  
 package { "nfs-common":
     ensure   => installed,
 }
@@ -19,9 +23,14 @@ package { "opennebula-node":
     ensure   => installed,
 }
 
-package { "qemu-system":
+package { "virt-manager":
     ensure   => installed,
     require  => Package["opennebula-node"],
+}
+
+package { "qemu-system":
+    ensure   => installed,
+    require  => [Package["opennebula-node"], Package["opennebula-node"]],
 }
 
 package { "bridge-utils":
@@ -151,6 +160,13 @@ if $hostname =~ /^slave-[0-9]+/ {
         logoutput => true,
         require  => Exec["Add /etc/fstab"],
     }
+    exec { "=== Waiting........ mount master's NFS ===":
+        command  => "echo '=== Waiting........ mount master's NFS ==='",
+        user     => "root",
+        timeout  => "0",
+        logoutput => true,
+        require  => Exec["Create DIR /var/lib/one/datastores"],
+    }
     exec { "Mount datastore":
         provider => shell,
         #command  => "mount /var/lib/one/datastores",
@@ -159,7 +175,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         timeout  => "0",
         logoutput => true,
         unless   => "df | grep -q '^master:/var/lib/one/datastores'",
-        require  => Exec["Create DIR /var/lib/one/datastores"],
+        require  => Exec["=== Waiting........ mount master's NFS ==="],
     }
     exec { "Set Ownership for /var/lib/one/datastores":
         command  => "chown -R oneadmin:oneadmin /var/lib/one/datastores && chmod -R 775 /var/lib/one/datastores",
@@ -220,5 +236,16 @@ exec { "Add ONE Node":
     logoutput => true,
     unless   => "su -l oneadmin -c \"ssh oneadmin@master 'onehost list'\" | grep -q $hostname",
     require  => Exec["Update Apparmor"],
+}
+
+file { "Create /home/vagrant/.config DIR for EtherApe":
+    path     => "/home/vagrant/.config",
+    owner    => "vagrant",
+    group    => "vagrant",
+    mode     => 0644,
+    ensure   => directory,
+    replace  => true,
+    recurse  => true,
+    require  => Exec["Add ONE Node"],
 }
 

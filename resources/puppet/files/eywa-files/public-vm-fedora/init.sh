@@ -32,7 +32,7 @@ else
 	sed -i "s/^HOSTNAME=.*/HOSTNAME=$HOSTNAME.test.org/g" /etc/sysconfig/network
 fi
 
-echo "nameserver 192.168.33.11
+echo "nameserver 192.168.33.10
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"

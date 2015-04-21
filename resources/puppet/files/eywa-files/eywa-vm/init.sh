@@ -24,7 +24,7 @@ echo "$HOSTNAME.test.org" > /etc/hostname
 #echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 /etc/init.d/hostname restart
 
-echo "nameserver 192.168.33.11
+echo "nameserver 192.168.33.10
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"
@@ -37,9 +37,9 @@ echo $SSH_PUBLIC_KEY >> $HOME/.ssh/authorized_keys
 chown -R root:root $HOME
 
 #echo "### Internal apt-get Mirror
-#deb http://192.168.33.11/ubuntu precise main restricted universe
-#deb http://192.168.33.11/ubuntu precise-updates main restricted universe
-#deb http://192.168.33.11/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
+#deb http://192.168.33.10/ubuntu precise main restricted universe
+#deb http://192.168.33.10/ubuntu precise-updates main restricted universe
+#deb http://192.168.33.10/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
 
 /etc/init.d/networking restart
 
@@ -51,7 +51,7 @@ deb http://ftp.daum.net/ubuntu precise-updates main restricted universe
 deb http://ftp.daum.net/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
 
 update-rc.d vmcontext disable
-echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head
+echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head
 
 ## for Test Apache
 mkdir -p /var/www/ 2> /dev/null

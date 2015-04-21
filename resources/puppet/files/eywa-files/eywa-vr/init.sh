@@ -29,7 +29,7 @@ echo "$HOSTNAME.test.org" > /etc/hostname
 #echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 /etc/init.d/hostname restart
 
-echo "nameserver 192.168.33.11
+echo "nameserver 192.168.33.10
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"
@@ -73,7 +73,7 @@ deb http://ftp.daum.net/ubuntu precise-updates main restricted universe
 deb http://ftp.daum.net/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
 
 update-rc.d vmcontext disable
-echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
+echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
 
 service apache2 stop
 update-rc.d apache2 disable

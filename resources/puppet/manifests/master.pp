@@ -15,11 +15,6 @@ package { "opennebula":
     ensure   => installed,
 }
 
-package { "virt-manager":
-    ensure   => installed,
-    require  => Package["opennebula"],
-}
-
 package { "opennebula-sunstone":
     ensure   => installed,
 }
@@ -172,8 +167,8 @@ exec { "Run set-oneadmin-pw.sh":
     require  => File["Put set-oneadmin-pw.sh"],
 }
 
-exec { "=== Starting Download Template-Image ===":
-    command  => "echo '=== Starting... Download Template-Image... Waiting.... ==='",
+exec { "=== Waiting.... Downloading Template-Image... ===":
+    command  => "echo '=== Waiting.... Downloading Template-Image... ==='",
     user     => "root",
     timeout  => "0",
     logoutput => true,
@@ -186,7 +181,7 @@ exec { "=== Starting Download Template-Image ===":
 #    user     => "root",
 #    timeout  => "0",
 #    #logoutput => true,
-#    require  => Exec["=== Starting Download Template-Image ==="],
+#    require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
 #}
 
 exec { "Download EYWA-Virtual-Router.qcow2.gz":
@@ -196,7 +191,7 @@ exec { "Download EYWA-Virtual-Router.qcow2.gz":
     timeout  => "0",
     #logoutput => true,
     #require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
-    require  => Exec["=== Starting Download Template-Image ==="],
+    require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
 }
 
 exec { "Download Ubuntu12.04_64.qcow2.gz":

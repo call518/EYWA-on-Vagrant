@@ -27,7 +27,7 @@ hostname $HOSTNAME.test.org
 #echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 
-echo "nameserver 192.168.33.11
+echo "nameserver 192.168.33.10
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"

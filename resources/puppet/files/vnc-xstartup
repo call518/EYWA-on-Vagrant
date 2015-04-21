@@ -20,3 +20,5 @@ xrdb $HOME/.Xresources
 startxfce4 &
 xfce4-terminal &
 virt-manager &
+#etherape --mode ip --interface any --numeric --filter 'arp or icmp' &
+etherape --mode ip --interface any --filter 'arp or icmp' &

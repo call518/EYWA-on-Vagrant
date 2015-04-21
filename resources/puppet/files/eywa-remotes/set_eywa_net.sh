@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DB_HOST="192.168.33.11"
+DB_HOST="192.168.33.10"
 DB_NAME="eywa"
 DB_USER="eywa"
 DB_PASS="1234"
@@ -35,7 +35,7 @@ $MYSQL_EYWA -e "insert into vm_info values ('','$DB_IS_VR','$ONE_VM_ID','$ONE_UI
 ## ================== (임시!!!) ================================================
 ## 동일 HOST에 동일 계정의 VR이 중복되는 것을 방지... 원칙적으로는 ONE의 스케쥴러에 의해, VR이 배치될 HOST조건을 수립하는 것!!!!
 ## (계정당,노드당 VR은 한개만 존재해야 하므로, 스케쥴링 HOST에 이미 동일 계정의 VR이 존재하면 작업 대상 신규 VM을 Terminate하고 종료.)
-SSH_oneadmin="ssh oneadmin@192.168.33.11 -i /var/lib/one/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5"
+SSH_oneadmin="ssh oneadmin@192.168.33.10 -i /var/lib/one/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5"
 if [ "$ONE_IS_VR" == "yes" ]; then
 	QUERY_EXIST_EYWA_VRs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='1' and vid!='$ONE_VM_ID' and uid='$ONE_UID' and hid='$ONE_HID' and deleted='0'"`
 	EXIST_EYWA_VRs=`echo $QUERY_EXIST_EYWA_VRs | awk '{print $1}'`

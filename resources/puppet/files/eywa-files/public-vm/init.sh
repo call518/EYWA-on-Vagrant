@@ -25,7 +25,7 @@ echo "$HOSTNAME.test.org" > /etc/hostname
 hostname $HOSTNAME.test.org
 #/etc/init.d/hostname restart
 
-echo "nameserver 192.168.33.11
+echo "nameserver 192.168.33.10
 nameserver 168.126.63.1" > /etc/resolv.conf
 
 HOME="/root"
@@ -41,9 +41,9 @@ CODENAME=`lsb_release -a 2> /dev/null| awk '/^Codename/ {print $2}'`
 if [ $CODENAME == "precise" ]; then
 
 echo "### Internal apt-get Mirror
-#deb http://192.168.33.11/ubuntu precise main restricted universe
-#deb http://192.168.33.11/ubuntu precise-updates main restricted universe
-#deb http://192.168.33.11/ubuntu precise-security main restricted universe multiverse
+#deb http://192.168.33.10/ubuntu precise main restricted universe
+#deb http://192.168.33.10/ubuntu precise-updates main restricted universe
+#deb http://192.168.33.10/ubuntu precise-security main restricted universe multiverse
 
 deb http://ftp.daum.net/ubuntu precise main restricted universe
 deb http://ftp.daum.net/ubuntu precise-updates main restricted universe
@@ -52,9 +52,9 @@ deb http://ftp.daum.net/ubuntu precise-security main restricted universe multive
 elif [ $CODENAME == "trusty" ]; then
 
 echo "### Internal apt-get Mirror
-#deb http://192.168.33.11/ubuntu trusy main restricted universe
-#deb http://192.168.33.11/ubuntu trusy-updates main restricted universe
-#deb http://192.168.33.11/ubuntu trusy-security main restricted universe multiverse
+#deb http://192.168.33.10/ubuntu trusy main restricted universe
+#deb http://192.168.33.10/ubuntu trusy-updates main restricted universe
+#deb http://192.168.33.10/ubuntu trusy-security main restricted universe multiverse
 
 deb http://ftp.daum.net/ubuntu/ trusty main restricted universe multiverse
 deb http://ftp.daum.net/ubuntu/ trusty-updates main restricted universe multiverse
@@ -72,4 +72,4 @@ fi
 umount -l /mnt
 
 update-rc.d vmcontext disable
-echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
+echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 

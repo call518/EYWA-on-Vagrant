@@ -2,15 +2,15 @@
   "hosts": {
     "master": {
       "name": "master",
-      "ipaddress": "192.168.33.11"
+      "ipaddress": "192.168.33.10"
     },
     "slave-1": {
       "name": "slave-1",
-      "ipaddress": "192.168.33.12"
+      "ipaddress": "192.168.33.11"
     },
     "slave-2": {
       "name": "slave-2",
-      "ipaddress": "192.168.33.13"
+      "ipaddress": "192.168.33.12"
     }
   }
 }

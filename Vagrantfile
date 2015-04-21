@@ -10,10 +10,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provider :virtualbox do |vb|
   #  vb.gui = true
   #end
+  config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
 
-  master_ip = "192.168.33.11"
-  master_ip_pri = "172.20.33.11"
+  master_ip = "192.168.33.10"
+  master_ip_pri = "172.20.33.10"
   ptr_head = "33.168.192"
 
   oneadmin_pw = "passw0rd"
@@ -31,11 +32,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     my_ip = "#{master_ip}"
     my_ip_pri = "#{master_ip_pri}"
     master.vm.hostname = "master"
+    vnc_port = "55910"
     #master.vm.network "private_network", ip: "#{master_ip}", auto_config: false, virtualbox__intnet: true
     master.vm.network "private_network", ip: "#{master_ip}", auto_config: false
     master.vm.network "private_network", ip: "#{master_ip_pri}", virtualbox__intnet: true
     master.vm.network "forwarded_port", guest: "#{sunstone_listen_port}", host: "#{sunstone_listen_port}"
-    master.vm.network "forwarded_port", guest: 55900, host: 55900, protocol: 'tcp'
+    master.vm.network "forwarded_port", guest: "#{vnc_port}", host: "#{vnc_port}", protocol: 'tcp'
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'tcp'
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
     master.vm.provider :virtualbox do |vb|
@@ -105,6 +107,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file  = "vnc.pp"
       puppet.facter = {
         "oneadmin_pw" => "#{oneadmin_pw}",
+        "vnc_port" => "#{vnc_port}"
       }
       puppet.options = "--verbose"
     end
@@ -126,9 +129,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   num_slave_nodes = 2 ## (WARNING) Max:2, and sync with hiera file -> "resources/puppet/hieradata/hosts.json"
   slave_ip_base = "192.168.33."
-  slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+12}" }
+  slave_ips = num_slave_nodes.times.collect { |n| slave_ip_base + "#{n+11}" }
   slave_ip_pri_base = "172.20.33."
-  slave_ips_pri = num_slave_nodes.times.collect { |n| slave_ip_pri_base + "#{n+12}" }
+  slave_ips_pri = num_slave_nodes.times.collect { |n| slave_ip_pri_base + "#{n+11}" }
   
   num_slave_nodes.times do |n|
     config.vm.define "slave-#{n+1}" do |slave|
@@ -137,9 +140,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       my_ip = "#{slave_ip}"
       my_ip_pri = "#{slave_ip_pri}"
       slave.vm.hostname = "slave-#{n+1}"
+      vnc_port = "559#{n+11}"
       #slave.vm.network "private_network", ip: "#{slave_ip}", virtualbox__intnet: true
       slave.vm.network "private_network", ip: "#{slave_ip}", auto_config: false
       slave.vm.network "private_network", ip: "#{slave_ip_pri}", virtualbox__intnet: true
+      slave.vm.network "forwarded_port", guest: "#{vnc_port}", host: "#{vnc_port}", protocol: 'tcp'
       slave.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--cpus", "2"]
         vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -185,16 +190,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
         puppet.options = "--verbose"
       end
-#      slave.vm.provision "puppet" do |puppet|
-#        puppet.working_directory = "/vagrant/resources/puppet"
-#        puppet.hiera_config_path = "resources/puppet/hiera.yaml"
-#        puppet.manifests_path = "resources/puppet/manifests"
-#        puppet.manifest_file  = "vnc.pp"
-#        puppet.facter = {
-#          "oneadmin_pw" => "#{oneadmin_pw}",
-#        }
-#        puppet.options = "--verbose"
-#      end
+      slave.vm.provision "puppet" do |puppet|
+        puppet.working_directory = "/vagrant/resources/puppet"
+        puppet.hiera_config_path = "resources/puppet/hiera.yaml"
+        puppet.manifests_path = "resources/puppet/manifests"
+        puppet.manifest_file  = "vnc.pp"
+        puppet.facter = {
+          "oneadmin_pw" => "#{oneadmin_pw}",
+          "vnc_port" => "#{vnc_port}"
+        }
+        puppet.options = "--verbose"
+      end
       slave.vm.provision "puppet" do |puppet|
         puppet.working_directory = "/vagrant/resources/puppet"
         puppet.hiera_config_path = "resources/puppet/hiera.yaml"
