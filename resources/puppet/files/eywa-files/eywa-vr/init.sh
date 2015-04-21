@@ -67,6 +67,11 @@ mkdir -p /etc/haproxy/cfg.d
 
 umount -l /mnt
 
+echo "### Internal apt-get Mirror
+deb http://ftp.daum.net/ubuntu precise main restricted universe
+deb http://ftp.daum.net/ubuntu precise-updates main restricted universe
+deb http://ftp.daum.net/ubuntu precise-security main restricted universe multiverse" > /etc/apt/sources.list
+
 update-rc.d vmcontext disable
 echo -e "nameserver 192.168.33.11\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
 
