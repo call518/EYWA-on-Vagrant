@@ -161,7 +161,7 @@ if $hostname =~ /^slave-[0-9]+/ {
         require  => Exec["Add /etc/fstab"],
     }
     exec { "=== Waiting........ mount master's NFS ===":
-        command  => "echo '=== Waiting........ mount master's NFS ==='",
+        command  => "echo \"=== Waiting........ mount master's NFS ===\"",
         user     => "root",
         timeout  => "0",
         logoutput => true,
