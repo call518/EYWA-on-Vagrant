@@ -265,6 +265,6 @@ exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
     timeout  => "0",
     logoutput => true,
     unless   => "test -L /root/.config/etherape",
-    require  => File["/root/.config/etherape"],
+    require  => File["Put /home/vagrant/.config/etherape"],
 }
 
