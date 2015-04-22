@@ -259,12 +259,12 @@ file { "Put /home/vagrant/.config/etherape":
     require => File["Create /home/vagrant/.config DIR for EtherApe"],
 }
 
-file { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
-    path    => "/root/.config/etherape",
-    ensure  => "link",
-    owner   => "root",
-    group   => "root",
-    target  => "/home/vagrant/.config/etherape",
-    require => File["Put /home/vagrant/.config/etherape"],
+exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
+    command  => "rm -f /root/.config/etherape && ln -s /home/vagrant/.config/etherape /root/.config/etherape",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    unless   => "test -L /root/.config/etherape",
+    require  => File["/root/.config/etherape"],
 }
 
