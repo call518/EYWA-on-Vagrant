@@ -26,8 +26,8 @@ echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 hostname $HOSTNAME.test.org
 service rsyslog restart
 
-echo "nameserver 192.168.33.10
-nameserver 168.126.63.1" > /etc/resolv.conf
+echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolv.conf
+echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolvconf/resolv.conf.d/head 
 
 HOME="/root"
 #mkdir -p $HOME/.ssh
@@ -73,4 +73,3 @@ fi
 umount -l /mnt
 
 update-rc.d vmcontext disable
-echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" >> /etc/resolvconf/resolv.conf.d/head 
