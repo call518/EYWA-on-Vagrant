@@ -7,13 +7,15 @@ CONTEXT=[
 	PASSWD="1234",
 	SSH_PUBLIC_KEY="@@__SSH_PUB_KEY__@@",
 	ETH0_IP="$NIC[IP,NETWORK=\"Public-Net\"]",
+	ETH0_MAC="$NIC[MAC,NETWORK=\"Public-Net\"]",
     ETH0_GATEWAY="192.168.33.2",
 	ETH1_IP="$NIC[IP,NETWORK=\"@@__UID__@@-Private-Net\"]",
+	ETH1_MAC="$NIC[MAC,NETWORK=\"@@__UID__@@-Private-Net\"]",
     HAPROXY_CFG="http:0.0.0.0:8080:80:1000:100:10.0.0.3,10.0.0.4,10.0.0.5,10.0.0.6,10.0.0.7,10.0.0.8,10.0.0.9,10.0.0.10"
 ]
 CPU="0.2"
 VCPU="2"
-DISK=[IMAGE="EYWA-Virtual-Router",IMAGE_UNAME="oneadmin"]
+DISK=[IMAGE="Ubuntu-14.04",IMAGE_UNAME="oneadmin"]
 FEATURES=[ACPI="yes"]
 GRAPHICS=[LISTEN="0.0.0.0",TYPE="VNC"]
 MEMORY="256"

@@ -21,32 +21,32 @@ su -l oneadmin << EOF
 #onevnet delete Public-Net
 #oneimage delete EYWA-Virtual-Router
 #oneimage delete Ubuntu12.04_64
+#oneimage delete Ubuntu-14.04
 
 
 ### Create Template/Image/Network Env.
 onevnet create /home/vagrant/one-public-net.tmpl
 
-#oneimage delete Ubuntu-14.04
+oneimage create \
+--name "Ubuntu-14.04" \
+--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
+--driver qcow2 \
+--prefix sd \
+--datastore default
+
 #oneimage create \
-#--name "Ubuntu-14.04" \
-#--path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
+#--name "EYWA-Virtual-Router" \
+#--path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
 #--driver qcow2 \
 #--prefix sd \
 #--datastore default
 
-oneimage create \
---name "EYWA-Virtual-Router" \
---path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
---driver qcow2 \
---prefix sd \
---datastore default
-
-oneimage create \
---name "Ubuntu12.04_64" \
---path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
---driver qcow2 \
---prefix sd \
---datastore default
+#oneimage create \
+#--name "Ubuntu12.04_64" \
+#--path "/usr/local/src/EYWA-Virtual-Router.qcow2.gz" \
+#--driver qcow2 \
+#--prefix sd \
+#--datastore default
 
 #while ! oneimage list | grep 'Ubuntu-14.04' | grep -q rdy
 #do
