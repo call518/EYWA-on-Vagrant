@@ -67,7 +67,7 @@ fi
 if [ $CODENAME == "trusty" ]; then
 	ifdown -a && ifup -a
 else
-	/etc/init.d/networking restart
+	service networking restart
 fi
 
 umount -l /mnt

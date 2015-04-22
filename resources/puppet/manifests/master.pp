@@ -175,14 +175,23 @@ exec { "=== Waiting.... Downloading Template-Image... ===":
     require  => Exec["Run set-oneadmin-pw.sh"],
 }
 
-exec { "Download Ubuntu-14.04.qcow2.gz":
-    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/Ubuntu-14.04.qcow2.gz",
-    creates  => "/usr/local/src/Ubuntu-14.04.qcow2.gz",
+exec { "Download EYWA-Ubuntu-14.04_64.qcow2.gz":
+    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz",
+    creates  => "/usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz",
     user     => "root",
     timeout  => "0",
     #logoutput => true,
     require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
 }
+
+#exec { "Download Ubuntu-14.04.qcow2.gz":
+#    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/Ubuntu-14.04.qcow2.gz",
+#    creates  => "/usr/local/src/Ubuntu-14.04.qcow2.gz",
+#    user     => "root",
+#    timeout  => "0",
+#    #logoutput => true,
+#    require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
+#}
 
 #exec { "Download EYWA-Virtual-Router.qcow2.gz":
 #    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110208' -O /usr/local/src/EYWA-Virtual-Router.qcow2.gz",
@@ -211,7 +220,7 @@ file { "Put one-public-net.tmpl":
     mode    => 0744,
     source => "/vagrant/resources/puppet/files/one-public-net.tmpl",
     #require  => Exec["Download Ubuntu12.04_64.qcow2.gz"],
-    require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
+    require  => Exec["Download EYWA-Ubuntu-14.04_64.qcow2.gz"],
 }
 
 file { "Put default.template":

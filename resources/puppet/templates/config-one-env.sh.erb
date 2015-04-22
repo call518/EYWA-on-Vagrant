@@ -19,6 +19,7 @@ echo " === Build Network/Image/Template ==== "
 su -l oneadmin << EOF
 ### Clear Template/Image/Network Env.
 #onevnet delete Public-Net
+#oneimage delete EYWA-Ubuntu-14.04_64
 #oneimage delete EYWA-Virtual-Router
 #oneimage delete Ubuntu12.04_64
 #oneimage delete Ubuntu-14.04
@@ -28,8 +29,8 @@ su -l oneadmin << EOF
 onevnet create /home/vagrant/one-public-net.tmpl
 
 oneimage create \
---name "Ubuntu-14.04" \
---path "/usr/local/src/Ubuntu-14.04.qcow2.gz" \
+--name "EYWA-Ubuntu-14.04_64" \
+--path "/usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz" \
 --driver qcow2 \
 --prefix sd \
 --datastore default
@@ -59,7 +60,7 @@ oneimage create \
 #--vcpu 1 \
 #--memory 512 \
 #--arch x86_64 \
-#--disk "Ubuntu-14.04" \
+#--disk "EYWA-Ubuntu-14.04_64" \
 #--nic "Public-Net" \
 #--context FILES="/var/lib/one/files/public-vm/init.sh" \
 #--context DNS="8.8.8.8" \

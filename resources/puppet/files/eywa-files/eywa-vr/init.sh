@@ -65,7 +65,8 @@ mkdir -p /etc/haproxy/cfg.d
 #else
 #	/etc/init.d/haproxy stop
 #fi
-/etc/init.d/haproxy stop
+service haproxy stop
+update-rc.d haproxy enable
 
 umount -l /mnt
 
@@ -83,7 +84,7 @@ deb http://ftp.daum.net/ubuntu/ trusty-security main restricted universe multive
 #deb http://ftp.daum.net/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
 fi
 
-update-rc.d vmcontext disable
-
 service apache2 stop
 update-rc.d apache2 disable
+
+update-rc.d vmcontext disable

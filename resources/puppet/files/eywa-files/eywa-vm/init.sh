@@ -62,9 +62,8 @@ deb http://ftp.daum.net/ubuntu/ trusty-security main restricted universe multive
 #deb http://ftp.daum.net/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
 fi
 
-update-rc.d vmcontext disable
-
 ## for Test Apache
+cp -a /var/www/index.html /var/www/index.html.default
 mkdir -p /var/www/ 2> /dev/null
 echo "
 <html>
@@ -79,3 +78,7 @@ $(ifconfig eth0 | awk '/inet addr/ {print $2}' | cut -d: -f2)
 #pushd /home/test-web
 #python -m SimpleHTTPServer 80 &
 #popd
+service apache2 start
+update-rc.d apache2 enable
+
+update-rc.d vmcontext disable
