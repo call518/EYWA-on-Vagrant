@@ -145,18 +145,18 @@ if $hostname == "master" {
   }
   
   package { "bind9":
-      #ensure   => installed,
-      ensure   => "1:9.9.5.dfsg-3",
+      ensure   => installed,
+      #ensure   => "1:9.9.5.dfsg-3",
   }
   
   package { "bind9-host":
-      #ensure   => installed,
-      ensure   => "1:9.9.5.dfsg-3",
+      ensure   => installed,
+      #ensure   => "1:9.9.5.dfsg-3",
   }
   
   package { "bind9utils":
-      #ensure   => installed,
-      ensure   => "1:9.9.5.dfsg-3",
+      ensure   => installed,
+      #ensure   => "1:9.9.5.dfsg-3",
   }
   
   file { "Put /var/lib/bind/test.org.zone":
@@ -218,8 +218,8 @@ if $hostname == "master" {
 ######## Common: Master & Slave-{N} ###########
 
 package { "mysql-client":
-    #ensure   => installed,
-    ensure   => "5.5.41-0ubuntu0.14.04.1",
+    ensure   => installed,
+    #ensure   => "5.5.41-0ubuntu0.14.04.1",
 }
 
 exec { "Create DIR /var/tmp/one/hooks/eywa":

@@ -20,8 +20,8 @@ package { "opennebula-sunstone":
 }
 
 package { "mysql-server":
-    #ensure   => installed,
-    ensure   => "5.5.41-0ubuntu0.14.04.1",
+    ensure   => installed,
+    #ensure   => "5.5.41-0ubuntu0.14.04.1",
 }
 
 service { "nfs-kernel-server":
