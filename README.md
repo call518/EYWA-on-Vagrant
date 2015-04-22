@@ -82,4 +82,4 @@ ssh -i /var/lib/one/.ssh/id_rsa root@{vm_ip_address}
 
 ## APPENDIX
 
-* OpenNebula's VNC Console is not supported. Because of Port Forwarding (>5900, Dynamic)
+* OpenNebula VM's VNC Console is not supported. Because of Port Forwarding (>5900, Dynamic)
