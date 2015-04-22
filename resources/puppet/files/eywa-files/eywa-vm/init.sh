@@ -20,7 +20,7 @@ cp -f /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 #HOSTNAME="EYWA-VM-${ONE_UID}-`echo $ETH0_IP | sed 's/\./-/g'`"
 HOSTNAME="VM-${ONE_UID}-`echo $ETH0_IP | sed 's/\./-/g'`"
 echo "$HOSTNAME.test.org" > /etc/hostname
-#echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
+echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 #echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 /etc/init.d/hostname restart
 hostname $HOSTNAME.test.org

@@ -25,7 +25,7 @@ for m in acpiphp pci_hotplug; do sudo modprobe ${m}; done
 #HOSTNAME="EYWA-VR-${ONE_UID}-`echo $ETH0_IP | sed 's/\./-/g'`"
 HOSTNAME="VR-${ONE_UID}-`echo $ETH0_IP | sed 's/\./-/g'`"
 echo "$HOSTNAME.test.org" > /etc/hostname
-#echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
+echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 #echo "127.0.0.1 $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 /etc/init.d/hostname restart
 hostname $HOSTNAME.test.org

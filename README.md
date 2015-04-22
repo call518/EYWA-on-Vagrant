@@ -43,6 +43,7 @@ host> vagrant up slave-2
 ## (Option) Using Desktop VNC
 
 * Connecting /w VNC
+  * VNC Password: passw0rd
 
 ```
 [master]
