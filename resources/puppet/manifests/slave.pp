@@ -271,7 +271,7 @@ exec { "Create DIR - /root/.config":
 }
 
 exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
-    command  => "rm -f /root/.config/etherape && ln -s /home/vagrant/.config/etherape /root/.config/etherape",
+    command  => "rm -f /root/.config/etherape && ln /home/vagrant/.config/etherape /root/.config/etherape",
     user     => "root",
     timeout  => "0",
     logoutput => true,
