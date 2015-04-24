@@ -12,14 +12,6 @@ exec { "Apt-get Update":
     logoutput => true,
 }
 
-package { "arping":
-    ensure   => installed,
-}
-
-package { "kpartx":
-    ensure   => installed,
-}
-
 #package { "git":
 #    ensure => "installed"
 #    require => Exec["Apt-get Update"],
