@@ -46,10 +46,10 @@ chown -R root:root $HOME
 ## == (추후 VR 이미지에 설정 해야할지 고민 필요... 선택사항이 아닌 필수라...) ===
 #sed -i '/^exit 0/d' /etc/rc.local
 #echo "iptables-restore < /etc/default/iptables.rules" >> /etc/rc.local
-#echo "ip addr add 10.0.0.1/24 dev eth1" >> /etc/rc.local
+#echo "ip addr add 10.0.0.1/8 dev eth1" >> /etc/rc.local
 #echo "arping -U 10.0.0.1 -I eth1 -c 10" >> /etc/rc.local
 #echo "exit 0" >> /etc/rc.local
-ip addr add 10.0.0.1/24 dev eth1
+ip addr add 10.0.0.1/8 dev eth1
 arping -A -U 10.0.0.1 -I eth1 -c 10
 cp -f /mnt/iptables.rules /etc/default/iptables.rules
 iptables-restore < /etc/default/iptables.rules
