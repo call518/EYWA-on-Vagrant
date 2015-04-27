@@ -98,14 +98,14 @@ ssh root@{VM-IP}
 
 ## APPENDIX
 
-### Screenshots: Monitoring EtherApe-GUI
+### Example: Screenshots of Monitoring EtherApe-GUI
 
 * Env.
  * VR-1 IP: eth0:192.168.33.101, eth1:10.0.0.2,10.0.0.1 (on-master)
  * VM-1 IP: eth0:10.0.0.3 (on slave-1)
  * VM-2 IP: eth0:10.0.0.4 (on master)
-* Tested on VM-2
 
+#### Connect to VM-2
 
 ```bash
 master> ssh root@192.168.33.101
