@@ -249,33 +249,43 @@ file { "Create /home/vagrant/.config DIR for EtherApe":
     require  => Exec["Add ONE Node"],
 }
 
-file { "Put /home/vagrant/.config/etherape":
-    path    => "/home/vagrant/.config/etherape",
+file { "Put /root/.config/etherape":
+    path    => "/root/.config/etherape",
     ensure  => present,
-    owner   => "vagrant",
-    group   => "vagrant",
+    owner   => "root",
+    group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
     require => File["Create /home/vagrant/.config DIR for EtherApe"],
 }
 
-exec { "Create DIR - /root/.config":
-    provider => shell,
-    command  => "mkdir /root/.config",
-    creates  => "/root/.config",
-    cwd      => "/root",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    require  => File["Put /home/vagrant/.config/etherape"],
-}
-
-exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
-    command  => "rm -f /root/.config/etherape && ln /home/vagrant/.config/etherape /root/.config/etherape",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    unless   => "test -L /root/.config/etherape",
-    require  => Exec["Create DIR - /root/.config"],
-}
+#file { "Put /home/vagrant/.config/etherape":
+#    path    => "/home/vagrant/.config/etherape",
+#    ensure  => present,
+#    owner   => "vagrant",
+#    group   => "vagrant",
+#    mode    => 0644,
+#    content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
+#    require => File["Create /home/vagrant/.config DIR for EtherApe"],
+#}
+#
+#exec { "Create DIR - /root/.config":
+#    provider => shell,
+#    command  => "mkdir /root/.config",
+#    creates  => "/root/.config",
+#    cwd      => "/root",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    require  => File["Put /home/vagrant/.config/etherape"],
+#}
+#
+#exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
+#    command  => "rm -f /root/.config/etherape && ln /home/vagrant/.config/etherape /root/.config/etherape",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    unless   => "test -L /root/.config/etherape",
+#    require  => Exec["Create DIR - /root/.config"],
+#}
 

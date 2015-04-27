@@ -244,10 +244,19 @@ file { "Put /var/tmp/one/hooks/eywa":
     require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
 }
 
-exec { "Set SUDO for oneadmin":
+exec { "Set SUDO - /etc/sudoers (1)":
     command => "echo 'oneadmin    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
     user    => "root",
     timeout => "0",
     unless  => "grep -q '^oneadmin    ALL=(ALL) NOPASSWD: ALL' /etc/sudoers",
     require => File["Put /var/tmp/one/hooks/eywa"],
 }
+
+exec { "Set SUDO - /etc/sudoers (2)":
+    command => "echo 'Defaults env_keep -= \"HOME\"' >> /etc/sudoers",
+    user    => "root",
+    timeout => "0",
+    unless  => "grep -q '^Defaults env_keep -= \"HOME\"' /etc/sudoers",
+    require => Exec["Set SUDO - /etc/sudoers (1)"],
+}
+
