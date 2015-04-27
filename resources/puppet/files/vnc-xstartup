@@ -20,4 +20,4 @@ xrdb $HOME/.Xresources
 startxfce4 &
 xfce4-terminal &
 virt-manager &
-etherape --mode ip --interface any --filter 'not tcp and not udp' &
+etherape --mode ip --interface any --numeric --filter 'not tcp and not udp' &
