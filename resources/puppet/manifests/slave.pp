@@ -249,6 +249,17 @@ file { "Create /home/vagrant/.config DIR for EtherApe":
     require  => Exec["Add ONE Node"],
 }
 
+exec { "Create DIR - /root/.config":
+    provider => shell,
+    command  => "mkdir /root/.config",
+    creates  => "/root/.config",
+    cwd      => "/root",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require => File["Create /home/vagrant/.config DIR for EtherApe"],
+}
+
 file { "Put /root/.config/etherape":
     path    => "/root/.config/etherape",
     ensure  => present,
@@ -256,7 +267,7 @@ file { "Put /root/.config/etherape":
     group   => "root",
     mode    => 0644,
     content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
-    require => File["Create /home/vagrant/.config DIR for EtherApe"],
+    require => Exec["Create DIR - /root/.config"],
 }
 
 #file { "Put /home/vagrant/.config/etherape":
