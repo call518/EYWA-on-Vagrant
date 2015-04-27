@@ -98,3 +98,41 @@ ssh root@{VM-IP}
 
 ## APPENDIX
 
+### Screenshots: Monitoring EtherApe-GUI
+
+* Env.
+ * VR-1 IP: eth0:192.168.33.101, eth1:10.0.0.2,10.0.0.1 (on-master)
+ * VM-1 IP: eth0:10.0.0.3 (on slave-1)
+ * VM-2 IP: eth0:10.0.0.4 (on master)
+* Tested on VM-2
+
+
+```bash
+master> ssh root@192.168.33.101
+VR-1> ssh root@10.0.0.4
+VM-2> (root's Prompt)
+```
+
+#### arping, VM-2 to VM-1
+
+```bash
+VM-2> arping 10.0.0.3
+```
+
+![Dashboard](etc-files/eywa-vnc-etherape-1.png)
+
+#### ping, VM-2 to VM-1 (Internal)
+
+```bash
+VM-2> ping -s 5000 10.0.0.3
+```
+
+![Dashboard](etc-files/eywa-vnc-etherape-2.png)
+
+#### ping, VM-2 to google.com (External)
+
+```bash
+VM-2> ping -s 5000 -M want 10.0.0.3
+```
+![Dashboard](etc-files/eywa-vnc-etherape-3.png)
+
