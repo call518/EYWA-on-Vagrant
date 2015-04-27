@@ -31,6 +31,9 @@ echo "$ETH0_IP $HOSTNAME.test.org $HOSTNAME" >> /etc/hosts
 hostname $HOSTNAME.test.org
 service rsyslog restart
 
+echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/ip_forward.conf
+sysctl -p /etc/sysctl.d/ip_forward.conf
+
 echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolv.conf
 echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolvconf/resolv.conf.d/head 
 

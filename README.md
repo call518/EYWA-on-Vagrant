@@ -26,7 +26,7 @@ EYWA PoC, OpenNebula on Vagrant Environment
  * eth2: "Internal Network"
  * 10.0.0.0/8 (GW: 10.0.0.1) (16777216 EA)
  * Promiscuous: "Allow All"
-* VXLAN Range (MySQL)
+* VXLAN Range (MySQL Database: eywa)
  * 239.0.0.0 ~ 239.0.1.155 (4096 EA)
 
 # EYWA Architecture
