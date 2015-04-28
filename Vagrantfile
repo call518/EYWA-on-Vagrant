@@ -38,8 +38,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.network "private_network", ip: "#{master_ip_pri}", virtualbox__intnet: true
     master.vm.network "forwarded_port", guest: "#{sunstone_listen_port}", host: "#{sunstone_listen_port}"
     master.vm.network "forwarded_port", guest: "#{vnc_port}", host: "#{vnc_port}", protocol: 'tcp'
-    master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'tcp'
-    master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
+    #master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'tcp'
+    #master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
