@@ -3,7 +3,7 @@ Description
 
 EYWA PoC, OpenNebula on Vagrant Environment
 
-[PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk?fmt=18)
+[PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk)
 
 ## (Note for Git)
 
