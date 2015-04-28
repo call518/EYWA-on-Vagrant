@@ -5,7 +5,7 @@ EYWA PoC, OpenNebula on Vagrant Environment
 
 [PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk)
 
-## (Git Note)
+## (Note for Git)
 
 * On MS-Windows family, may be "\^M" EOL troube...
 * (Recommended) Before "Git Clone", Running "git config --global core.autocrlf true"
