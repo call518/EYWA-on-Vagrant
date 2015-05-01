@@ -1,7 +1,7 @@
 Description
 =============
 
-EYWA PoC, OpenNebula on Vagrant Environment
+EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant Environment)
 
 [PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk)
 
