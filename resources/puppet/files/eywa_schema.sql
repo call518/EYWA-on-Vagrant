@@ -28,7 +28,7 @@ CREATE TABLE `mc_address` (
   `uid` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`num`),
   KEY (`address`)
-) ENGINE=InnoDB AUTO_INCREMENT=4097 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
