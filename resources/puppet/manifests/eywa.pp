@@ -18,13 +18,21 @@ if $hostname == "master" {
   #    #require => Package["nfs-kernel-server"],
   #}
   
+  exec { "=== Waiting.... Downloading eywa_schema.sql.gz... ===":
+      command  => "echo '=== Waiting.... eywa_schema.sql.gz... ==='",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      #require  => Exec[""],
+  }
+  
   exec { "Put eywa_schema.sql.gz":
-      command  => "wget '' -O /home/vagrant/eywa_schema.sql.gz",
+      command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110238' -O /home/vagrant/eywa_schema.sql.gz",
       creates  => "/home/vagrant/eywa_schema.sql.gz",
       user     => "root",
       timeout  => "0",
       #logoutput => true,
-      require  => Exec["=== Waiting.... Downloading eywa_schema.sql.gz ==="],
+      require  => Exec["=== Waiting.... Downloading eywa_schema.sql.gz... ==="],
   }
   
   exec { "Create eywa DB":
@@ -33,7 +41,8 @@ if $hostname == "master" {
       timeout  => "0",
       logoutput => true,
       unless   => "mysql -uroot -p${oneadmin_pw} -e 'USE eywa'",
-      require  => File["Put eywa_schema.sql"],
+      #require  => File["Put eywa_schema.sql"],
+      require  => Exec["Put eywa_schema.sql"],
   }
   
   exec { "Set eywa User/Pass":
@@ -47,7 +56,8 @@ if $hostname == "master" {
   }
   
   exec { "Create eywa Schema & Env.":
-      command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
+      #command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
+      command  => "zcat /home/vagrant/eywa_schema.sql | mysql -uroot -p${oneadmin_pw} eywa",
       user     => "root",
       timeout  => "0",
       logoutput => true,
