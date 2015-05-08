@@ -8,14 +8,23 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin"
 $oneadmin_home = "/var/lib/one"
 
 if $hostname == "master" {
-  file { "Put eywa_schema.sql":
-      path    => "/home/vagrant/eywa_schema.sql",
-      ensure  => present,
-      owner   => "root",
-      group   => "root",
-      mode    => 0644,
-      source  => "/vagrant/resources/puppet/files/eywa_schema.sql",
-      #require => Package["nfs-kernel-server"],
+  #file { "Put eywa_schema.sql":
+  #    path    => "/home/vagrant/eywa_schema.sql",
+  #    ensure  => present,
+  #    owner   => "root",
+  #    group   => "root",
+  #    mode    => 0644,
+  #    source  => "/vagrant/resources/puppet/files/eywa_schema.sql",
+  #    #require => Package["nfs-kernel-server"],
+  #}
+  
+  exec { "Put eywa_schema.sql.gz":
+      command  => "wget '' -O /home/vagrant/eywa_schema.sql.gz",
+      creates  => "/home/vagrant/eywa_schema.sql.gz",
+      user     => "root",
+      timeout  => "0",
+      #logoutput => true,
+      require  => Exec["=== Waiting.... Downloading eywa_schema.sql.gz ==="],
   }
   
   exec { "Create eywa DB":
