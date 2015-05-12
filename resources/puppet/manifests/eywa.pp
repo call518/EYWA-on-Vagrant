@@ -115,6 +115,15 @@ if $hostname == "master" {
       require  => Exec["Set Testing SSH Key for EYWA-VR"],
   }
   
+  exec { "mkdir -p /var/log/one/templates":
+      command  => "mkdir -p /var/log/one/templates && chown oneadmin:oneadmin /var/log/one/templates",
+      creates  => "/var/log/one/templates",
+      user     => "oneadmin",
+      timeout  => "0",
+      logoutput => true,
+      require  => File["Put ${oneadmin_home}/files DIR"],
+  }
+  
   #exec { "mkdir /var/tmp/one/hooks/eywa":
   #    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa",
   #    creates  => "/var/tmp/one/hooks/eywa",
@@ -152,7 +161,7 @@ if $hostname == "master" {
       mode    => 0644,
       content => template("/vagrant/resources/puppet/templates/oned.conf-eywa.erb"),
       #require => File["Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)"],
-      require => File["Put ${oneadmin_home}/files DIR"],
+      require => Exec["mkdir -p /var/log/one/templates"],
   }
   
   exec { "Restart OpenNebula Service":
