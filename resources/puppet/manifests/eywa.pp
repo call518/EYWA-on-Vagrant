@@ -42,7 +42,7 @@ if $hostname == "master" {
       logoutput => true,
       unless   => "mysql -uroot -p${oneadmin_pw} -e 'USE eywa'",
       #require  => File["Put eywa_schema.sql"],
-      require  => Exec["Put eywa_schema.sql"],
+      require  => Exec["Put eywa_schema.sql.gz"],
   }
   
   exec { "Set eywa User/Pass":
