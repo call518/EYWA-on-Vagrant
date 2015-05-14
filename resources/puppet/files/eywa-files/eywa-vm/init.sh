@@ -29,6 +29,12 @@ service rsyslog restart
 echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolv.conf
 echo -e "nameserver 192.168.33.10\nnameserver 168.126.63.1" > /etc/resolvconf/resolv.conf.d/head 
 
+## Set MTU to 1450 (for VXLAN)
+#sed -i '/^exit 0/d' /etc/rc.local
+#echo "ifconfig eth1 mtu 1450" >> /etc/rc.local
+#echo "exit 0" >> /etc/rc.local
+#ifconfig eth1 mtu 1450
+
 HOME="/root"
 #mkdir -p $HOME/.ssh
 rm -rf $HOME/.ssh 2> /dev/null
