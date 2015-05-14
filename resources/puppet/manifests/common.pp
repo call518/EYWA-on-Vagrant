@@ -22,7 +22,8 @@ file { "Add sources.list":
     ensure  => present,
     owner    => "root",
     group    => "root",
-    content => "deb http://downloads.opennebula.org/repo/Ubuntu/14.04 stable opennebula",
+    #content => "deb http://downloads.opennebula.org/repo/Ubuntu/14.04 stable opennebula", ## OpenNebula 4.6.x
+    content => "deb http://downloads.opennebula.org/repo/4.10/Ubuntu/14.04/ stable opennebula",	## OpenNebula 4.10.x
     require => Exec["Add apt-key"],
 }
 
