@@ -5,10 +5,10 @@ EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant E
 
 [PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk)
 
-## (Note for Git)
-
-* On MS-Windows family, may be "\^M" EOL troube...
-* (Recommended) Before "Git Clone", Running "git config --global core.autocrlf true"
+YouTube-PoC.png
+<a href="https://www.youtube.com/watch?v=FsXDuiWqmJk" alt="Click to watch the Video of PoC" target="_blank">
+  <img src="etc-files/YouTube-PoC.png" />
+</a>
 
 ## Vagrant PoC Env.
 
