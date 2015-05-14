@@ -5,7 +5,6 @@ EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant E
 
 [PoC-Demo Video (YouTube)](https://youtu.be/FsXDuiWqmJk)
 
-YouTube-PoC.png
 <a href="https://www.youtube.com/watch?v=FsXDuiWqmJk" alt="Click to watch the Video of PoC" target="_blank">
   <img src="etc-files/YouTube-PoC.png" />
 </a>
