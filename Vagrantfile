@@ -17,6 +17,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   master_ip_pri = "172.20.33.10"
   ptr_head = "33.168.192"
 
+  opennebula_version = "4.6"
+  opennebula_version = "4.10"
+
   oneadmin_pw = "passw0rd"
   vm_root_pw = "1234"
 
@@ -71,6 +74,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.hiera_config_path = "resources/puppet/hiera.yaml"
       puppet.manifests_path = "resources/puppet/manifests"
       puppet.manifest_file  = "common.pp"
+      puppet.facter = {
+        "opennebula_version" => "#{opennebula_version}",
+      }
       puppet.options = "--verbose"
     end
     master.vm.provision "puppet" do |puppet|
@@ -175,6 +181,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.hiera_config_path = "resources/puppet/hiera.yaml"
         puppet.manifests_path = "resources/puppet/manifests"
         puppet.manifest_file  = "common.pp"
+        puppet.facter = {
+          "opennebula_version" => "#{opennebula_version}",
+        }
         puppet.options = "--verbose"
       end
       slave.vm.provision "puppet" do |puppet|

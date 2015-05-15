@@ -10,6 +10,12 @@ EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant E
 
 ## Vagrant PoC Env.
 
+### Compatibility
+
+* Support OpeNebula 4.6 & OpenNebula 4.10 (Default: OpenNebula 4.10)
+* Edit Vagrantfile to change OpenNebula version
+ * "opennebula_version" Parameter
+
 ### Virtualization Provider
 
 * Tested on VirtualBox 4.3.26.r98988

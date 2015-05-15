@@ -17,13 +17,20 @@ exec { "Add apt-key":
     #require => File[""],
 }
 
+if $opennebula_version == "4.6" {
+    $one_repo = "deb http://downloads.opennebula.org/repo/Ubuntu/14.04 stable opennebula"
+} else {
+    $one_repo = "deb http://downloads.opennebula.org/repo/4.10/Ubuntu/14.04/ stable opennebula"
+}
+
 file { "Add sources.list":
     path    => "/etc/apt/sources.list.d/opennebula.list",
     ensure  => present,
     owner    => "root",
     group    => "root",
     #content => "deb http://downloads.opennebula.org/repo/Ubuntu/14.04 stable opennebula", ## OpenNebula 4.6.x
-    content => "deb http://downloads.opennebula.org/repo/4.10/Ubuntu/14.04/ stable opennebula",	## OpenNebula 4.10.x
+    #content => "deb http://downloads.opennebula.org/repo/4.10/Ubuntu/14.04/ stable opennebula",	## OpenNebula 4.10.x
+    content => "$one_repo",
     require => Exec["Add apt-key"],
 }
 
