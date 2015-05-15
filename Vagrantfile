@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   master_ip_pri = "172.20.33.10"
   ptr_head = "33.168.192"
 
-  opennebula_version = "4.6"
+  #opennebula_version = "4.6"
   opennebula_version = "4.10"
 
   oneadmin_pw = "passw0rd"
