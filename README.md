@@ -87,7 +87,8 @@ VNC Address: {Vagrant-Host-IP}:55912
 * Log in to Web-UI, by "oneadmin" user.
 * Go to "System" Tab -> "Users" Tab.
 * Click "+" Button.
-* Create "testuser" User. (Password is that you want.) * Default Templates is generated. (in "Templates" Tab)
+* Create "testuser" User. (Password is that you want.)
+ * Default Templates is generated. (in "Templates" Tab)
 * EYWA-Virutal-Router(VR-1) is automatic launched. (in "Virtual Machines" Tab)
 * When VR-1 is up, Create EYWA-VM(VM-1).
 * Add VR-2 for LB/HA
