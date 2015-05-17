@@ -1,6 +1,52 @@
 # Description
 
-EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant Environment)
+SandBox for EYWA PoC.
+
+Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant Environment)
+
+## Features
+
+### The Benefits of EYWA
+
+1. Performance
+ * Load Balancing by Multiple VR (No Limit)
+2. High Availability
+ * HA by Multiple VR (No Limit)
+3. Traffic Engineering
+ * Save of Network Bandwidth
+ * Traffic Isolation by VxLAN (16,777,216)
+ * Multicast instead of Broadcast
+ * Decrease in Packet Floods
+ * Flat Address
+ * Multiple Gateway for Load-balancer of Inbound & Outbound Traffic
+4. Cost
+ * Multiple VR instead of L4 Switch (Single Router)
+ * Scalable VR
+
+#### in Public Network
+
+1. Load Balancing
+ * Load Balancing by Unlimited VRs(Virtual Router)
+ * Scale-out
+ * Load balanced Inbound & Outbound Traffic
+2. High Availability
+ * HA by Unlimited VRs
+3. Traffic Engineering
+ * Save of Network Bandwidth
+ * Low latency
+4. VM Migration
+
+#### in Private Network
+
+1. A large number of tenants
+ * A large number of VLANs
+ * Traffic Isolation by VxLAN (16,777,216)
+2. Large layer 2 network
+ * 10.0.0.0/8 (16,777,216 IPs) per Tenant
+ * Multicast instead of Broadcast, by VxLAN
+ * Decrease in MAC Flooding, by VxLAN
+ * Eliminate Broadcast (ToDo)
+
 
 ## Vagrant PoC Env.
 
