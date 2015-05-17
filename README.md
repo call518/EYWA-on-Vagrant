@@ -143,10 +143,16 @@ ssh root@{VM-IP}
 
 ## APPENDIX
 
+### Slide about EYWA
+
+<a href="http://www.slideshare.net/WookJaeJeong/eywa-45939266" alt="Click to watch the Video of PoC" target="_blank">
+  <img src="etc-files/EYWA-SlideShare-Cover.png" width="500" height="300"/>
+</a>
+
 ### PoC-Demo Video
 
 <a href="https://www.youtube.com/watch?v=FsXDuiWqmJk" alt="Click to watch the Video of PoC" target="_blank">
-  <img src="etc-files/YouTube-PoC.png" />
+  <img src="etc-files/YouTube-PoC.png" width="400" height="300" />
 </a>
 
 ### Example: Screenshots of Monitoring EtherApe-GUI
