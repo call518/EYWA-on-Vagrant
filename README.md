@@ -46,15 +46,13 @@ EYWA PoC - Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant E
 
 ```bash
 host> vagrant up master
-host> vagrant ssh master
-master> sudo /home/vagrant/config-one-env.sh
 ```
 
 ## Deploy Slave Nodes
 
 ```bash
 host> vagrant up slave-1
-host> vagrant up slave-2
+host> vagrant up slave-2 (Optional)
 ```
 
 ## (Option) Using VNC
