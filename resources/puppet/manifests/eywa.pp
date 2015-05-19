@@ -55,6 +55,14 @@ if $hostname == "master" {
       require  => Exec["Create eywa DB"],
   }
   
+  exec { "=== Waiting.... Creating EYWA DB Schema... ===":
+      command  => "echo '=== Waiting.... Creating EYWA DB Schema... ==='",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      require  => Exec["Set eywa User/Pass"],
+  }
+  
   exec { "Create eywa Schema & Env.":
       #command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
       command  => "zcat /home/vagrant/eywa_schema.sql | mysql -uroot -p${oneadmin_pw} eywa",
@@ -62,7 +70,7 @@ if $hostname == "master" {
       timeout  => "0",
       logoutput => true,
       unless   => "mysql -uroot -p${oneadmin_pw} -e 'SELECT * FROM eywa.vm_info'",
-      require  => Exec["Set eywa User/Pass"],
+      require  => Exec["=== Waiting.... Creating EYWA DB Schema... ==="],
   }
   
   #exec { "Generate Multicast Address Pool":
