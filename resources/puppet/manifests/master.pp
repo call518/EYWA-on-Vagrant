@@ -127,7 +127,7 @@ exec { "Backup oned.conf":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    onlyif   => "test ! -f /etc/one/oned.conf.bak"",
+    onlyif   => "test ! -f /etc/one/oned.conf.bak",
     require  => Exec["Permission Private SSH-key"],
 }
 
