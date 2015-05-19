@@ -126,7 +126,7 @@ exec { "Backup oned.conf":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Permission Private SSH-Key"],
+    require  => Exec["Permission Private SSH-key"],
 }
 
 #file { "Config oned.conf":
