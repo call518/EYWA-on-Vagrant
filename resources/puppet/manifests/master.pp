@@ -121,15 +121,41 @@ exec { "Permission Private SSH-key":
     require  => File["Put .ssh DIR"],
 }
 
-file { "Config oned.conf":
-    path    => "/etc/one/oned.conf",
+exec { "Backup oned.conf":
+    command  => "cp -a /etc/one/oned.conf /etc/one/oned.conf.bak",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec["Permission Private SSH-Key"],
+}
+
+#file { "Config oned.conf":
+#    path    => "/etc/one/oned.conf",
+#    ensure  => present,
+#    owner   => "root",
+#    group   => "root",
+#    mode    => 0644,
+#    content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
+#    notify  => Service["opennebula"],
+#    require => [Exec["Create opennebula Database"], Exec["Backup oned.conf"]],
+#}
+
+file { "Put edit-oned.conf.sh":
+    path    => "/home/vagrant/edit-oned.conf.sh",
     ensure  => present,
     owner   => "root",
     group   => "root",
-    mode    => 0644,
-    content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
-    notify  => Service["opennebula"],
-    require => [Exec["Create opennebula Database"], Exec["Permission Private SSH-key"]],
+    mode    => 0755,
+    source  => "/vagrant/resources/puppet/files/edit-oned.conf.sh",
+    require => [Exec["Create opennebula Database"], Exec["Backup oned.conf"]],
+}
+
+exec { "Run edit-oned.conf.sh":
+    command  => "/home/vagrant/edit-oned.conf.sh",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => File["Put edit-oned.conf.sh"],
 }
 
 exec { "Restart OpenNebula Service":
@@ -137,7 +163,7 @@ exec { "Restart OpenNebula Service":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => File["Config oned.conf"],
+    require  => Exec["Put edit-oned.conf.sh"],
 }
 
 file { "Put set-oneadmin-pw.sh":

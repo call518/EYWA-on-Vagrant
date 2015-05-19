@@ -153,23 +153,51 @@ if $hostname == "master" {
   #    require => File["Put xpath.rb (${oneadmin_home}/remotes/datastore/xpath.rb)"],
   #}
   
-  file { "Config oned.conf for EYWA":
-      path    => "/etc/one/oned.conf",
+  file { "Put add-eywa-oned.conf":
+      path    => "/home/vagrant/add-eywa-oned.conf",
       ensure  => present,
       owner   => "root",
       group   => "root",
       mode    => 0644,
-      content => template("/vagrant/resources/puppet/templates/oned.conf-eywa.erb"),
-      #require => File["Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)"],
+      source  => "/vagrant/resources/puppet/files/add-eywa-oned.conf",
       require => Exec["mkdir -p /var/log/one/templates"],
   }
+  
+  file { "Put add-eywa-oned.conf.sh":
+      path    => "/home/vagrant/add-eywa-oned.conf.sh",
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => 0775,
+      source  => "/vagrant/resources/puppet/files/add-eywa-oned.conf.sh",
+      require => File["Put add-oned.conf"],
+  }
+  
+  exec { "Config oned.conf for EYWA":
+      command  => "/home/vagrant/add-eywa-oned.conf.sh",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      require  => File["Put add-eywa-oned.conf.sh"],
+  }
+  
+  #file { "Config oned.conf for EYWA":
+  #    path    => "/etc/one/oned.conf",
+  #    ensure  => present,
+  #    owner   => "root",
+  #    group   => "root",
+  #    mode    => 0644,
+  #    content => template("/vagrant/resources/puppet/templates/oned.conf-eywa.erb"),
+  #    #require => File["Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)"],
+  #    require => Exec["mkdir -p /var/log/one/templates"],
+  #}
   
   exec { "Restart OpenNebula Service":
       command  => "service opennebula restart",
       user     => "root",
       timeout  => "0",
       logoutput => true,
-      require  => File["Config oned.conf for EYWA"],
+      require  => Exec["Config oned.conf for EYWA"],
   }
   
   package { "bind9":
