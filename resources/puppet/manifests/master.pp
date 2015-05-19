@@ -163,7 +163,7 @@ exec { "Restart OpenNebula Service":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec["Put edit-oned.conf.sh"],
+    require  => Exec["Run edit-oned.conf.sh"],
 }
 
 file { "Put set-oneadmin-pw.sh":
