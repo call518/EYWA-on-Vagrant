@@ -37,7 +37,6 @@ mv $TMP /var/log/one/templates/
 TMPL="eywa_virtual_router.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL > $TMP
-ONE_VM_ID=`onevm create $TMP | awk '{print $2}'`
 #onevm chmod $ONE_VM_ID 000
 #onevm chown $ONE_VM_ID $ONE_UID $ONE_GID
 #mv $TMP /var/log/one/templates/
@@ -45,14 +44,16 @@ ONE_VM_ID=`onevm create $TMP | awk '{print $2}'`
 #TMPL="eywa_virtual_router.tmpl"
 #TMP="$ONE_UID-$TMPL.$$.$DATE"
 #sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL >> $TMP
-TMPL_ID=`onetemplate create $TMP | awk '{print $2}'`
+TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
+#ONE_VM_ID=`onetemplate instantiate $ONE_UID-EYWA-Router | awk '{print $NF}'`
+ONE_VM_ID=`onetemplate instantiate $TMPL_ID | awk '{print $NF}'`
 mv $TMP /var/log/one/templates/
 
 ## EYWA VM 생성용도 Template 배포
 TMPL="eywa_private_vm.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL >> $TMP
-TMPL_ID=`onetemplate create $TMP | awk '{print $2}'`
+TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
 onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
@@ -61,7 +62,7 @@ mv $TMP /var/log/one/templates/
 TMPL="public_vm.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL >> $TMP
-TMPL_ID=`onetemplate create $TMP | awk '{print $2}'`
+TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
 onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
