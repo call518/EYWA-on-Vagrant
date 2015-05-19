@@ -122,10 +122,12 @@ exec { "Permission Private SSH-key":
 }
 
 exec { "Backup oned.conf":
+    #provider => shell,
     command  => "cp -a /etc/one/oned.conf /etc/one/oned.conf.bak",
     user     => "root",
     timeout  => "0",
     logoutput => true,
+    onlyif   => "test ! -f /etc/one/oned.conf.bak"",
     require  => Exec["Permission Private SSH-key"],
 }
 
