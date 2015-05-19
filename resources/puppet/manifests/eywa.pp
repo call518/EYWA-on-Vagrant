@@ -170,7 +170,7 @@ if $hostname == "master" {
       group   => "root",
       mode    => 0775,
       source  => "/vagrant/resources/puppet/files/add-eywa-oned.conf.sh",
-      require => File["Put add-oned.conf"],
+      require => File["Put add-eywa-oned.conf"],
   }
   
   exec { "Config oned.conf for EYWA":
