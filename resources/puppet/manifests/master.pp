@@ -223,6 +223,16 @@ file { "Put one-public-net.tmpl":
     require  => Exec["Download EYWA-Ubuntu-14.04_64.qcow2.gz"],
 }
 
+file { "Put datastore-default.tmpl":
+    path    => "/home/vagrant/datastore-default.tmpl",
+    ensure  => present,
+    owner   => "root",
+    group   => "oneadmin",
+    mode    => 0744,
+    source => "/vagrant/resources/puppet/files/datastore-default.tmpl",
+    require  => File["Put one-public-net.tmpl"],
+}
+
 file { "Put default.template":
     path    => "/home/vagrant/default.template",
     ensure  => present,
@@ -230,7 +240,7 @@ file { "Put default.template":
     group   => "oneadmin",
     mode    => 0744,
     content => template("/vagrant/resources/puppet/templates/default.template.erb"),
-    require  => File["Put one-public-net.tmpl"],
+    require  => File["Put datastore-default.tmpl"],
 }
 
 exec { "Set SSH_PUB_KEY in default.template":

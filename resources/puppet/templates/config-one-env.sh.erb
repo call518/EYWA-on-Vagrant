@@ -24,10 +24,13 @@ su -l oneadmin << EOF
 #oneimage delete Ubuntu12.04_64
 #oneimage delete Ubuntu-14.04
 
-
 ### Create Template/Image/Network Env.
 onevnet create /home/vagrant/one-public-net.tmpl
 
+### Update default Datastore (TM: shared -> qcow2)
+onedatastore update 1 /home/vagrant/datastore-default.tmpl
+
+### Create EYWA Image
 oneimage create \
 --name "EYWA-Ubuntu-14.04_64" \
 --path "/usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz" \
