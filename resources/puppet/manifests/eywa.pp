@@ -73,14 +73,14 @@ if $hostname == "master" {
       require  => Exec["=== Waiting.... Creating EYWA DB Schema... ==="],
   }
   
-  exec { "Create Index: 'uid' column in mc_address":
-      command  => "mysql -uroot -p${oneadmin_pw} -e \"alter table eywa.mc_address add index index_uid(uid)\"",
-      user     => "root",
-      timeout  => "0",
-      logoutput => true,
-      unless   => "mysql -uroot -p${oneadmin_pw} -e 'show index from eywa.mc_address' | grep -q index_uid",
-      require  => Exec["Create eywa Schema & Env."],
-  }
+  #exec { "Create Index: 'uid' column in mc_address":
+  #    command  => "mysql -uroot -p${oneadmin_pw} -e \"alter table eywa.mc_address add index index_uid(uid)\"",
+  #    user     => "root",
+  #    timeout  => "0",
+  #    logoutput => true,
+  #    unless   => "mysql -uroot -p${oneadmin_pw} -e 'show index from eywa.mc_address' | grep -q index_uid",
+  #    require  => Exec["Create eywa Schema & Env."],
+  #}
   
   file { "Put ${oneadmin_home}/remotes/hooks/eywa DIR":
       path     => "${oneadmin_home}/remotes/hooks/eywa",
@@ -91,7 +91,8 @@ if $hostname == "master" {
       ensure   => directory,
       replace  => true,
       recurse  => true,
-      require  => Exec["Create Index: 'uid' column in mc_address"],
+      #require  => Exec["Create Index: 'uid' column in mc_address"],
+      require  => Exec["Create eywa Schema & Env."],
   }
   
   exec { "Set Testing SSH Key for EYWA-VM":
