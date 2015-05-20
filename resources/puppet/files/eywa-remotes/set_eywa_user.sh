@@ -38,7 +38,7 @@ TMPL="eywa_virtual_router.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
 sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL > $TMP
 TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
-onetemplate instantiate $TMPL_ID | awk '{print $NF}'
+onetemplate instantiate $TMPL_ID
 mv $TMP /var/log/one/templates/
 
 ## Create EYWA Private-VM Template
