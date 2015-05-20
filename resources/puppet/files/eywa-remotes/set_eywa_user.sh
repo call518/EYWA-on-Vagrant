@@ -58,5 +58,3 @@ TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
 onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
-
-exit 0
