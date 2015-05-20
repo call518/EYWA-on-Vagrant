@@ -33,14 +33,6 @@ onevnet create $TMP
 onevnet chmod "$ONE_UID-Private-Net" 644
 mv $TMP /var/log/one/templates/
 
-## Create EYWA VR(Vritual Router) Template (Owner: oneadmin)
-TMPL="eywa_virtual_router.tmpl"
-TMP="$ONE_UID-$TMPL.$$.$DATE"
-sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL > $TMP
-TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
-onetemplate instantiate $TMPL_ID
-mv $TMP /var/log/one/templates/
-
 ## Create EYWA Private-VM Template
 TMPL="eywa_private_vm.tmpl"
 TMP="$ONE_UID-$TMPL.$$.$DATE"
@@ -58,3 +50,12 @@ TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
 onetemplate chmod $TMPL_ID 600
 onetemplate chown $TMPL_ID $ONE_UID $ONE_GID
 mv $TMP /var/log/one/templates/
+
+## Create EYWA VR(Vritual Router) Template (Owner: oneadmin)
+TMPL="eywa_virtual_router.tmpl"
+TMP="$ONE_UID-$TMPL.$$.$DATE"
+sed -e "s/@@__UID__@@/$ONE_UID/g" $TMPL > $TMP
+TMPL_ID=`onetemplate create $TMP | awk '{print $NF}'`
+onetemplate instantiate $TMPL_ID
+mv $TMP /var/log/one/templates/
+
