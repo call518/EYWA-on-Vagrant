@@ -73,14 +73,14 @@ if $hostname == "master" {
       require  => Exec["=== Waiting.... Creating EYWA DB Schema... ==="],
   }
   
-  #exec { "Generate Multicast Address Pool":
-  #    command  => "for i in `seq 0 15`; do for j in `seq 0 255`; do mysql -uroot -p${oneadmin_pw} -e \"INSERT INTO eywa.mc_address VALUES ('','239.0.$i.$j','')\"; done; done",
-  #    user     => "root",
-  #    timeout  => "0",
-  #    logoutput => true,
-  #    unless   => "mysql -uroot -p${oneadmin_pw} -e 'SELECT * FROM eywa.vm_info'",
-  #    require  => Exec["Create eywa Schema & Env."],
-  #}
+  exec { "Create Index: 'uid' column in mc_address":
+      command  => "mysql -uroot -p${oneadmin_pw} -e \"alter table eywa.mc_address add index index_uid(uid)\"",
+      user     => "root",
+      timeout  => "0",
+      logoutput => true,
+      unless   => "mysql -uroot -p${oneadmin_pw} -e 'show index from eywa.mc_address' | grep -q index_uid",
+      require  => Exec["Create eywa Schema & Env."],
+  }
   
   file { "Put ${oneadmin_home}/remotes/hooks/eywa DIR":
       path     => "${oneadmin_home}/remotes/hooks/eywa",
@@ -91,7 +91,7 @@ if $hostname == "master" {
       ensure   => directory,
       replace  => true,
       recurse  => true,
-      require  => Exec["Create eywa Schema & Env."],
+      require  => Exec["Create Index: 'uid' column in mc_address"],
   }
   
   exec { "Set Testing SSH Key for EYWA-VM":
@@ -132,6 +132,34 @@ if $hostname == "master" {
       require  => File["Put ${oneadmin_home}/files DIR"],
   }
   
+  file { "Put ${oneadmin_home}/remotes/vmm/check_eywa_net.sh":
+      path    => "${oneadmin_home}/remotes/vmm/check_eywa_net.sh",
+      ensure  => present,
+      owner   => "oneadmin",
+      group   => "oneadmin",
+      mode    => 0775,
+      source  => "/vagrant/resources/puppet/files/check_eywa_net.sh",
+      require => Exec["mkdir -p /var/log/one/templates"],
+  }
+  
+  exec { "Backup ${oneadmin_home}/remotes/vmm/kvm/deploy":
+      command  => "cp -a ${oneadmin_home}/remotes/vmm/kvm/deploy ${oneadmin_home}/remotes/vmm/kvm/deploy.bak",
+      user     => "oneadmin",
+      timeout  => "0",
+      logoutput => true,
+      unless   => "test ! -f ${oneadmin_home}/remotes/vmm/kvm/deploy.bak",
+      require  => File["Put ${oneadmin_home}/remotes/vmm/check_eywa_net.sh"],
+  }
+  
+  exec { "Add check_eywa_net.sh -> ${oneadmin_home}/remotes/vmm/kvm/deploy":
+      command  => "sed -i '/^data/i source $(dirname $0)/../check_eywa_net.sh' ${oneadmin_home}/remotes/vmm/kvm/deploy",
+      user     => "oneadmin",
+      timeout  => "0",
+      logoutput => true,
+      unless   => "grep -q check_eywa_net.sh ${oneadmin_home}/remotes/vmm/kvm/deploy",
+      require  => Exec["Backup ${oneadmin_home}/remotes/vmm/kvm/deploy"],
+  }
+  
   #exec { "mkdir /var/tmp/one/hooks/eywa":
   #    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa",
   #    creates  => "/var/tmp/one/hooks/eywa",
@@ -168,7 +196,7 @@ if $hostname == "master" {
       group   => "root",
       mode    => 0644,
       source  => "/vagrant/resources/puppet/files/add-eywa-oned.conf",
-      require => Exec["mkdir -p /var/log/one/templates"],
+      require => Exec["Add check_eywa_net.sh -> ${oneadmin_home}/remotes/vmm/kvm/deploy"],
   }
   
   file { "Put add-eywa-oned.conf.sh":

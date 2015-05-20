@@ -61,6 +61,8 @@ Distributed Virtual Router System /w OpenNebula Cluster (on Vagrant Environment)
 ### Compatibility
 
 * Support OpeNebula 4.6 & OpenNebula 4.10 (Default: OpenNebula 4.10)
+* Tested Hypervisor: KVM
+* Tested Store: NFS Shared, Qcow2(Default Datastore)
 * Edit Vagrantfile to change OpenNebula version
  * "opennebula_version" Parameter
 
