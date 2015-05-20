@@ -46,37 +46,6 @@ function deploy_network() {
 
 #--------------------------------------------------------------------------------------------
 
-### If this is EYWA...
-#if [ "$ONE_IS_EYWA" == "yes" ]; then
-#	## If this is EYWA-VR...
-#	if [ "$ONE_IS_VR" == "yes" ]; then
-#    	## If this is EYWA-VR and already exist EYWA-VR, it will be terminated...
-#    	if [ $EXIST_EYWA_VRs -ne 0 ]; then
-#    			## Temporary policy for terminating
-#    			sudo arptables -I FORWARD -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1 -j DROP
-#    			$SSH_oneadmin "onevm delete $ONE_VM_ID"
-#    			exit 128
-#    	fi
-#		## If not exist anyother EYWA-VMs...
-#		if [ $EXIST_EYWA_VMs -eq 0 ]; then
-#			deploy_network
-#			sudo arptables -A FORWARD -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1 -j DROP
-#		fi
-#		sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2 -j DROP
-#		sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1 -j DROP
-#	## If this is not EYWA-VM...
-#	else
-#		## If not exist anyother EYWA-VR/VM...
-#		if [ $EXIST_EYWA_VRs -eq 0 ] && [ $EXIST_EYWA_VMs -eq 0 ]; then
-#			deploy_network
-#			#sudo arptables -A FORWARD -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2 -j DROP
-#			#sudo arptables -A FORWARD -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1 -j DROP
-#		fi
-#	fi
-#fi
-
-#--------------------------------------------------------------------------------------------
-
 ## Prevent duplicate VR in same host...
 if [ "$ONE_IS_VR" == "yes" ] && [ $EXIST_EYWA_VRs -ne 0 ]; then
 		$SSH_oneadmin "onevm delete $ONE_VM_ID"

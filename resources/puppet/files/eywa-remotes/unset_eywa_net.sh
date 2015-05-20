@@ -38,39 +38,6 @@ function undeploy_network() {
 
 #--------------------------------------------------------------------------------------------
 
-#if [ "$ONE_IS_EYWA" == "yes" ]; then
-#	if [ "$ONE_IS_VR" == "yes" ]; then
-#		if [ $EXIST_EYWA_VRs -eq 0 ] && [ $EXIST_EYWA_VMs -eq 0 ]; then
-#			undeploy_network
-#			sudo arptables -D FORWARD -j DROP -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1
-#		fi
-#		sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2
-#		sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1
-#	else
-#		if [ $EXIST_EYWA_VRs -eq 0 ]; then
-#			if [ $EXIST_EYWA_VMs -eq 0 ]; then
-#				undeploy_network
-#				#sudo arptables -D FORWARD -j DROP -i vxlan$VXLAN_G_N -o vnet+ -s $VR_PRI_IP --opcode 1
-#			fi
-#			sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -s $VR_PRI_IP -d $VR_PRI_IP --opcode 2
-#			sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1
-#		else
-#			## 대상 HOST에 동일 계정의 VR이 존재할 경우, 
-#			if [ $EXIST_EYWA_VMs -eq 0 ]; then
-#				## 대상 HOST에 동일 계정의 VM이 존재치 않을 경우,
-#				## (VM이 전혀 없이 VR혼자만 노드에 있는 특수한 경우... 일단 무작업으로 Case는 유지..)
-#				echo "Pass...."
-#			else
-#				## 대상 HOST에 동일 계정의 VM이 존재할 경우,
-#				## (역시, 기존의 arptables 정책이나, BR설정을 변경할 요소가 없음. VM만 단순 삭제 처리...)
-#				echo "Pass...."
-#			fi
-#		fi
-#	fi
-#fi
-
-#--------------------------------------------------------------------------------------------
-
 ## Delete ARP Policy
 if [ "$ONE_IS_VR" == "yes" ] && [ $EXIST_EYWA_VRs -eq 0 ]; then
 	sudo arptables -D FORWARD -j DROP -i vnet+ -o vxlan$VXLAN_G_N -d $VR_PRI_IP --opcode 1

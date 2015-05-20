@@ -31,5 +31,3 @@ do
 done
 
 $MYSQL_EYWA -e "update mc_address set uid='' where uid='$ONE_UID'"
-
-exit 0
