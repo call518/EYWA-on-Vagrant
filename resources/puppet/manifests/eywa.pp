@@ -153,7 +153,7 @@ if $hostname == "master" {
   }
   
   exec { "Add check_eywa_net.sh -> ${oneadmin_home}/remotes/vmm/kvm/deploy":
-      command  => "sed -i '/^data/i source $(dirname $0)/../check_eywa_net.sh' ${oneadmin_home}/remotes/vmm/kvm/deploy",
+      command  => "sed -i '/^data/i source $(dirname \$0)/../check_eywa_net.sh' ${oneadmin_home}/remotes/vmm/kvm/deploy",
       user     => "oneadmin",
       timeout  => "0",
       logoutput => true,
