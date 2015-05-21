@@ -238,9 +238,10 @@ if $hostname == "master" {
   }
   
   exec { "Sync: onehost sync -f":
-      command  => "onehost sync -f",
-      user     => "oneadmin",
+      command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
+      user     => "root",
       timeout  => "0",
+      logoutput => true,
       require  => Exec["Restart OpenNebula Service"],
   }
 
@@ -322,34 +323,34 @@ package { "mysql-client":
     #ensure   => "5.5.41-0ubuntu0.14.04.1",
 }
 
-exec { "Create DIR /var/tmp/one/hooks/eywa":
-    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa && chmod 0755 /var/tmp/one/hooks/eywa",
-    creates  => "/var/tmp/one/hooks/eywa",
-    user     => "oneadmin",
-    group    => "oneadmin",
-    timeout  => "0",
-    logoutput => true,
-    #require  => Exec[""],
-}
+#exec { "Create DIR /var/tmp/one/hooks/eywa":
+#    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa && chmod 0755 /var/tmp/one/hooks/eywa",
+#    creates  => "/var/tmp/one/hooks/eywa",
+#    user     => "oneadmin",
+#    group    => "oneadmin",
+#    timeout  => "0",
+#    logoutput => true,
+#    #require  => Exec[""],
+#}
 
-file { "Put /var/tmp/one/hooks/eywa":
-    path     => "/var/tmp/one/hooks/eywa",
-    owner    => "oneadmin",
-    group    => "oneadmin",
-    mode     => 0775,
-    source   => "/vagrant/resources/puppet/files/eywa-remotes",
-    ensure   => directory,
-    replace  => true,
-    recurse  => true,
-    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
-}
+#file { "Put /var/tmp/one/hooks/eywa":
+#    path     => "/var/tmp/one/hooks/eywa",
+#    owner    => "oneadmin",
+#    group    => "oneadmin",
+#    mode     => 0775,
+#    source   => "/vagrant/resources/puppet/files/eywa-remotes",
+#    ensure   => directory,
+#    replace  => true,
+#    recurse  => true,
+#    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
+#}
 
 exec { "Set SUDO - /etc/sudoers (1)":
     command => "echo 'oneadmin    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
     user    => "root",
     timeout => "0",
     unless  => "grep -q '^oneadmin    ALL=(ALL) NOPASSWD: ALL' /etc/sudoers",
-    require => File["Put /var/tmp/one/hooks/eywa"],
+    #require => File["Put /var/tmp/one/hooks/eywa"],
 }
 
 exec { "Set SUDO - /etc/sudoers (2)":
