@@ -160,7 +160,7 @@ if $hostname == "master" {
       owner   => "oneadmin",
       group   => "oneadmin",
       mode    => 0775,
-      source  => "/vagrant/resources/puppet/files/check_eywa_net.sh",
+      content => template("/vagrant/resources/puppet/templates/check_eywa_net.sh"),
       require => Exec["mkdir -p /var/log/one/templates"],
   }
   
