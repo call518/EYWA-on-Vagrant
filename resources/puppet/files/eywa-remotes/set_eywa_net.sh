@@ -25,11 +25,14 @@ VXLAN_G_N=${QUERY_MC_ADDRESS[0]} # VXLAN Group Number
 VXLAN_G_A=${QUERY_MC_ADDRESS[1]} # VXLAN Group Address
 
 if [ "$ONE_IS_VR" == "yes" ]; then
-	#$MYSQL_EYWA -e "update mc_address set uid='$ONE_UID' where num='$VXLAN_G_N'"
-	$MYSQL_EYWA -e "insert into vm_info values ('','$DB_IS_VR','$ONE_VM_ID','$ONE_UID','$ONE_HID','$ONE_ETH0_IP','0')"
 	DB_IS_VR="1"
 else
-	DB_IS_VR="0"
+	DB_IS_VR="0";
+fi
+
+if [ "$ONE_IS_EYWA" == "yes" ]; then
+	#$MYSQL_EYWA -e "update mc_address set uid='$ONE_UID' where num='$VXLAN_G_N'"
+	$MYSQL_EYWA -e "insert into vm_info values ('','$DB_IS_VR','$ONE_VM_ID','$ONE_UID','$ONE_HID','$ONE_ETH0_IP','0')"
 fi
 
 EXIST_EYWA_VRs=`$MYSQL_EYWA -e "select count(*) from vm_info where is_vr='1' and uid='$ONE_UID' and vid!='$ONE_VM_ID' and hid='$ONE_HID' and deleted='0'"`
