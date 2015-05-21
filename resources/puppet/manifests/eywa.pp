@@ -23,7 +23,7 @@ if $hostname == "master" {
       user     => "root",
       timeout  => "0",
       logoutput => true,
-      #require  => Exec[""],
+      require  => Package["mysql-client"],
   }
   
   exec { "Put eywa_schema.sql.gz":
