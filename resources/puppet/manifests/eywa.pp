@@ -7,6 +7,27 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/usr/local/bin"
 
 $oneadmin_home = "/var/lib/one"
 
+package { "mysql-client":
+    ensure   => installed,
+    #ensure   => "5.5.41-0ubuntu0.14.04.1",
+}
+
+exec { "Set SUDO - /etc/sudoers (1)":
+    command => "echo 'oneadmin    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
+    user    => "root",
+    timeout => "0",
+    unless  => "grep -q '^oneadmin    ALL=(ALL) NOPASSWD: ALL' /etc/sudoers",
+    require => Package["mysql-client"],
+}
+
+exec { "Set SUDO - /etc/sudoers (2)":
+    command => "echo 'Defaults env_keep -= \"HOME\"' >> /etc/sudoers",
+    user    => "root",
+    timeout => "0",
+    unless  => "grep -q '^Defaults env_keep -= \"HOME\"' /etc/sudoers",
+    require => Exec["Set SUDO - /etc/sudoers (1)"],
+}
+
 if $hostname == "master" {
   #file { "Put eywa_schema.sql":
   #    path    => "/home/vagrant/eywa_schema.sql",
@@ -23,7 +44,7 @@ if $hostname == "master" {
       user     => "root",
       timeout  => "0",
       logoutput => true,
-      require  => Package["mysql-client"],
+      require  => Exec["Set SUDO - /etc/sudoers (2)"],
   }
   
   exec { "Put eywa_schema.sql.gz":
@@ -237,14 +258,6 @@ if $hostname == "master" {
       require  => Exec["Config oned.conf for EYWA"],
   }
   
-  exec { "Sync: onehost sync -f":
-      command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
-      user     => "root",
-      timeout  => "0",
-      logoutput => true,
-      require  => Exec["Restart OpenNebula Service"],
-  }
-
   package { "bind9":
       ensure   => installed,
       #ensure   => "1:9.9.5.dfsg-3",
@@ -313,14 +326,8 @@ if $hostname == "master" {
       user    => "root",
       timeout => "0",
       require => Exec["Restart DNS(Bind9) Service"],
+      before  => Exec["Sync: onehost sync -f"],
   }
-}
-
-######## Common: Master & Slave-{N} ###########
-
-package { "mysql-client":
-    ensure   => installed,
-    #ensure   => "5.5.41-0ubuntu0.14.04.1",
 }
 
 #exec { "Create DIR /var/tmp/one/hooks/eywa":
@@ -345,19 +352,12 @@ package { "mysql-client":
 #    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
 #}
 
-exec { "Set SUDO - /etc/sudoers (1)":
-    command => "echo 'oneadmin    ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
-    user    => "root",
-    timeout => "0",
-    unless  => "grep -q '^oneadmin    ALL=(ALL) NOPASSWD: ALL' /etc/sudoers",
-    #require => File["Put /var/tmp/one/hooks/eywa"],
-}
-
-exec { "Set SUDO - /etc/sudoers (2)":
-    command => "echo 'Defaults env_keep -= \"HOME\"' >> /etc/sudoers",
-    user    => "root",
-    timeout => "0",
-    unless  => "grep -q '^Defaults env_keep -= \"HOME\"' /etc/sudoers",
-    require => Exec["Set SUDO - /etc/sudoers (1)"],
+exec { "Sync: onehost sync -f":
+    provider => shell,
+    command  => "while ! $(su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"); do sleep 5; done",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+    require  => Exec[""],
 }
 
