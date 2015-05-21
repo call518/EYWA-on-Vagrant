@@ -358,6 +358,6 @@ exec { "Sync: onehost sync -f":
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    require  => Exec[""],
+    #require  => Exec[""],
 }
 
