@@ -237,6 +237,13 @@ if $hostname == "master" {
       require  => Exec["Config oned.conf for EYWA"],
   }
   
+  exec { "Sync: onehost sync -f":
+      command  => "onehost sync -f",
+      user     => "oneadmin",
+      timeout  => "0",
+      require  => Exec["Restart OpenNebula Service"],
+  }
+
   package { "bind9":
       ensure   => installed,
       #ensure   => "1:9.9.5.dfsg-3",
