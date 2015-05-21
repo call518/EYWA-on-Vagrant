@@ -9,7 +9,7 @@ ssh 192.168.33.10 "cat $CONTEXT_FILE | grep 'IS_EYWA'" > $TMP_FILE
 
 source $TMP_FILE
 
-if [ ${IS_EYWA} == "yes" ]; then
+if [ "x${IS_EYWA}" == "xyes" ]; then
     DB_HOST="192.168.33.10"
     DB_NAME="eywa"
     DB_USER="eywa"
