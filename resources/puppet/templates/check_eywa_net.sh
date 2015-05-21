@@ -4,7 +4,8 @@ EYWA_VID=`grep "one-[0-9]" $domain | sed -e 's/<name>//g' | sed -e 's/<\/name>//
 TMP_FILE=`mktemp`
 trap "rm -f $TMP_FILE" EXIT
 CONTEXT_FILE="/var/lib/one/vms/${EYWA_VID}/context.sh"
-scp 192.168.33.10:$CONTEXT_FILE $TMP_FILE
+#scp 192.168.33.10:$CONTEXT_FILE $TMP_FILE
+ssh 192.168.33.10 "cat $CONTEXT_FILE | grep 'IS_EYWA'" > $TMP_FILE
 
 source $TMP_FILE
 
