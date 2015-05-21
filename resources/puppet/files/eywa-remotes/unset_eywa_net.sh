@@ -49,4 +49,4 @@ if [ $EXIST_EYWA_VRs -eq 0 ] && [ $EXIST_EYWA_VMs -eq 0 ]; then
 	undeploy_network
 fi
 
-$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID'"
+#$MYSQL_EYWA -e "update vm_info set deleted='1' where vid='$ONE_VM_ID'"
