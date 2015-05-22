@@ -352,12 +352,12 @@ if $hostname == "master" {
 #    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
 #}
 
-exec { "Sync: onehost sync -f":
-    provider => shell,
-    command  => "while ! $(su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"); do sleep 5; done",
-    user     => "root",
-    timeout  => "0",
-    logoutput => true,
-    #require  => Exec[""],
-}
+#exec { "Sync: onehost sync -f":
+#    provider => shell,
+#    command  => "while ! $(su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"); do sleep 5; done",
+#    user     => "root",
+#    timeout  => "0",
+#    logoutput => true,
+#    #require  => Exec[""],
+#}
 
