@@ -145,6 +145,8 @@ VNC Address: {Vagrant-Host-IP}:55912
 
 ### SSH Connect to VM
 
+**(Note) VM is Slow, becase of Nested-Virtaulization.**
+
 on master or slave-{n}
 ```bash
 ssh root@{VR-IP(External)}
