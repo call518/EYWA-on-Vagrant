@@ -326,7 +326,7 @@ if $hostname == "master" {
       user    => "root",
       timeout => "0",
       require => Exec["Restart DNS(Bind9) Service"],
-      before  => Exec["Sync: onehost sync -f"],
+      #before  => Exec["Sync: onehost sync -f"],
   }
 }
 
