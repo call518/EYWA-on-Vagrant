@@ -153,6 +153,10 @@ ssh root@{VR-IP(External)}
 ssh root@{VM-IP}
 ```
 
+## Limitations
+
+* Not yet support Migration fo EYWA-VR/VM, and deployment strategy of EYWA-VR.
+
 ## APPENDIX
 
 ### EYWA Add-On for OpenNebula
