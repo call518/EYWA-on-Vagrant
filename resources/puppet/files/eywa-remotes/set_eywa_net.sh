@@ -7,7 +7,7 @@ DB_PASS="1234"
 MYSQL_EYWA="mysql -u$DB_USER -p$DB_PASS -h$DB_HOST $DB_NAME -s -N"
 T64=$1
 XPATH="/var/tmp/one/hooks/eywa/xpath.rb -b $T64"
-SSH_oneadmin="ssh oneadmin@192.168.33.10 -i /var/lib/one/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5"
+SSH_oneadmin="ssh -l oneadmin 192.168.33.10 -i /var/lib/one/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5"
 
 ONE_VM_ID=`$XPATH /VM/ID`
 ONE_UID=`$XPATH /VM/TEMPLATE/CONTEXT/ONE_UID`

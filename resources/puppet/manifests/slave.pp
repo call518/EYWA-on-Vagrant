@@ -62,25 +62,6 @@ exec { "Enable eth1":
     require  => File["Set eth1.cfg"],
 }
 
-#file { "Set eth2.cfg":
-#    path    => "/etc/network/interfaces.d/eth2.cfg",
-#    ensure  => present,
-#    owner   => "root",
-#    group   => "root",
-#    mode    => 0644,
-#    content => template("/vagrant/resources/puppet/templates/eth2.cfg.erb"),
-#    require => Exec["Enable eth1"],
-#}
-
-#exec { "Enable eth2":
-#    command  => "ifup eth2",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    unless   => "ifconfig eth2 2> /dev/null | grep -q UP",
-#    require  => File["Set eth2.cfg"],
-#}
-
 if $hostname =~ /^master/ {
   file { "Set VSe.cfg":
       path    => "/etc/network/interfaces.d/VSe.cfg",
@@ -90,7 +71,6 @@ if $hostname =~ /^master/ {
       mode    => 0644,
       content => template("/vagrant/resources/puppet/templates/VSe-master.cfg.erb"),
       require => Exec["Enable eth1"],
-      #require => Exec["Enable eth2"],
   }
 } else {
   file { "Set VSe.cfg":
@@ -119,7 +99,6 @@ exec { "Disable virbr0":
     timeout  => "0",
     logoutput => true,
     onlyif   => "ifconfig virbr0 2> /dev/null > /dev/null",
-    #require  => Exec["Static ARP Table for VSe"],
     require  => Exec["Enable VSe"],
 }
 
@@ -169,7 +148,6 @@ if $hostname =~ /^slave-[0-9]+/ {
     }
     exec { "Mount datastore":
         provider => shell,
-        #command  => "mount /var/lib/one/datastores",
         command  => "while ! df | grep -q '^master:/var/lib/one/datastores'; do mount /var/lib/one/datastores; sleep 5; done",
         user     => "root",
         timeout  => "0",
@@ -229,7 +207,6 @@ exec { "Update Apparmor":
 }
 
 exec { "Add ONE Node":
-    #command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n ebtables'\"",
     command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost create $hostname -i kvm -v kvm -n dummy'\"",
     user     => "root",
     timeout  => "0",
@@ -269,34 +246,4 @@ file { "Put /root/.config/etherape":
     content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
     require => Exec["Create DIR - /root/.config"],
 }
-
-#file { "Put /home/vagrant/.config/etherape":
-#    path    => "/home/vagrant/.config/etherape",
-#    ensure  => present,
-#    owner   => "vagrant",
-#    group   => "vagrant",
-#    mode    => 0644,
-#    content => template("/vagrant/resources/puppet/templates/etherape.config.erb"),
-#    require => File["Create /home/vagrant/.config DIR for EtherApe"],
-#}
-#
-#exec { "Create DIR - /root/.config":
-#    provider => shell,
-#    command  => "mkdir /root/.config",
-#    creates  => "/root/.config",
-#    cwd      => "/root",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    require  => File["Put /home/vagrant/.config/etherape"],
-#}
-#
-#exec { "Link /home/vagrant/.config/etherape to /root/.config/etherape":
-#    command  => "rm -f /root/.config/etherape && ln /home/vagrant/.config/etherape /root/.config/etherape",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    unless   => "test -L /root/.config/etherape",
-#    require  => Exec["Create DIR - /root/.config"],
-#}
 

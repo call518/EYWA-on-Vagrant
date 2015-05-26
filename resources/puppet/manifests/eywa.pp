@@ -29,16 +29,6 @@ exec { "Set SUDO - /etc/sudoers (2)":
 }
 
 if $hostname == "master" {
-  #file { "Put eywa_schema.sql":
-  #    path    => "/home/vagrant/eywa_schema.sql",
-  #    ensure  => present,
-  #    owner   => "root",
-  #    group   => "root",
-  #    mode    => 0644,
-  #    source  => "/vagrant/resources/puppet/files/eywa_schema.sql",
-  #    #require => Package["nfs-kernel-server"],
-  #}
-  
   exec { "=== Waiting.... Downloading eywa_schema.sql.gz... ===":
       command  => "echo '=== Waiting.... eywa_schema.sql.gz... ==='",
       user     => "root",
@@ -85,7 +75,6 @@ if $hostname == "master" {
   }
   
   exec { "Create eywa Schema & Env.":
-      #command  => "mysql -uroot -p${oneadmin_pw} eywa < /home/vagrant/eywa_schema.sql",
       command  => "zcat /home/vagrant/eywa_schema.sql | mysql -uroot -p${oneadmin_pw} eywa",
       user     => "root",
       timeout  => "0",
@@ -93,15 +82,6 @@ if $hostname == "master" {
       unless   => "mysql -uroot -p${oneadmin_pw} -e 'SELECT * FROM eywa.vm_info'",
       require  => Exec["=== Waiting.... Creating EYWA DB Schema... ==="],
   }
-  
-  #exec { "Create Index: 'uid' column in mc_address":
-  #    command  => "mysql -uroot -p${oneadmin_pw} -e \"alter table eywa.mc_address add index index_uid(uid)\"",
-  #    user     => "root",
-  #    timeout  => "0",
-  #    logoutput => true,
-  #    unless   => "mysql -uroot -p${oneadmin_pw} -e 'show index from eywa.mc_address' | grep -q index_uid",
-  #    require  => Exec["Create eywa Schema & Env."],
-  #}
   
   file { "Put ${oneadmin_home}/remotes/hooks/eywa DIR":
       path     => "${oneadmin_home}/remotes/hooks/eywa",
@@ -112,7 +92,6 @@ if $hostname == "master" {
       ensure   => directory,
       replace  => true,
       recurse  => true,
-      #require  => Exec["Create Index: 'uid' column in mc_address"],
       require  => Exec["Create eywa Schema & Env."],
   }
   
@@ -141,7 +120,6 @@ if $hostname == "master" {
       ensure   => directory,
       replace  => true,
       recurse  => true,
-      #require  => File["Put ${oneadmin_home}/remotes/hooks/eywa DIR"],
       require  => Exec["Set Testing SSH Key for EYWA-VR"],
   }
   
@@ -182,35 +160,6 @@ if $hostname == "master" {
       require  => Exec["Backup ${oneadmin_home}/remotes/vmm/kvm/deploy"],
   }
   
-  #exec { "mkdir /var/tmp/one/hooks/eywa":
-  #    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa",
-  #    creates  => "/var/tmp/one/hooks/eywa",
-  #    user     => "oneadmin",
-  #    timeout  => "0",
-  #    logoutput => true,
-  #    require  => File["Put ${oneadmin_home}/files DIR"],
-  #}
-  
-  #file { "Put xpath.rb (${oneadmin_home}/remotes/datastore/xpath.rb)":
-  #    path    => "${oneadmin_home}/remotes/datastore/xpath.rb",
-  #    ensure  => present,
-  #    owner   => "oneadmin",
-  #    group   => "oneadmin",
-  #    mode    => 0775,
-  #    source  => "/vagrant/resources/puppet/files/xpath.rb",
-  #    require => Exec["mkdir /var/tmp/one/hooks/eywa"],
-  #}
-  
-  #file { "Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)":
-  #    path    => "/var/tmp/one/hooks/eywa/xpath.rb",
-  #    ensure  => present,
-  #    owner   => "oneadmin",
-  #    group   => "oneadmin",
-  #    mode    => 0775,
-  #    source  => "/vagrant/resources/puppet/files/xpath.rb",
-  #    require => File["Put xpath.rb (${oneadmin_home}/remotes/datastore/xpath.rb)"],
-  #}
-  
   file { "Put add-eywa-oned.conf":
       path    => "/home/vagrant/add-eywa-oned.conf",
       ensure  => present,
@@ -238,17 +187,6 @@ if $hostname == "master" {
       logoutput => true,
       require  => File["Put add-eywa-oned.conf.sh"],
   }
-  
-  #file { "Config oned.conf for EYWA":
-  #    path    => "/etc/one/oned.conf",
-  #    ensure  => present,
-  #    owner   => "root",
-  #    group   => "root",
-  #    mode    => 0644,
-  #    content => template("/vagrant/resources/puppet/templates/oned.conf-eywa.erb"),
-  #    #require => File["Put xpath.rb (/var/tmp/one/hooks/eywa/xpath.rb)"],
-  #    require => Exec["mkdir -p /var/log/one/templates"],
-  #}
   
   exec { "Restart OpenNebula Service":
       command  => "service opennebula restart",
@@ -326,38 +264,15 @@ if $hostname == "master" {
       user    => "root",
       timeout => "0",
       require => Exec["Restart DNS(Bind9) Service"],
-      #before  => Exec["Sync: onehost sync -f"],
+      before  => Exec["Sync: onehost sync -f"],
   }
 }
 
-#exec { "Create DIR /var/tmp/one/hooks/eywa":
-#    command  => "mkdir -p /var/tmp/one/hooks/eywa && chown oneadmin:oneadmin /var/tmp/one/hooks/eywa && chmod 0755 /var/tmp/one/hooks/eywa",
-#    creates  => "/var/tmp/one/hooks/eywa",
-#    user     => "oneadmin",
-#    group    => "oneadmin",
-#    timeout  => "0",
-#    logoutput => true,
-#    #require  => Exec[""],
-#}
-
-#file { "Put /var/tmp/one/hooks/eywa":
-#    path     => "/var/tmp/one/hooks/eywa",
-#    owner    => "oneadmin",
-#    group    => "oneadmin",
-#    mode     => 0775,
-#    source   => "/vagrant/resources/puppet/files/eywa-remotes",
-#    ensure   => directory,
-#    replace  => true,
-#    recurse  => true,
-#    require  => Exec["Create DIR /var/tmp/one/hooks/eywa"],
-#}
-
-#exec { "Sync: onehost sync -f":
-#    provider => shell,
-#    command  => "while ! $(su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"); do sleep 5; done",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    #require  => Exec[""],
-#}
+exec { "Sync: onehost sync -f":
+    provider => shell,
+    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
+    user     => "root",
+    timeout  => "0",
+    logoutput => true,
+}
 

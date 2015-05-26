@@ -131,17 +131,6 @@ exec { "Backup oned.conf":
     require  => Exec["Permission Private SSH-key"],
 }
 
-#file { "Config oned.conf":
-#    path    => "/etc/one/oned.conf",
-#    ensure  => present,
-#    owner   => "root",
-#    group   => "root",
-#    mode    => 0644,
-#    content => template("/vagrant/resources/puppet/templates/oned.conf.erb"),
-#    notify  => Service["opennebula"],
-#    require => [Exec["Create opennebula Database"], Exec["Backup oned.conf"]],
-#}
-
 file { "Put edit-oned.conf.sh":
     path    => "/home/vagrant/edit-oned.conf.sh",
     ensure  => present,
@@ -178,20 +167,11 @@ file { "Put set-oneadmin-pw.sh":
     require  => Exec["Restart OpenNebula Service"],
 }
 
-#exec { "dos2unix set-oneadmin-pw.sh":
-#    command  => "dos2unix /home/vagrant/set-oneadmin-pw.sh",
-#    user     => "root",
-#    timeout  => "0",
-#    logoutput => true,
-#    require  => File["Put set-oneadmin-pw.sh"],
-#}
-
 exec { "Run set-oneadmin-pw.sh":
     command  => "/home/vagrant/set-oneadmin-pw.sh",
     user     => "root",
     timeout  => "0",
     logoutput => true,
-    #require  => Exec["dos2unix set-oneadmin-pw.sh"],
     require  => File["Put set-oneadmin-pw.sh"],
 }
 
@@ -212,34 +192,6 @@ exec { "Download EYWA-Ubuntu-14.04_64.qcow2.gz":
     require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
 }
 
-#exec { "Download Ubuntu-14.04.qcow2.gz":
-#    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110218' -O /usr/local/src/Ubuntu-14.04.qcow2.gz",
-#    creates  => "/usr/local/src/Ubuntu-14.04.qcow2.gz",
-#    user     => "root",
-#    timeout  => "0",
-#    #logoutput => true,
-#    require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
-#}
-
-#exec { "Download EYWA-Virtual-Router.qcow2.gz":
-#    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110208' -O /usr/local/src/EYWA-Virtual-Router.qcow2.gz",
-#    creates  => "/usr/local/src/EYWA-Virtual-Router.qcow2.gz",
-#    user     => "root",
-#    timeout  => "0",
-#    #logoutput => true,
-#    #require  => Exec["Download Ubuntu-14.04.qcow2.gz"],
-#    require  => Exec["=== Waiting.... Downloading Template-Image... ==="],
-#}
-
-#exec { "Download Ubuntu12.04_64.qcow2.gz":
-#    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110206' -O /usr/local/src/Ubuntu12.04_64.qcow2.gz",
-#    creates  => "/usr/local/src/Ubuntu12.04_64.qcow2.gz",
-#    user     => "root",
-#    timeout  => "0",
-#    #logoutput => true,
-#    require  => Exec["Download EYWA-Virtual-Router.qcow2.gz"],
-#}
-
 file { "Put one-public-net.tmpl":
     path    => "/home/vagrant/one-public-net.tmpl",
     ensure  => present,
@@ -247,7 +199,6 @@ file { "Put one-public-net.tmpl":
     group   => "oneadmin",
     mode    => 0744,
     source => "/vagrant/resources/puppet/files/one-public-net.tmpl",
-    #require  => Exec["Download Ubuntu12.04_64.qcow2.gz"],
     require  => Exec["Download EYWA-Ubuntu-14.04_64.qcow2.gz"],
 }
 

@@ -12,31 +12,6 @@ exec { "Apt-get Update":
     logoutput => true,
 }
 
-#package { "git":
-#    ensure => "installed"
-#    require => Exec["Apt-get Update"],
-#}
-
-#package { "unzip":
-#    ensure => "installed"
-#    require => Exec["Apt-get Update"],
-#}
-
-#package { "dos2unix":
-#    ensure   => installed,
-#    require => Exec["Apt-get Update"],
-#}
-
-#package { "expect":
-#    ensure   => installed,
-#    require => Exec["Apt-get Update"],
-#}
-
-#package { "sshpass":
-#    ensure   => installed,
-#    require => Exec["Apt-get Update"],
-#}
-
 case $operatingsystem {
     debian, ubuntu: { $vim_pkg = "vim" }
     centos, redhat, fedora: { $vim_pkg = "vim-enhanced" }
