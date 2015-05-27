@@ -126,6 +126,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "master_ip" => "#{master_ip}",
         "my_ip" => "#{my_ip}",
         "my_ip_pri" => "#{my_ip_pri}",
+        "opennebula_version" => "#{opennebula_version}",
         "oneadmin_pw" => "#{oneadmin_pw}",
         "ptr_head" => "#{ptr_head}",
       }
@@ -219,6 +220,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           "master_ip" => "#{master_ip}",
           "my_ip" => "#{my_ip}",
           "my_ip_pri" => "#{my_ip_pri}",
+          "opennebula_version" => "#{opennebula_version}",
           "oneadmin_pw" => "#{oneadmin_pw}",
           "ptr_head" => "#{ptr_head}",
         }

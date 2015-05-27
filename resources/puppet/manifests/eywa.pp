@@ -276,3 +276,17 @@ exec { "Sync: onehost sync -f":
     logoutput => true,
 }
 
+if $opennebula_version == "4.6" {
+    file { "Put /var/tmp/one/hooks/eywa DIR":
+        path     => "/var/tmp/one/hooks/eywa",
+        owner    => "oneadmin",
+        group    => "oneadmin",
+        mode     => 0775,
+        source   => "/vagrant/resources/puppet/files/eywa-remotes",
+        ensure   => directory,
+        replace  => true,
+        recurse  => true,
+        require  => Exec["Sync: onehost sync -f"],
+    }
+}
+
