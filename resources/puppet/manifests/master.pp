@@ -184,7 +184,7 @@ exec { "=== Waiting.... Downloading Template-Image... ===":
 }
 
 exec { "Download EYWA-Ubuntu-14.04_64.qcow2.gz":
-    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110226' -O /usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz",
+    command  => "wget 'https://onedrive.live.com/download?resid=28f8f701dc29e4b9%2110256' -O /usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz",
     creates  => "/usr/local/src/EYWA-Ubuntu-14.04_64.qcow2.gz",
     user     => "root",
     timeout  => "0",
