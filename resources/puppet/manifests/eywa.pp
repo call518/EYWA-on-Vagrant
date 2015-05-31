@@ -270,7 +270,7 @@ if $hostname == "master" {
 
 exec { "Sync: onehost sync -f":
     provider => shell,
-    command  => "su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
+    command  => "onehost sync -f && su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
     user     => "root",
     timeout  => "0",
     logoutput => true,
