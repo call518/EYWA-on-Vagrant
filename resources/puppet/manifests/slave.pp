@@ -11,6 +11,10 @@ package { "arptables":
     ensure   => installed,
 }
 
+package { "cpu-checker":
+    ensure   => installed,
+}
+
 package { "etherape":
     ensure   => installed,
 }

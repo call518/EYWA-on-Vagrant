@@ -2,7 +2,9 @@
 
 ONE_CONF="/etc/one/oned.conf"
 
-sed -i 's|type.*= "kvm"|type = "qemu"|g' ${ONE_CONF}
+if ! kvm-ok 2> /dev/null > /dev/null; then
+	sed -i 's|type.*= "kvm"|type = "qemu"|g' ${ONE_CONF}
+fi
 sed -i '/backend = "sqlite"/ s|^|#|' ${ONE_CONF}
 
 if ! grep -q "EYWA-MySQL" ${ONE_CONF}; then
