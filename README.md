@@ -66,6 +66,15 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 * Edit Vagrantfile to change OpenNebula version
  * "opennebula_version" Parameter
 
+### Download Images Info.
+
+* Public Repository: OneDrive
+ * Folder-Link: http://1drv.ms/1BcJiDq (Read-Only)
+ * Detail-Info: http://www.evernote.com/l/ACma0cNe1CdCKLQFaDn6U3ukySYCWS6tmeM/
+ * (Note) If puppet *.pp Download(wget) is failed, check link url. (and feeback to me)
+* EYWA-Router Template
+ * "EYWA-Ubuntu-14.04_64.qcow2.gz"
+ 
 ### Virtualization Provider
 
 * Tested on VirtualBox 4.3.26.r98988

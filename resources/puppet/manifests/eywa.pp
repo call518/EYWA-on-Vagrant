@@ -218,7 +218,7 @@ if $hostname == "master" {
       group   => "bind",
       mode    => 0644,
       content => template("/vagrant/resources/puppet/templates/dns/bind/test.org.zone.erb"),
-      require => [Package["bind9"], Package["bind9-host"], Package["bind9utils"]],
+      require => [Exec["Restart OpenNebula Service"], Package["bind9"], Package["bind9-host"], Package["bind9utils"]],
   }
   
   file { "Put /var/lib/bind/${ptr_head}.in-addr.arpa.zone":
@@ -228,7 +228,7 @@ if $hostname == "master" {
       group   => "bind",
       mode    => 0644,
       content => template("/vagrant/resources/puppet/templates/dns/bind/in-addr.arpa.zone.erb"),
-      require => [Package["bind9"], Package["bind9-host"], Package["bind9utils"]],
+      require => File["Put /var/lib/bind/test.org.zone"],
   }
   
   file { "Put /etc/bind/named.conf.local":
@@ -270,23 +270,8 @@ if $hostname == "master" {
 
 exec { "Sync: onehost sync -f":
     provider => shell,
-    command  => "onehost sync -f && chown -R oneadmin:oneadmin /var/tmp/one/hooks/eywa && su -l oneadmin -c \"ssh oneadmin@master 'onehost sync -f'\"",
+    command  => "(sudo onehost sync -f && sudo chown -R oneadmin:oneadmin /var/tmp/one/hooks/eywa) || (su -l oneadmin -c \"ssh oneadmin@master 'sudo onehost sync -f'\")",
     user     => "root",
     timeout  => "0",
     logoutput => true,
 }
-
-if $opennebula_version == "4.6" {
-    file { "Put /var/tmp/one/hooks/eywa DIR":
-        path     => "/var/tmp/one/hooks/eywa",
-        owner    => "oneadmin",
-        group    => "oneadmin",
-        mode     => 0775,
-        source   => "/vagrant/resources/puppet/files/eywa-remotes",
-        ensure   => directory,
-        replace  => true,
-        recurse  => true,
-        require  => Exec["Sync: onehost sync -f"],
-    }
-}
-
