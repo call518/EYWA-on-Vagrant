@@ -88,3 +88,5 @@ service apache2 start
 update-rc.d apache2 enable
 
 update-rc.d vmcontext disable
+
+ping -c 10.0.0.1
