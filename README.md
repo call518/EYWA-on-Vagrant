@@ -4,6 +4,8 @@
 
 Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environment)
 
+(Note) Currently VirtualBox is not supporting nesting VT-X, so simulation VMs is slow.
+
 (Note) In Windows, Configure "core.autocrlf = input" in you Git Env, because "^M"
 
 ## PoC-Demo Video
