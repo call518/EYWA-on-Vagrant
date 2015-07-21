@@ -195,7 +195,7 @@ VR-1> ssh root@10.0.0.4
 VM-2> (root's Prompt)
 ```
 
-#### arping, VM-2 to VM-1
+#### arping, VM-2 to VM-1 (Internal)
 
 ```bash
 VM-2> arping 10.0.0.3
