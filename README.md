@@ -155,8 +155,9 @@ VNC Address: {Vagrant-Host-IP}:55912
 ### SSH Connect to VM
 
 **(Note) VM is Slow, becase of Nested-Virtaulization.**
+**(Note) VM/VR's root-password is '1234'.**
 
-on master or slave-{n}
+On any-node(master/slave)
 ```bash
 ssh root@{VR-IP(External)}
 ssh root@{VM-IP}
