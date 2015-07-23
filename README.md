@@ -162,6 +162,8 @@ VNC Address: {Vagrant-Host-IP}:55912
 
 On any-node(master/slave)
 ```bash
+vagrant ssh master //or slave-1/slave-2
+sudo -i //root-privileged
 ssh root@{VR-IP(External)}
 ssh root@{VM-IP}
 ```
