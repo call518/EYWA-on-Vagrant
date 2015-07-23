@@ -46,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
+      #vb.customize ["modifyvm", :id, "--pae", "on"]
       #vb.customize ["modifyvm", :id, "--ioapic", "on"]
       #vb.customize ["modifyvm", :id, "--hpet", "on"]
       #vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
@@ -160,6 +161,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       slave.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--cpus", "2"]
         vb.customize ["modifyvm", :id, "--memory", "2048"]
+        #vb.customize ["modifyvm", :id, "--pae", "on"]
         #vb.customize ["modifyvm", :id, "--ioapic", "on"]
         #vb.customize ["modifyvm", :id, "--hpet", "on"]
         #vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
