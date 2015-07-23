@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'tcp'
     master.vm.network "forwarded_port", guest: 53, host: 53, protocol: 'udp'
     master.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
       vb.customize ["modifyvm", :id, "--memory", "2048"]
       #vb.customize ["modifyvm", :id, "--chipset", "ich9"]
       #vb.customize ["modifyvm", :id, "--pae", "on"]
