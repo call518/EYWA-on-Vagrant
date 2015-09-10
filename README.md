@@ -145,9 +145,10 @@ VNC Address: {Vagrant-Host-IP}:55912
 * Go to "System" Tab -> "Users" Tab.
 * Click "+" Button.
 * Create "testuser" User. (Password is that you want.)
- * Default Templates is generated. (in "Templates" Tab)
+ * Default two templates is generated. (in "Templates" Tab)
+ * The templates is 2-EYWA-Router and 2-Ubuntu(EYWA). (Note)"2" is User-ID
 * EYWA-Virutal-Router(VR-1) is automatic launched. (in "Virtual Machines" Tab)
-* When VR-1 is up, Create EYWA-VM(VM-1).
+* When VR-1 is up, Create EYWA-VM(VM-1) with Ubuntu(EYWA) Template.
 * Add VR-2 for LB/HA
 * Add VM-2.
 * Test Ping, to/on all Nodes.
