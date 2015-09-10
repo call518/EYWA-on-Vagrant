@@ -154,6 +154,7 @@ VNC Address: {Vagrant-Host-IP}:55912
 + On all VMs, Test ping to external.
 + Delete(Destroy) VR-1, and Test Ping on all EYWA-VMs.
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
++ Repeat testing of creating/deleting VRs
 
 ### SSH Connect to VM
 
