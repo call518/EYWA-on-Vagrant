@@ -148,12 +148,12 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Default two templates is generated. (in "Templates" Tab)
  * The templates is 2-EYWA-Router and 2-Ubuntu(EYWA). (Note)"2" is User-ID
 + EYWA-Virutal-Router(VR-1) is automatic launched. (in "Virtual Machines" Tab)
-+ When VR-1 is up, Create EYWA-VM(VM-1) with 2-Ubuntu(EYWA) Template.
-+ Add VR-2 for LB/HA
++ When VR-1 is up, Create VM-1(EYWA-VM) with 2-Ubuntu(EYWA) Template.
++ Add VR-2 with EYWA-Router-0 template. (for LB/HA)
 + Add VM-2.
-+ Test Ping, to/on all EYWA-VMs.
++ On all VMs, Test ping to external.
 + Delete(Destroy) VR-1, and Test Ping on all EYWA-VMs.
- * Outbound-Traffic(External) of EYWA-VMs will going to VR-2.
+ * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
 
 ### SSH Connect to VM
 
