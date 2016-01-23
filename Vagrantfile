@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #opennebula_version = "4.6"
   opennebula_version = "4.10"
+  #opennebula_version = "4.14"
 
   oneadmin_pw = "passw0rd"
   vm_root_pw = "1234"
