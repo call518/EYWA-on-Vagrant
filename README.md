@@ -259,8 +259,7 @@ VNC Address: {Vagrant-Host-IP}:55912
     * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then destroy it.
  * Only briefly stop the ping, it works again soon.
     * After ARP Refresh, ping test of all VMs is resumed. (Failover)
-    * Check 'arp -n', the 10.0.0.1's MAC is changed to remained EYWA-Virtual-Router's MAC.
-
+ * Check 'arp -n', the 10.0.0.1's MAC is changed to remained EYWA-Virtual-Router's MAC.
 + In addition, try the add / delete as you want.
 
 ### (North-South) Inbound LB/HA Scenario
