@@ -141,8 +141,9 @@ VNC Address: {Vagrant-Host-IP}:55912
 
 ## PoC Scenario
 
-### Outbound LB/HA Scenario
+### (North-South) Outbound LB/HA Scenario
 
++ (Note) This is test of external traffic. (VM to Exter)
 + Log in to Web-UI, by "oneadmin" user.
 + Go to 'System' Tab -> 'Users' Tab.
 + Click '+' Button.
@@ -180,7 +181,11 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
 + In addition, try the add / delete as you want.
 
-### Inbound LB/HA Scenario
+### (North-South) Inbound LB/HA Scenario
+
+* TODO (ASAP)
+
+### (East-West) Isolation & Traffic-Engineering Scenario
 
 * TODO (ASAP)
 
@@ -202,7 +207,7 @@ ssh root@{VM-IP}
 
 ## Limitations
 
-* Not yet support Migration fo EYWA-VR/VM, and deployment strategy of EYWA-VR.
+* With OpenNebula, Not yet support Migration fo EYWA-VR/VM, and deployment strategy of EYWA-VR.
 
 ### EYWA Add-On for OpenNebula
 
