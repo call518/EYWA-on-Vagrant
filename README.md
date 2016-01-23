@@ -83,6 +83,8 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
 ### Networking
 
+#### Host Layer
+
 * Vagrant Management Network
  * eth0: "NAT"
 * External Network
@@ -96,6 +98,23 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
  * Promiscuous: "Allow All"
 * VXLAN Range (MySQL Database: eywa)
  * 239.0.0.0 ~ 239.0.1.155 (4096 EA)
+
+#### Virtual Machine Layer
+
+##### EYWA Virtual Router
+
+* eth0
+ * External Network.
+ * 192.168.33.0/24 (GW/ 192.168.33.2)
+* eth1 - Primary
+ * Internal Network. (per Tenant)
+ * 10.0.0.1/8 (Default Gateway of Tenant's VMs)
+ * 10.0.0.x/8 (Internal IP-Address. exclude 10.0.0.1)
+
+##### EYWA Virtual Machine
+
+* eth0
+ * 10.0.0.x/8 (Default Gateway: 10.0.0.1)
 
 # EYWA Architecture
 
@@ -172,6 +191,8 @@ VNC Address: {Vagrant-Host-IP}:55912
  * EYWA-VRs should be present on different hosts.
  * EYWA-VMs should be present on different hosts.
  * All Status must be "RUNNING"
+ * All VMs's Default-Gateway is "10.0.0.1".
+ * All VRs's Primary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
  * On all VMs, Test ping to external.
  * (Note) Sample list of the generated VM with virt-manager on VNC-Console.
     * '2-EYWA-Router-0' => 'one-0'
