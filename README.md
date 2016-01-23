@@ -85,18 +85,25 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
 #### Host Layer
 
-* Vagrant Management Network
- * eth0: "NAT"
-* External Network
- * eth1: "Host-Only Adapter"
- * 192.168.33.0/24 (GW: 192.168.33.2)
-  * Range: 192.168.33.101 ~ 192.168.33.200 (100 EA)
+##### Vagrant Management Network
+
+* eth0: "NAT"
+
+##### External Network
+
+* eth1: "Host-Only Adapter"
+* 192.168.33.0/24 (GW: 192.168.33.2)
+ * Range: 192.168.33.101 ~ 192.168.33.200 (100 EA)
  * Promiscuous: "Allow All"
-* Internal Network
- * eth2: "Internal Network"
- * 10.0.0.0/8 (GW: 10.0.0.1) (16777216 EA)
- * Promiscuous: "Allow All"
-* VXLAN Range (MySQL Database: eywa)
+
+##### Internal Network
+
+* eth2: "Internal Network"
+* 10.0.0.0/8 (GW: 10.0.0.1) (16777216 EA)
+* Promiscuous: "Allow All"
+
+##### VXLAN Range (MySQL Database: eywa)
+
  * 239.0.0.0 ~ 239.0.1.155 (4096 EA)
 
 #### Virtual Machine Layer
