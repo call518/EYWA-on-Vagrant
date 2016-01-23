@@ -209,6 +209,12 @@ VNC Address: {Vagrant-Host-IP}:55912
 + Test failure scenarios. (If Some VRs is Down/Fail...)
  * Delete(Destroy) one of the two EYWA-Routers. (e.g. '2-EYWA-Router-{0|1}').
  * Test Ping on all EYWA-VMs.
+    * SSH to one of VMs with VNC-Console. (SSH Path: Client -> VR -> VM)
+    ```bash
+    (on Host)# ssh 192.168.33.101 (e.g. First EYWA Virtual Router)
+    (on VR)# ssh 10.0.0.3 (e.g. First Virtual Machine)
+    (on VM)# ping 8.8.8.8 (Test Outbound-Networking on VM)
+    ```
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
 + In addition, try the add / delete as you want.
 
