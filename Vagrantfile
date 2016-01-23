@@ -31,6 +31,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "trusty64"
   config.vm.box_url = "https://onedrive.live.com/download?resid=28f8f701dc29e4b9%21247"
 
+  ### bridge parameters.
+  ## resources/puppet/templates/VSe-master.cfg.erb
+  ## resources/puppet/templates/VSe-slave.cfg.erb
+  #---------------------
+  #bridge_waitport 0
+  #bridge_maxwait 0
+  #bridge_ageing 0
+  #bridge_maxage 0
+  #bridge_fd 0
+  #bridge_hello 2
+  #---------------------
+
+
   config.vm.define "master" do |master|
     my_ip = "#{master_ip}"
     my_ip_pri = "#{master_ip_pri}"
