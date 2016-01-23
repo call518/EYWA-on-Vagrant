@@ -87,7 +87,7 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
 ##### Vagrant Management Network
 
-* eth0: "NAT"
+* eth0: "NAT" for External.
 
 ##### External Network
 
