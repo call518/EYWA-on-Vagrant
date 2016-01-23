@@ -113,7 +113,7 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 * eth0
  * External Network.
  * 192.168.33.0/24 (GW/ 192.168.33.2)
-* eth1 - Primary
+* eth1
  * Internal Network. (per Tenant)
  * 10.0.0.1/8 (Default Gateway of Tenant's VMs)
  * 10.0.0.x/8 (Internal IP-Address. exclude 10.0.0.1)
@@ -210,17 +210,19 @@ VNC Address: {Vagrant-Host-IP}:55912
     (SSH Key is already exist, so auto-login.) 
 
     [on Any-Host]# ssh 192.168.33.101 (SSH Connect to 2-EYWA-Router-0)
+    [on 2-EYWA-Router-0]# ip address
     [on 2-EYWA-Router-0]# ssh 10.0.0.3 (IP-Address of 2-Ubuntu(EYWA)-0)
     [on 2-Ubuntu(EYWA)-0]# route -n
     [on 2-Ubuntu(EYWA)-0]# arp -n
     
     [on Any-Host]# ssh 192.168.33.102 (SSH Connect to 2-EYWA-Router-1)
+    [on 2-EYWA-Router-1]# ip address
     [on 2-EYWA-Router-1]# ssh 10.0.0.5 (IP-Address of 2-Ubuntu(EYWA)-1)
     [on 2-Ubuntu(EYWA)-1]# route -n
     [on 2-Ubuntu(EYWA)-1]# arp -n
     ```
+    * All VRs's secondary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
     * All VMs's Default-Gateway is "10.0.0.1".
-    * All VRs's Primary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
     * On all VMs, Test ping to external.
  * Test Outbound Ping on all EYWA-VMs. (with VNC-Console)
     ```bash
