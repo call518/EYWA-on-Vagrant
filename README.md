@@ -142,19 +142,37 @@ VNC Address: {Vagrant-Host-IP}:55912
 ## PoC Scenario
 
 + Log in to Web-UI, by "oneadmin" user.
-+ Go to "System" Tab -> "Users" Tab.
-+ Click "+" Button.
-+ Create "testuser" User. (Password is that you want.)
++ Go to 'System' Tab -> 'Users' Tab.
++ Click '+' Button.
++ Create 'testuser' User. (Password is that you want.)
  * Default two templates is generated. (in "Templates" Tab)
- * The templates is 2-EYWA-Router and 2-Ubuntu(EYWA). (Note)"2" is User-ID
-+ EYWA-Virutal-Router(VR-1) is automatic launched. (in "Virtual Machines" Tab)
-+ When VR-1 is up, Create VM-1(EYWA-VM) with 2-Ubuntu(EYWA) Template.
-+ Add VR-2 with EYWA-Router-0 template. (for LB/HA)
-+ Add VM-2.
-+ On all VMs, Test ping to external.
-+ Delete(Destroy) VR-1, and Test Ping on all EYWA-VMs.
+ * The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
+ * (Note)'2' is User-ID
++ EYWA-Virutal-Router('VR-1') is automatic launched. (in 'Virtual Machines' Tab)
++ After VR-1 is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
++ Click '+' Button.
++ Create first EYWA-VM(named with 'VM-1') by '2-Ubuntu(EYWA)' Template.
++ Please wait until the status of 'Host' in 'Virtual Machines' is determined.
++ Repeat Creating Second EYWA-Virtual-Router('VR-2').
++ Click '+' Button.
++ Add 'VR-2' with EYWA-Router-0 template. (for Router's LB/HA)
++ Please wait until the status of 'Host' is determined.
++ Repeat Creating Second EYWA-VM(named 'VM-2'). Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
++ Click '+' Button.
++ Add 'VM-2' with 'Ubuntu(EYWA)' template. (for Routers's LB/HA)
++ Please wait until the status of 'Host' in 'Virtual Machines' is determined.
++ Finaly, Check all VM/VR for EYWA-Demo Environment.
+ * EYWA-VRs should be present on different hosts.
+ * EYWA-VMs should be present on different hosts.
+ * All Status must be "RUNNING"
+ * On all VMs, Test ping to external.
++ Test failure scenarios. (If Some VRs is Down/Fail...)
+ * Delete(Destroy) 'VR-1'.
+ * Test Ping on all EYWA-VMs.
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
-+ Repeat testing of creating/deleting VRs
++ In addition, try the add / delete as you want.
+
+## APPENDIX
 
 ### SSH Connect to VM
 
@@ -173,8 +191,6 @@ ssh root@{VM-IP}
 ## Limitations
 
 * Not yet support Migration fo EYWA-VR/VM, and deployment strategy of EYWA-VR.
-
-## APPENDIX
 
 ### EYWA Add-On for OpenNebula
 
