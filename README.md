@@ -214,6 +214,7 @@ VNC Address: {Vagrant-Host-IP}:55912
     (on Host)# ssh 192.168.33.101 (e.g. First EYWA Virtual Router)
     (on VR)# ssh 10.0.0.3 (e.g. First Virtual Machine)
     (on VM)# ping 8.8.8.8 (Test Outbound-Networking on VM)
+    (on VM)# arp -n (Get IP/Mac of Gateway-VR)
     ```
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
 + In addition, try the add / delete as you want.
