@@ -206,6 +206,8 @@ VNC Address: {Vagrant-Host-IP}:55912
 + Test failure scenarios. (If Some VRs is Down/Fail...)
  * Connect from any Host to VMs, then check below, (SSH Path: Client -> VR -> VM)
     ```bash
+    (SSH Key is already exist, so auto-login.) 
+
     [on Any-Host]# ssh 192.168.33.101 (SSH Connect to 2-EYWA-Router-0)
     [on 2-EYWA-Router-0]# ssh 10.0.0.3 (IP-Address of 2-Ubuntu(EYWA)-0)
     [on 2-Ubuntu(EYWA)-0]# route -n
