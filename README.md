@@ -83,7 +83,7 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
 ### Networking
 
-#### Host Layer
+#### Vagrant(VirtualBox) Layer
 
 ##### Vagrant Management Network
 
@@ -106,7 +106,7 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
  * 239.0.0.0 ~ 239.0.1.155 (4096 EA)
 
-#### Virtual Machine Layer
+#### EYWA(OpenNebula) Layer
 
 ##### EYWA Virtual Router
 
