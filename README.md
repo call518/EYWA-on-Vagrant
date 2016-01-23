@@ -246,14 +246,20 @@ VNC Address: {Vagrant-Host-IP}:55912
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
  
- * Before delete one EYWA-Router, via the VR remain and again ssh connecting to VMs.
+ * Before delete one EYWA-Router, via the VR remain and again ssh re-connecting to all VMs.
     * (Note) VR to delete is not use as Gateway. (If both is used, then delete any.)
+ * Run ping on all VMs.
+    
+    ```bash
+    [on 2-Ubuntu(EYWA)-0] ping 8.8.8.8
+    [on 2-Ubuntu(EYWA)-1] ping 8.8.8.8
+    ```
+
  * Delete(Trash) one of EYWA-Router that working as Default-Gateway by ARP-Result.
-    * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then Destroy it.
- * Re-Connect(SSH) to all VMs though remained EYWA-Virtual-Router, and re-run ping test.
- * Ping test to be resumed.
+    * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then destroy it.
+ * Only briefly stop the ping, it works again soon.
     * After ARP Refresh, ping test of all VMs is resumed. (Failover)
-    * Check 'arp -n', the 10.0.0.1's MAC is remained EYWA-Virtual-Router's MAC.
+    * Check 'arp -n', the 10.0.0.1's MAC is changed to remained EYWA-Virtual-Router's MAC.
 
 + In addition, try the add / delete as you want.
 
