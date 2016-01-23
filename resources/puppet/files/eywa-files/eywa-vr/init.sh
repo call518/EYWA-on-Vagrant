@@ -53,6 +53,7 @@ echo "ifconfig eth1 mtu 1450" >> /etc/rc.local
 echo "iptables-restore < /etc/default/iptables.rules" >> /etc/rc.local
 echo "ip addr add 10.0.0.1/8 dev eth1" >> /etc/rc.local
 echo "arping -U 10.0.0.1 -I eth1 -c 100 &" >> /etc/rc.local
+echo "arping -c 100 -A -I eth1 10.0.0.1 &" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 ip addr add 10.0.0.1/8 dev eth1
 #arping -A -U 10.0.0.1 -I eth1 -c 100 &
