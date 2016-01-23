@@ -3,8 +3,10 @@ iface VSe inet static
     address <%= @my_ip %>
     netmask 255.255.255.0
     bridge_ports eth1
+    bridge_stp off
     bridge_waitport 0
+    bridge_maxwait 0
+    bridge_ageing 0
+    bridge_maxage 0
     bridge_fd 0
     bridge_hello 2
-    bridge_maxage 12
-    bridge_stp off
