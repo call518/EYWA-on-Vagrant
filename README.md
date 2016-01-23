@@ -198,21 +198,29 @@ VNC Address: {Vagrant-Host-IP}:55912
  * EYWA-VRs should be present on different hosts(VirtualBox VM). (Check 'Host' in 'Virtual Machine' Tab)
  * EYWA-VMs should be present on different hosts(VirtualBox VM). (Check 'Host' in 'Virtual Machine' Tab)
  * All Status must be "RUNNING"
- * All VMs's Default-Gateway is "10.0.0.1".
- * All VRs's Primary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
- * On all VMs, Test ping to external.
  * (Note) Sample list of the generated VM with virt-manager on VNC-Console.
     * '2-EYWA-Router-0' => 'one-0'
     * '2-Ubuntu(EYWA)-0' => 'one-1'
     * '2-EYWA-Router-1' => 'one-2'
     * '2-Ubuntu(EYWA)-1' => 'one-3'
 + Test failure scenarios. (If Some VRs is Down/Fail...)
- * Test Outbound Ping on all EYWA-VMs. (with VNC-Console)
-    * SSH to one of VMs and Test Outboudn Ping. (SSH Path: Client -> VR -> VM)
-
+ * Connect from any Host to VMs, then check below, (SSH Path: Client -> VR -> VM)
     ```bash
-    [on Host]# ssh 192.168.33.101 (SSH Connect to 2-EYWA-Router-0)
+    [on Any-Host]# ssh 192.168.33.101 (SSH Connect to 2-EYWA-Router-0)
     [on 2-EYWA-Router-0]# ssh 10.0.0.3 (IP-Address of 2-Ubuntu(EYWA)-0)
+    [on 2-Ubuntu(EYWA)-0]# route -n
+    [on 2-Ubuntu(EYWA)-0]# arp -n
+    
+    [on Any-Host]# ssh 192.168.33.102 (SSH Connect to 2-EYWA-Router-1)
+    [on 2-EYWA-Router-1]# ssh 10.0.0.5 (IP-Address of 2-Ubuntu(EYWA)-1)
+    [on 2-Ubuntu(EYWA)-1]# route -n
+    [on 2-Ubuntu(EYWA)-1]# arp -n
+    ```
+    * All VMs's Default-Gateway is "10.0.0.1".
+    * All VRs's Primary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
+    * On all VMs, Test ping to external.
+ * Test Outbound Ping on all EYWA-VMs. (with VNC-Console)
+    ```bash
     [on 2-Ubuntu(EYWA)-0]# ping 8.8.8.8 (Test Outbound-Networking on VM)
     [on 2-Ubuntu(EYWA)-0]# arp -n (Get IP/Mac of Gateway-VR)
     (ARP Result)
@@ -220,12 +228,8 @@ VNC Address: {Vagrant-Host-IP}:55912
                 OR
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
-
-    * SSH to another VM and Test Outbound Ping.
-
+    * SSH to another VM to Test Outbound Ping.
     ```bash
-    [on Host]# ssh 192.168.33.102 (SSH Connect to 2-EYWA-Router-1)
-    [on 2-EYWA-Router-1]# ssh 10.0.0.5 (IP-Address of 2-Ubuntu(EYWA)-1)
     [on 2-Ubuntu(EYWA)-1]# ping 8.8.8.8 (Test Outbound-Networking on VM)
     [on 2-Ubuntu(EYWA)-1]# arp -n (Get IP/Mac of Gateway-VR)
     (ARP Result of Default-Gateway)
@@ -233,7 +237,6 @@ VNC Address: {Vagrant-Host-IP}:55912
                 OR
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
-
  * Delete(Trash) one of EYWA-Router that working as Default-Gateway by ARP-Result.
     * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then Destroy it.
  * Re-Connect(SSH) to all VMs though remained EYWA-Virtual-Router, and re-run ping test.
