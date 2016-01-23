@@ -150,9 +150,10 @@ VNC Address: {Vagrant-Host-IP}:55912
 + Go to 'System' Tab -> 'Users' Tab.
 + Click '+' Button.
 + Create 'testuser' User. (Password is that you want.)
- * Default two templates is generated. (in "Templates" Tab)
- * The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
- * (Note)'2' is User-ID
+ * After user created, then...
+ * Default two templates is generated automatic. (in "Templates" Tab)
+    * The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
+    * (Note)'2' is User-ID
 + EYWA-Virutal-Router('VR-1') is automatic launched. (in 'Virtual Machines' Tab)
 + After '2-EYWA-Router-0' is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
 + Create first VM.
