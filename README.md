@@ -251,8 +251,8 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Run ping on all VMs.
     
     ```bash
-    [on 2-Ubuntu(EYWA)-0] ping 8.8.8.8
-    [on 2-Ubuntu(EYWA)-1] ping 8.8.8.8
+    [on 2-Ubuntu(EYWA)-0] watch -d -n1 'arp -n1; ping -c1 8.8.8.8'
+    [on 2-Ubuntu(EYWA)-1] watch -d -n1 'arp -n1; ping -c1 8.8.8.8'
     ```
 
  * Delete(Trash) one of EYWA-Router that working as Default-Gateway by ARP-Result.
