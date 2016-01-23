@@ -141,6 +141,8 @@ VNC Address: {Vagrant-Host-IP}:55912
 
 ## PoC Scenario
 
+### Outbound LB/HA Scenario
+
 + Log in to Web-UI, by "oneadmin" user.
 + Go to 'System' Tab -> 'Users' Tab.
 + Click '+' Button.
@@ -149,28 +151,33 @@ VNC Address: {Vagrant-Host-IP}:55912
  * The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
  * (Note)'2' is User-ID
 + EYWA-Virutal-Router('VR-1') is automatic launched. (in 'Virtual Machines' Tab)
-+ After VR-1 is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
-+ Click '+' Button.
-+ Create first EYWA-VM(named with 'VM-1') by '2-Ubuntu(EYWA)' Template.
-+ Please wait until the status of 'Host' in 'Virtual Machines' is determined.
-+ Repeat Creating Second EYWA-Virtual-Router('VR-2').
-+ Click '+' Button.
-+ Add 'VR-2' with EYWA-Router-0 template. (for Router's LB/HA)
-+ Please wait until the status of 'Host' is determined.
-+ Repeat Creating Second EYWA-VM(named 'VM-2'). Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
-+ Click '+' Button.
-+ Add 'VM-2' with 'Ubuntu(EYWA)' template. (for Routers's LB/HA)
-+ Please wait until the status of 'Host' in 'Virtual Machines' is determined.
++ After '2-EYWA-Router-0' is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
++ Create first VM.
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Create first VM(named with '2-Ubuntu(EYWA)-0') by '2-Ubuntu(EYWA)' Template.
+ * Please wait until the status of 'Host' is "RUNNING".
++ Create Second VR.
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Add '2-EYWA-Router-1' with '2-EYWA-Router' template. (for Router's LB/HA)
+ * Please wait until the status of 'Host' is "RUNNING".
++ Create Second VM(named '2-Ubuntu(EYWA)-1').
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Add VM('2-Ubuntu(EYWA)-1') with '2-Ubuntu(EYWA)' template. (for Routers's LB/HA)
+ * Please wait until the status of 'Host' is "RUNNING".
 + Finaly, Check all VM/VR for EYWA-Demo Environment.
  * EYWA-VRs should be present on different hosts.
  * EYWA-VMs should be present on different hosts.
  * All Status must be "RUNNING"
  * On all VMs, Test ping to external.
 + Test failure scenarios. (If Some VRs is Down/Fail...)
- * Delete(Destroy) 'VR-1'.
+ * Delete(Destroy) one of the two EYWA-Routers. (e.g. '2-EYWA-Router-{0|1}').
  * Test Ping on all EYWA-VMs.
  * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
 + In addition, try the add / delete as you want.
+
+### Inbound LB/HA Scenario
+
+* TODO
 
 ## APPENDIX
 
