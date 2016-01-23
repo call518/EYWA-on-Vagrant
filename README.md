@@ -194,7 +194,7 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Click '+' Button in 'Virtual Machines' Tab.
  * Add VM('2-Ubuntu(EYWA)-1') with '2-Ubuntu(EYWA)' template. (for Routers's LB/HA)
  * Please wait until the status of 'Status' is "RUNNING".
-+ Finaly, Check all VM/VR for EYWA-Demo Environment.
++ Check all VM/VR for EYWA-Demo Environment.
  * EYWA-VRs should be present on different hosts. ('Host' in 'Virtual Machine' Tab)
  * EYWA-VMs should be present on different hosts. ('Host' in 'Virtual Machine' Tab)
  * All Status must be "RUNNING"
