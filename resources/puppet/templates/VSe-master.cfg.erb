@@ -4,12 +4,12 @@ iface VSe inet static
     netmask 255.255.255.0
     bridge_ports eth1
     bridge_stp off
-    bridge_waitport 0
-    bridge_maxwait 0
-    bridge_ageing 0
-    bridge_maxage 0
-    bridge_fd 0
-    bridge_hello 2
+    #bridge_waitport 0
+    #bridge_maxwait 0
+    #bridge_ageing 0
+    #bridge_maxage 0
+    #bridge_fd 0
+    #bridge_hello 2
     post-up ip addr add 192.168.33.2/24 dev $IFACE
     post-up iptables -t nat -I POSTROUTING -o eth0 -s 192.168.33.0/24 -j MASQUERADE
     pre-down ip addr del 192.168.33.2/24 dev $IFACE
