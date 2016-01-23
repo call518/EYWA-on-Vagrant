@@ -19,8 +19,8 @@ exec { "Add apt-key":
 
 if $opennebula_version == "4.6" {
     $one_repo = "deb http://downloads.opennebula.org/repo/Ubuntu/14.04 stable opennebula"
-} elsif $opennebula_version == "4.14" {
-    $one_repo = "deb http://downloads.opennebula.org/repo/4.14/Ubuntu/14.04/ stable opennebula"
+#} elsif $opennebula_version == "4.14" {
+#    $one_repo = "deb http://downloads.opennebula.org/repo/4.14/Ubuntu/14.04/ stable opennebula"
 } else {
     $one_repo = "deb http://downloads.opennebula.org/repo/4.10/Ubuntu/14.04/ stable opennebula"
 }

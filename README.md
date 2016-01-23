@@ -63,10 +63,10 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 ### Compatibility
 
 * Support OpeNebula 4.6 & OpenNebula 4.10 (Default: OpenNebula 4.10)
-* Tested Hypervisor: KVM
-* Tested Store: NFS Shared, Qcow2(Default Datastore)
-* Edit Vagrantfile to change OpenNebula version
- * "opennebula_version" Parameter
+* Edit 'Vagrantfile' to change OpenNebula version
+ * "opennebula_version" Parameter.
+* (Optional) Tested OpenNebula Hypervisor: KVM
+* (Optional) Tested OpenNeubla Storage: NFS Shared, Qcow2 (OpenNebula's "Default" Datastore)
 
 ### Download Images Info.
 
@@ -107,16 +107,18 @@ Distributed Virtual Router Networking /w OpenNebula Cluster (on Vagrant Environm
 
 # Prepare
 
+* (Note) At least two host need.
+
 ## Deploy Master Node (Front-end)
 
 ```bash
-host> vagrant up master
+host> vagrant up master (Mandatory)
 ```
 
 ## Deploy Slave Nodes
 
 ```bash
-host> vagrant up slave-1
+host> vagrant up slave-1 (Mandatory)
 host> vagrant up slave-2 (Optional)
 ```
 
