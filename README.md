@@ -245,7 +245,9 @@ VNC Address: {Vagrant-Host-IP}:55912
                 OR
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
-
+ 
+ * Before delete one EYWA-Router, via the VR remain and again ssh connecting to VMs.
+    * (Note) VR to delete is not use as Gateway. (If both is used, then delete any.)
  * Delete(Trash) one of EYWA-Router that working as Default-Gateway by ARP-Result.
     * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then Destroy it.
  * Re-Connect(SSH) to all VMs though remained EYWA-Virtual-Router, and re-run ping test.
