@@ -206,6 +206,7 @@ VNC Address: {Vagrant-Host-IP}:55912
 + Test failure scenarios. (If Some VRs is Down/Fail...)
  * (Note) VM Placement is Random (by OpenNebula), Therefore, it may not exactly match the following information.
  * Connect from any Host to VMs, then check below, (SSH Path: Client -> VR -> VM)
+
     ```bash
     (SSH Key is already exist, so auto-login.) 
 
@@ -221,10 +222,12 @@ VNC Address: {Vagrant-Host-IP}:55912
     [on 2-Ubuntu(EYWA)-1]# route -n
     [on 2-Ubuntu(EYWA)-1]# arp -n
     ```
+
     * All VRs's secondary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
     * All VMs's Default-Gateway is "10.0.0.1".
     * On all VMs, Test ping to external.
  * Test Outbound Ping on all EYWA-VMs. (with VNC-Console)
+
     ```bash
     [on 2-Ubuntu(EYWA)-0]# ping 8.8.8.8 (Test Outbound-Networking on VM)
     [on 2-Ubuntu(EYWA)-0]# arp -n (Get IP/Mac of Gateway-VR)
@@ -233,6 +236,7 @@ VNC Address: {Vagrant-Host-IP}:55912
                 OR
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
+
     * SSH to another VM to Test Outbound Ping.
     ```bash
     [on 2-Ubuntu(EYWA)-1]# ping 8.8.8.8 (Test Outbound-Networking on VM)
@@ -242,6 +246,7 @@ VNC Address: {Vagrant-Host-IP}:55912
                 OR
        10.0.0.1 --> 02:00:0a:00:00:04
     ```
+
  * Delete(Trash) one of EYWA-Router that working as Default-Gateway by ARP-Result.
     * Select that EYWA-Virtual-Router on "Virtual Machines" Tab, then Destroy it.
  * Re-Connect(SSH) to all VMs though remained EYWA-Virtual-Router, and re-run ping test.
