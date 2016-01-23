@@ -170,10 +170,10 @@ VNC Address: {Vagrant-Host-IP}:55912
  * All Status must be "RUNNING"
  * On all VMs, Test ping to external.
  * (Note) Sample list of the generated VM with virt-manager on VNC-Console.
-   * '2-EYWA-Router-0' => 'one-0'
-   * '2-Ubuntu(EYWA)-1' => 'one-1'
-   * '2-EYWA-Router-2' => 'one-2'
-   * '2-Ubuntu(EYWA)-3' => 'one-3'
+    * '2-EYWA-Router-0' => 'one-0'
+    * '2-Ubuntu(EYWA)-1' => 'one-1'
+    * '2-EYWA-Router-2' => 'one-2'
+    * '2-Ubuntu(EYWA)-3' => 'one-3'
 + Test failure scenarios. (If Some VRs is Down/Fail...)
  * Delete(Destroy) one of the two EYWA-Routers. (e.g. '2-EYWA-Router-{0|1}').
  * Test Ping on all EYWA-VMs.
