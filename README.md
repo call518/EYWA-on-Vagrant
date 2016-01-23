@@ -225,7 +225,6 @@ VNC Address: {Vagrant-Host-IP}:55912
 
     * All VRs's secondary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
     * All VMs's Default-Gateway is "10.0.0.1".
-    * On all VMs, Test ping to external.
  * Test Outbound Ping on all EYWA-VMs. (with VNC-Console)
 
     ```bash
