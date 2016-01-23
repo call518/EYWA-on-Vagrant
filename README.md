@@ -195,8 +195,8 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Add VM('2-Ubuntu(EYWA)-1') with '2-Ubuntu(EYWA)' template. (for Routers's LB/HA)
  * Please wait until the status of 'Status' is "RUNNING".
 + Check all VM/VR for EYWA-Demo Environment.
- * EYWA-VRs should be present on different hosts. ('Host' in 'Virtual Machine' Tab)
- * EYWA-VMs should be present on different hosts. ('Host' in 'Virtual Machine' Tab)
+ * EYWA-VRs should be present on different hosts(VirtualBox VM). (Check 'Host' in 'Virtual Machine' Tab)
+ * EYWA-VMs should be present on different hosts(VirtualBox VM). (Check 'Host' in 'Virtual Machine' Tab)
  * All Status must be "RUNNING"
  * All VMs's Default-Gateway is "10.0.0.1".
  * All VRs's Primary IP-Address of Internal-NIC is "10.0.0.1" for VMs's Default-Gateway.
