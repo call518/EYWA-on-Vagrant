@@ -143,42 +143,42 @@ VNC Address: {Vagrant-Host-IP}:55912
 
 ### Outbound LB/HA Scenario
 
-1 Log in to Web-UI, by "oneadmin" user.
-1 Go to 'System' Tab -> 'Users' Tab.
-1 Click '+' Button.
-1 Create 'testuser' User. (Password is that you want.)
- 1 Default two templates is generated. (in "Templates" Tab)
- 1 The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
- 1 (Note)'2' is User-ID
-1 EYWA-Virutal-Router('VR-1') is automatic launched. (in 'Virtual Machines' Tab)
-1 After '2-EYWA-Router-0' is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
-1 Create first VM.
- 1 Click '+' Button in 'Virtual Machines' Tab.
- 1 Create first VM(named with '2-Ubuntu(EYWA)-0') by '2-Ubuntu(EYWA)' Template.
- 1 Please wait until the status of 'Host' is "RUNNING".
-1 Create Second VR.
- 1 Click '+' Button in 'Virtual Machines' Tab.
- 1 Add '2-EYWA-Router-1' with '2-EYWA-Router' template. (for Router's LB/HA)
- 1 Please wait until the status of 'Host' is "RUNNING".
-1 Create Second VM(named '2-Ubuntu(EYWA)-1').
- 1 Click '+' Button in 'Virtual Machines' Tab.
- 1 Add VM('2-Ubuntu(EYWA)-1') with '2-Ubuntu(EYWA)' template. (for Routers's LB/HA)
- 1 Please wait until the status of 'Host' is "RUNNING".
-1 Finaly, Check all VM/VR for EYWA-Demo Environment.
- 1 EYWA-VRs should be present on different hosts.
- 1 EYWA-VMs should be present on different hosts.
- 1 All Status must be "RUNNING"
- 1 On all VMs, Test ping to external.
- 1 (Note) Sample list of the generated VM with virt-manager on VNC-Console.
-    1 '2-EYWA-Router-0' => 'one-0'
-    1 '2-Ubuntu(EYWA)-1' => 'one-1'
-    1 '2-EYWA-Router-2' => 'one-2'
-    1 *'2-Ubuntu(EYWA)-3' => 'one-3'
-1 Test failure scenarios. (If Some VRs is Down/Fail...)
- 1 Delete(Destroy) one of the two EYWA-Routers. (e.g. '2-EYWA-Router-{0|1}').
- 1 Test Ping on all EYWA-VMs.
- 1 Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
-1 In addition, try the add / delete as you want.
++ Log in to Web-UI, by "oneadmin" user.
++ Go to 'System' Tab -> 'Users' Tab.
++ Click '+' Button.
++ Create 'testuser' User. (Password is that you want.)
+ * Default two templates is generated. (in "Templates" Tab)
+ * The templates is '2-EYWA-Router' and 2-Ubuntu(EYWA).
+ * (Note)'2' is User-ID
++ EYWA-Virutal-Router('VR-1') is automatic launched. (in 'Virtual Machines' Tab)
++ After '2-EYWA-Router-0' is up(Status is RUNNING), Go to 'Virtual Resources' Tab -> 'Virtual Machines'.
++ Create first VM.
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Create first VM(named with '2-Ubuntu(EYWA)-0') by '2-Ubuntu(EYWA)' Template.
+ * Please wait until the status of 'Host' is "RUNNING".
++ Create Second VR.
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Add '2-EYWA-Router-1' with '2-EYWA-Router' template. (for Router's LB/HA)
+ * Please wait until the status of 'Host' is "RUNNING".
++ Create Second VM(named '2-Ubuntu(EYWA)-1').
+ * Click '+' Button in 'Virtual Machines' Tab.
+ * Add VM('2-Ubuntu(EYWA)-1') with '2-Ubuntu(EYWA)' template. (for Routers's LB/HA)
+ * Please wait until the status of 'Host' is "RUNNING".
++ Finaly, Check all VM/VR for EYWA-Demo Environment.
+ * EYWA-VRs should be present on different hosts.
+ * EYWA-VMs should be present on different hosts.
+ * All Status must be "RUNNING"
+ * On all VMs, Test ping to external.
+ * (Note) Sample list of the generated VM with virt-manager on VNC-Console.
+    * '2-EYWA-Router-0' => 'one-0'
+    * '2-Ubuntu(EYWA)-1' => 'one-1'
+    * '2-EYWA-Router-2' => 'one-2'
+    * '2-Ubuntu(EYWA)-3' => 'one-3'
++ Test failure scenarios. (If Some VRs is Down/Fail...)
+ * Delete(Destroy) one of the two EYWA-Routers. (e.g. '2-EYWA-Router-{0|1}').
+ * Test Ping on all EYWA-VMs.
+ * Outbound-Traffic(External) of all VMs will going to VR-2. (HA/LB)
++ In addition, try the add / delete as you want.
 
 ### Inbound LB/HA Scenario
 
