@@ -204,6 +204,7 @@ VNC Address: {Vagrant-Host-IP}:55912
     * '2-EYWA-Router-1' => 'one-2'
     * '2-Ubuntu(EYWA)-1' => 'one-3'
 + Test failure scenarios. (If Some VRs is Down/Fail...)
+ * (Note) VM Placement is Random (by OpenNebula), Therefore, the information may not exactly match.
  * Connect from any Host to VMs, then check below, (SSH Path: Client -> VR -> VM)
     ```bash
     (SSH Key is already exist, so auto-login.) 
