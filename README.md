@@ -208,7 +208,7 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Connect from any Host to VMs, then check below, (SSH Path: Client -> VR -> VM)
 
     ```bash
-    (SSH Key is already exist, so auto-login.) 
+    (SSH Key is already exist, so auto-login. If prompt for password, then 'CTRL+C' and retry.) 
 
     [on Any-Host]# ssh 192.168.33.101 (SSH Connect to 2-EYWA-Router-0)
     [on 2-EYWA-Router-0]# ip address
@@ -260,7 +260,10 @@ VNC Address: {Vagrant-Host-IP}:55912
  * Only briefly stop the ping, it works again soon.
     * After ARP Refresh, ping test of all VMs is resumed. (Failover)
  * Check 'arp -n', the 10.0.0.1's MAC is changed to remained EYWA-Virtual-Router's MAC.
-+ In addition, try the add / delete as you want.
++ Next, Add New Virtual-Router.
+ * Create new VR to test LB.
+ * Then check Gateway(10.0.0.1)'s MAC on all VMs.
++ (Optional) In addition, try other test. (add / delete as you want)
 
 ### (North-South) Inbound LB/HA Scenario
 
